@@ -94,7 +94,7 @@ class Application:
             return await self.json(send, 403, {"error": "Use same-origin JSON requests"})
         if method == "GET" and path == "/api/health":
             return await self.json(send, 200, {"ok": True, "live": bool(self.engine), "protocol": 1,
-                "message": "Real agent connected" if self.engine else "Replay mode · no API calls", "max_sessions": self.max_sessions})
+                "message": "Real agent connected" if self.engine else "Simulation and replay · no API calls", "max_sessions": self.max_sessions})
         if method == "GET" and path == "/api/sessions":
             return await self.json(send, 200, {"cursor": self.bus.cursor, "sessions": [s.snapshot() for s in self.sessions.values()]})
         if method == "GET" and path == "/api/events":
@@ -163,7 +163,12 @@ class Application:
         director = cfg.get("director", "scripted")
         if director not in ("scripted", "improvise"):
             raise ValueError("Unknown director")
-        return dict(scenario=scenario, role=role, property=prop, issue=issue.strip(), max_ticks=ticks, director=director)
+        controls = cfg.get("controls")
+        if controls is None:
+            controls = {r: "human" if r in (role, "operator") else "ai" for r in ("tenant", "landlord", "contractor", "operator")}
+        if not isinstance(controls, dict) or set(controls) != {"tenant", "landlord", "contractor", "operator"} or any(v not in ("ai", "human") for v in controls.values()):
+            raise ValueError("Set each participant to ai or human")
+        return dict(scenario=scenario, role=role, property=prop, issue=issue.strip(), max_ticks=ticks, director=director, controls=controls)
 
     async def stream(self, cursor, receive, send):
         await send({"type": "http.response.start", "status": 200, "headers": [
@@ -225,7 +230,7 @@ def main():
         except Exception as exc:
             parser.error(f"Agent configuration failed ({type(exc).__name__}). Supply the agent dependencies and runtime credentials, or use --replay.")
     import uvicorn
-    print(f"Lettings Village → http://{args.host}:{args.port} · {'live agent' if engine else 'recorded runs / no API calls'}", flush=True)
+    print(f"Lettings Village → http://{args.host}:{args.port} · {'live agent' if engine else 'simulation + recorded runs / no API calls'}", flush=True)
     uvicorn.run(Application(engine, args.runs, args.public_origin), host=args.host, port=args.port, log_level="warning", access_log=False)
 
 

@@ -90,8 +90,9 @@ export function recommendations(dataset,jobs,rules,rate){
 }
 export function operationalSummary(tickets){
   // Replaying the same baseline again is not another job. Prefer its fullest playback.
-  const recordings=new Map(),live=[];
+  const recordings=new Map(),live=[],sim=[];
   for(const ticket of tickets){
+    if(ticket.mode==='sim'||ticket.events.some(e=>e.simulated)){sim.push(ticket);continue;}
     if(ticket.mode==='live'){live.push(ticket);continue;}
     const key=ticket.provenance?.trace_sha256||ticket.id;
     if(!recordings.has(key)||recordings.get(key).events.length<ticket.events.length)recordings.set(key,ticket);
@@ -113,7 +114,7 @@ export function operationalSummary(tickets){
         awaiting:ticket.pending?.role||null,ended:ticket.ended,events};
     });
   }
-  return {live:aggregate(live),replay:aggregate([...recordings.values()]),duplicateReplays:[...tickets].filter(t=>t.mode!=='live').length-recordings.size};
+  return {live:aggregate(live),sim:aggregate(sim),replay:aggregate([...recordings.values()]),duplicateReplays:[...tickets].filter(t=>t.mode==='replay'&&!t.events.some(e=>e.simulated)).length-recordings.size};
 }
 export function validateLedger(value){
   const fail=message=>{throw new Error(`Ledger: ${message}`);};

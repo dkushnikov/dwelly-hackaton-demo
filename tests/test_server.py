@@ -58,6 +58,19 @@ def test_invalid_session_configuration_is_rejected(cfg):
         Application().validate(cfg)
 
 
+@pytest.mark.parametrize("controls", [{}, {"tenant": "human"}, {"tenant": "ai", "landlord": "ai", "contractor": "ai", "operator": "admin"}, []])
+def test_incomplete_or_unknown_participant_controls_are_rejected(controls):
+    with pytest.raises(ValueError, match="each participant"):
+        Application().validate({"controls": controls})
+
+
+def test_each_role_can_be_assigned_independently():
+    controls = {"tenant": "human", "landlord": "human", "contractor": "ai", "operator": "ai"}
+    assert Application().validate({"controls": controls})["controls"] == controls
+    assert Application().validate({"role": "landlord"})["controls"]["landlord"] == "human"
+    assert Application().validate({})["controls"]["operator"] == "human"
+
+
 def test_recordings_survive_server_restart(tmp_path):
     session = Session({}, tmp_path)
     session.emit({"t": "ticket_opened"})

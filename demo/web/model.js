@@ -7,12 +7,12 @@ export function createTicket(id, mode, scenario = {}) {
 export function reduceEvent(ticket, event) {
   if(event.v !== 1 || !Number.isInteger(event.seq) || ticket.seen.has(event.seq)) return false;
   ticket.seen.add(event.seq); ticket.events.push(event);
-  if(event.t === 'ticket_opened') {ticket.issue=event.issue;ticket.property=event.property;ticket.provenance=event.provenance;}
+  if(event.t === 'ticket_opened') {ticket.issue=event.issue;ticket.property=event.property;ticket.provenance=event.provenance;ticket.controls=event.controls||ticket.controls;ticket.participants=event.participants||ticket.participants;}
   if(event.t === 'agent_thinking') {ticket.owner='agency';ticket.pending=null;}
   if(event.t === 'status') {ticket.status=event;ticket.owner=event.owner;ticket.stage=event.stage;}
   if(event.t === 'awaiting_player') {ticket.pending=event;ticket.owner=event.role;}
   if(event.t === 'actor_message') ticket.pending=null;
-  if(event.t === 'episode_end') {ticket.ended=true;ticket.pending=null;ticket.summary=event.summary;ticket.endReason=event.reason;}
+  if(event.t === 'episode_end') {ticket.ended=true;ticket.pending=null;ticket.summary=event.summary;ticket.endReason=event.reason;ticket.outcome=event.outcome;ticket.progress=1;}
   return true;
 }
 export function metrics(tickets) {

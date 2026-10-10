@@ -1,0 +1,175 @@
+{
+  "v": 1,
+  "scenarios": [
+    {
+      "id": "public-keys",
+      "title": "Key Replacement Request",
+      "property": "P-001",
+      "kind": "keys",
+      "contractor": "C-005",
+      "tag": "Public case · PM-021",
+      "color": "sage",
+      "issue": "Hi Clara,\n\nThe tenants have advised that the key snapped for the back door for the conservatory and they do not have a spare.\n\nPlease can you replace the lock and provide 4 new keys, 2 for the tenants, 1 for us and 1 for the landlord. The ones for us and the landlord will need to be given to the office.",
+      "description": "The provider reported replacing the cylinder and handles and said the remaining keys would be delivered to the office the following day. The request was marked completed and closed.",
+      "source": {
+        "case": "PM-021",
+        "track": "Property Management",
+        "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/021/index.md",
+        "history_url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/021/history.md",
+        "revision": "9bcdca585955dfb930005ed742572606e68f5688",
+        "index_sha256": "75f2be29d3947109aa123c072760b9c9ea294d4330ea9eeb35b1730ed825f27e",
+        "history_sha256": "50c6900b3b4c1be040cba1aab6f293d726502ae8fd4d1ca76aa57a9c2b3d100e",
+        "original_property": "Flat 22, 148 Lantern Quay, Westmarsh, ZZ4 1ZZ",
+        "adaptation": "Public synthetic case adapted to village residents. Turns, dialogue and timing are simulated; this is not an LLM evaluation.",
+        "caveat": "Names and the property are mapped to the village; closure checks retain the public case's meaning.",
+        "evidence": [
+          {
+            "id": "PM-021/ev001",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/021/history.md#event-001",
+            "text": "## 2024-11-21 09:30:14 UTC — event 001\n\n- **Channel:** Note\n- **From:** Northbridge Lettings\n- **To:** Not specified\n\nRequest description: The key snapped for the back door for the conservatory and we don’t have a spare\n\n"
+          },
+          {
+            "id": "PM-021/ev006",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/021/history.md#event-006",
+            "text": "## 2024-11-21 11:00:42 UTC — event 006\n\n- **Channel:** Email\n- **From:** Landlord\n- **To:** Northbridge Lettings\n\nQuinn approves the maintenance action regarding the broken key and requests new keys for the tenant, the landlord, and the property management.\n\n"
+          },
+          {
+            "id": "PM-021/ev020",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/021/history.md#event-020",
+            "text": "## 2024-11-22 16:04:29 UTC — event 020\n\n- **Channel:** Email\n- **From:** Contractor\n- **To:** Agency / system\n\nGood evening\n\nJob is completed, I have replaced Cylinder and handles. I will drop off remaining keys to the office tomorrow.\n\n"
+          },
+          {
+            "id": "PM-021/ev025",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/021/history.md#event-025",
+            "text": "## 2024-11-23 04:22:25 UTC — event 025\n\n- **Channel:** Note\n- **From:** Agency / system\n- **To:** Not specified\n\nSkipped uploading one or more documents. **Reason provided:** No quote required, repaired on site\n\n"
+          },
+          {
+            "id": "PM-021/ev028",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/021/history.md#event-028",
+            "text": "## 2024-11-23 04:22:39 UTC — event 028\n\n- **Channel:** Update\n- **From:** Agency / system\n- **To:** Not specified\n\nKeys return confirmed\nValidation: (Priority cannot be decreased to 0. Current priority is 3.)\n\n"
+          },
+          {
+            "id": "PM-021/ev029",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/021/history.md#event-029",
+            "text": "## 2024-11-23 04:22:42 UTC — event 029\n\n- **Channel:** Update\n- **From:** Agency / system\n- **To:** Not specified\n\nAll checks have been completed; the request is now closed\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "public-fan",
+      "title": "Kitchen Extractor Fan Repair Request",
+      "property": "P-002",
+      "kind": "fan",
+      "contractor": "C-003",
+      "tag": "Public case · PM-017",
+      "color": "sage",
+      "issue": "Extractor fan in kitchen does not seem to work (turn on). May be a simple technician fix. Thank you",
+      "description": "The tenant found the switch following the landlord’s instructions and confirmed that the extractor fan was working. The job was closed without payment.",
+      "source": {
+        "case": "PM-017",
+        "track": "Property Management",
+        "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/017/index.md",
+        "history_url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/017/history.md",
+        "revision": "9bcdca585955dfb930005ed742572606e68f5688",
+        "index_sha256": "8a8cc4d76c80701d5f100d1fbc0f7daea2430b8c65d724ec5331ab4490f26251",
+        "history_sha256": "4e6841b2ce52d8b2fcbfb7af0ff2f2ad6099ea495b5143add1dd6b3ad54911b0",
+        "original_property": "Flat 1, 31 Juniper Mews, Cedarford, ZZ7 7ZZ",
+        "adaptation": "Public synthetic case adapted to village residents. Turns, dialogue and timing are simulated; this is not an LLM evaluation.",
+        "caveat": "Names and the property are mapped to the village; closure checks retain the public case's meaning.",
+        "evidence": [
+          {
+            "id": "PM-017/ev001",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/017/history.md#event-001",
+            "text": "## 2026-09-11 08:37:27 UTC — event 001\n\n- **Channel:** Note\n- **From:** Agency / system\n- **To:** Not specified\n\nRequest description: Extractor fan in kitchen does not seem to work (turn on). May be a simple technician fix. Thank you\n\n"
+          },
+          {
+            "id": "PM-017/ev008",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/017/history.md#event-008",
+            "text": "## 2026-09-15 22:29:06 UTC — event 008\n\n- **Channel:** Email\n- **From:** Landlord\n- **To:** Northbridge Lettings\n\nThere is a switch to the righthand side of the hob when needs to be switched on.\n\n"
+          },
+          {
+            "id": "PM-017/ev011",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/017/history.md#event-011",
+            "text": "## 2026-09-16 08:55:05 UTC — event 011\n\n- **Channel:** Email\n- **From:** Tenant\n- **To:** Northbridge Lettings\n\nThe customer confirms that the extractor fan is working after locating the button.\n\n"
+          },
+          {
+            "id": "PM-017/ev014",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/017/history.md#event-014",
+            "text": "## 2026-09-21 03:42:31 UTC — event 014\n\n- **Channel:** Update\n- **From:** Northbridge Lettings\n- **To:** Internal\n\nTask has been completed without payment\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "public-warranty",
+      "title": "Oven Repair Request",
+      "property": "P-006",
+      "kind": "warranty",
+      "contractor": "C-006",
+      "tag": "Public case · PM-025",
+      "color": "sage",
+      "issue": "The oven has stopped heating up. Does not work on any settings, the light still switches on and it makes a sound but does not heat up on oven or grill settings. It was replaced sometime last year as the last one stopped working too.",
+      "description": "The contractor confirmed that the oven repair was completed under warranty, with no charge to the landlord. The task was marked complete without payment.",
+      "source": {
+        "case": "PM-025",
+        "track": "Property Management",
+        "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/index.md",
+        "history_url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md",
+        "revision": "9bcdca585955dfb930005ed742572606e68f5688",
+        "index_sha256": "b9bd191d2e2387051296183e626eba980c81fd5bcdc3144fa98b85b9820c68bd",
+        "history_sha256": "8101970309d2eb0c5db0d0bad3d03f13402ac5b9d560a7b9d2367f5e45cc7a04",
+        "original_property": "Flat 2, 176 Lantern Quay, Westmarsh, ZZ8 5ZZ",
+        "adaptation": "Public synthetic case adapted to village residents. Turns, dialogue and timing are simulated; this is not an LLM evaluation.",
+        "caveat": "The source has conflicting appointment dates. The simulation uses relative time without reconciling those dates.",
+        "evidence": [
+          {
+            "id": "PM-025/ev001",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md#event-001",
+            "text": "## 2024-05-19 18:21:07 UTC — event 001\n\n- **Channel:** Note\n- **From:** Agency / system\n- **To:** Not specified\n\nRequest description: The oven has stopped heating up. Does not work on any settings, the light still switches on and it makes a sound but does not heat up on oven or grill settings. It was replaced sometime last year as the last one stopped working too.\n\n"
+          },
+          {
+            "id": "PM-025/ev006",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md#event-006",
+            "text": "## 2024-05-21 12:04:07 UTC — event 006\n\n- **Channel:** Email\n- **From:** Landlord\n- **To:** Agency / system\n\nFelix requests that the contractor used by Keystone Works for the oven replacement last year be contacted for a charge-free service since the oven should still be under warranty.\n\n"
+          },
+          {
+            "id": "PM-025/ev020",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md#event-020",
+            "text": "## 2024-05-21 15:42:54 UTC — event 020\n\n- **Channel:** Email\n- **From:** Contractor\n- **To:** Agency / system\n\nHarbour Services confirms that the oven repair appointment is scheduled for tomorrow, 21st June, and mentions that the oven is no longer under warranty.\n\n"
+          },
+          {
+            "id": "PM-025/ev022",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md#event-022",
+            "text": "## 2024-05-23 12:08:42 UTC — event 022\n\n- **Channel:** Email\n- **From:** Contractor\n- **To:** Agency / system\n\nThe customer attended the property for inspection but couldn't fix the oven. They will consult the supplier as the warranty just expired.\n\n"
+          },
+          {
+            "id": "PM-025/ev042",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md#event-042",
+            "text": "## 2024-06-12 12:40:47 UTC — event 042\n\n- **Channel:** Email\n- **From:** Contractor\n- **To:** Agency / system\n\nClara from Harbour Services informed Oscar that the oven falls within a 2-year manufacturer's warranty, and the manufacturer will send an engineer to inspect the oven. Clara will coordinate with the tenant to arrange a suitable appointment.\n\n"
+          },
+          {
+            "id": "PM-025/ev044",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md#event-044",
+            "text": "## 2024-06-12 14:00:46 UTC — event 044\n\n- **Channel:** Email\n- **From:** Contractor\n- **To:** Agency / system\n\nHarbour Services has updated Northbridge Lettings on the status of an oven repair. They have informed the tenant about the engineer's visit, and parts have been ordered. They will arrange an appointment once the parts arrive.\n\n"
+          },
+          {
+            "id": "PM-025/ev050",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md#event-050",
+            "text": "## 2024-06-14 15:43:44 UTC — event 050\n\n- **Channel:** Email\n- **From:** Contractor\n- **To:** Agency / system\n\nThe engineer from the warranty provider has assessed the oven repair issue and identified a need for additional parts, which have been ordered. The problem is expected to be resolved by the end of next week, and the tenant will be kept informed.\n\n"
+          },
+          {
+            "id": "PM-025/ev062",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md#event-062",
+            "text": "## 2024-06-21 16:04:56 UTC — event 062\n\n- **Channel:** Email\n- **From:** Contractor\n- **To:** Agency / system\n\nThe oven repair has been completed under warranty with no charge to the landlord.\n\n"
+          },
+          {
+            "id": "PM-025/ev064",
+            "url": "https://github.com/DwellyOrg/HackatonPublicCases/blob/9bcdca585955dfb930005ed742572606e68f5688/Property%20Management/025/history.md#event-064",
+            "text": "## 2024-06-21 17:56:10 UTC — event 064\n\n- **Channel:** Update\n- **From:** Agency / system\n- **To:** Not specified\n\nTask has been completed without payment\n"
+          }
+        ]
+      }
+    }
+  ]
+}

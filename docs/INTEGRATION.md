@@ -2,7 +2,7 @@
 
 ## Существующий агент
 
-`demo.engine.AgentEngine` принимает явный `--agent-root`. На старте загружает реальные `harness.loop.CaseAgent`, `Rulebook`, `PlaybookLibrary`, `Settings` и `mockworld.adapter.MockAdapter`. Никаких патчей в соседний checkout не требуется.
+`make game` использует отдельную копию `.deps/lettings-ops-agent`, закреплённую в `agent-source.json`; `make agent-sync` воспроизводит её, `make agent-update` явно обновляет из upstream. `demo.engine.AgentEngine` получает этот путь через `--agent-root`. На старте загружает реальные `harness.loop.CaseAgent`, `Rulebook`, `PlaybookLibrary`, `Settings` и `mockworld.adapter.MockAdapter`. Исходный рабочий каталог агентной команды не используется.
 
 В сессии Case.id остаётся неизменным между раундами: `MockAdapter.world_for(case)` возвращает тот же мир. Между сессиями adapter отдельный. Trace callback получает `model_turn`, `playbook`, `gate`, `tool_result`, `terminal`, а world.log даёт подтверждённые effects. `finally` вычитывает остаток лога даже при ошибке ответа агента.
 
@@ -55,3 +55,19 @@
 SSE буфер — 20 000 событий. Истёкший cursor восстанавливается через snapshot. Исторические завершённые сессии, вытесненные из памяти, доступны только как JSONL. После рестарта нельзя продолжить живой мир из лога.
 
 API использует same-origin JSON writes, Host allowlist, ограничения размера/числа ходов и path confinement. Авторизация пользователей делегируется Cloudflare Access перед всем origin. Внутренней системы аккаунтов нет.
+
+
+## Interactive controls and browser simulation
+
+`POST /api/sessions` accepts an optional complete `controls` object with keys
+`tenant`, `landlord`, `contractor`, `operator`; each value is `ai` or `human`.
+Explicit controls take precedence over the legacy single `role`. When omitted,
+the selected legacy role and the operator are human-controlled. The assignments
+are included in `ticket_opened` and reconnect snapshots. All live participant
+replies remain untrusted agent evidence.
+
+Browser simulations are independent of the live API. `simulation.js` emits
+protocol v1 events with `simulated: true`, named participants, explicit choices,
+source event references and `episode_end.outcome`. Their state and journals live
+in browser local storage. The Cases view and BI keep these separate from live
+and recorded agent output. See [INTERACTIVE.md](INTERACTIVE.md).

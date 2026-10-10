@@ -11,13 +11,19 @@ from demo.protocol import effect_event, status_event, summary_of, trace_event
 from demo.scenarios import SCENARIOS
 
 
-def convert(root, output):
+def convert(root, output, recordings_root=None):
+    recordings_root = recordings_root or root / "runs/baseline"
+    missing = [str(recordings_root / scenario["fixture"].split("-", 1)[0] / name)
+               for scenario in SCENARIOS for name in ("_state.json", "trace.jsonl")
+               if not (recordings_root / scenario["fixture"].split("-", 1)[0] / name).is_file()]
+    if missing:
+        raise ValueError("Baseline recordings are not part of the agent Git checkout. Supply RECORDINGS_ROOT with _state.json and trace.jsonl for F01/F02/F07/F08. Bundled replays remain unchanged.")
     output.mkdir(parents=True, exist_ok=True)
     catalog = []
     for scenario in SCENARIOS:
         fixture = root / "fixtures" / scenario["fixture"]
         spec = yaml.safe_load((fixture / "case.yaml").read_text())
-        run = root / "runs/baseline" / spec["id"]
+        run = recordings_root / spec["id"]
         state_bytes = (run / "_state.json").read_bytes()
         trace_bytes = (run / "trace.jsonl").read_bytes()
         state = json.loads(state_bytes)
@@ -73,5 +79,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("agent_root", type=Path)
     parser.add_argument("--output", type=Path, default=Path("demo/web/replays"))
+    parser.add_argument("--recordings-root", type=Path, help="Directory containing F01/F02/F07/F08 recording artifacts")
     args = parser.parse_args()
-    convert(args.agent_root, args.output)
+    try:
+        convert(args.agent_root, args.output, args.recordings_root)
+    except ValueError as exc:
+        parser.exit(1, f"{exc}\n")

@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / "demo/web"
-FILES = ["index.html", "style.css", "app.js", "model.js", "village.js", "sw.js", "favicon.svg", "catalog.json"]
+FILES = ["index.html", "style.css", "app.js", "model.js", "village.js", "sw.js", "favicon.svg", "catalog.json", "simulation.js", "public-scenarios.json"]
 FILES += ["insights.css", "insights.js", "insights-model.js", "insights-rules.json", "insights-corpus.json", "insights-lab.json"]
 
 
@@ -36,6 +36,7 @@ def main():
             bundle.write(dest / name, name)
     print(f"Static replay build: {dest}")
     print("4 authentic recordings; no runtime sessions, agent source, credentials, CDN or API dependency.")
+    print("Interactive simulation: 3 source-linked public cases, role control and browser-local saved sessions; no API calls.")
     print("BI: 50 public corpus cases + 84 clearly labelled synthetic portfolio jobs; local review feedback.")
     print(f"Deployment archive: {archive} ({archive.stat().st_size} bytes)")
 

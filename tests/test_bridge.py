@@ -96,3 +96,29 @@ def test_landlord_decline_enters_next_real_agent_case(engine, tmp_path):
         assert any(e["t"] == "actor_message" and e.get("source") == "player" for e in session.events)
         assert session.events[-1]["t"] == "episode_end"
     asyncio.run(check())
+
+
+def test_two_manual_roles_pause_the_same_live_session_independently(engine, tmp_path):
+    def waiting(role):
+        return {"decision": "Need confirmation", "stage": "on_hold", "hold_reason": f"Waiting for {role.title()}",
+                "recap": "Awaiting reply", "next_step": f"{role.title()} to confirm", "definition_of_done": [],
+                "info_requests": [{"to": role, "question": "Please confirm"}]}
+    end = {"decision": "Keep case open", "stage": "on_hold", "hold_reason": "Waiting for Other", "recap": "Replies received",
+           "next_step": "Property manager to review", "definition_of_done": [], "handover": {"question": "Review evidence?"}}
+    set_client(engine, [[use("request_info", waiting("landlord"))], [use("request_info", waiting("tenant"))], [use("escalate", end)]])
+
+    async def check():
+        controls = {"tenant": "human", "landlord": "human", "contractor": "ai", "operator": "ai"}
+        session = Session(config(controls=controls, max_ticks=3), tmp_path)
+        task = asyncio.create_task(engine.run(session))
+        for role in ("landlord", "tenant"):
+            for _ in range(100):
+                if session.pending and session.pending["role"] == role:
+                    break
+                await asyncio.sleep(0)
+            assert session.pending["role"] == role
+            session.answer(role, "Confirmed in this test", session.pending["prompt_id"])
+        await task
+        assert [e["role"] for e in session.events if e["t"] == "awaiting_player"] == ["landlord", "tenant"]
+        assert not any(e["t"] == "error" for e in session.events)
+    asyncio.run(check())

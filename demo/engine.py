@@ -87,7 +87,7 @@ class AgentEngine:
         try:
             case, adapter, world = self.prepare(session)
             session.emit({"t": "ticket_opened", "ticket": case.id, "property": session.config["property"],
-                          "issue": case.title, "mode": "live", "source": "CaseAgent + PolicyGate + MockAdapter"})
+                          "issue": case.title, "mode": "live", "controls": session.config.get("controls"), "source": "CaseAgent + PolicyGate + MockAdapter"})
             for a in case.artefacts:
                 if a.trust == "untrusted":
                     session.emit({"t": "actor_message", "role": "contractor" if session.config["scenario"] == "fraud" else "tenant",
@@ -138,7 +138,9 @@ class AgentEngine:
                 if role == "operator" and data.get("handover"):
                     prompt = data["handover"]["question"]
                 suggestions = PRESETS[role]
-                if session.config["role"] == role or role == "operator":
+                controls = session.config.get("controls")
+                human = controls[role] == "human" if controls else session.config["role"] == role or role == "operator"
+                if human:
                     body = await session.ask(role, prompt, suggestions)
                     source = "player"
                 elif session.config["director"] == "improvise":

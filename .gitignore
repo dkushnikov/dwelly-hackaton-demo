@@ -10,3 +10,4 @@ dist/
 artifacts/
 build/
 *.egg-info/
+.deps/

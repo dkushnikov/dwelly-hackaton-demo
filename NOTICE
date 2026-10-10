@@ -15,3 +15,10 @@ contains proactive refusals by the model, not policy-gate deny invocations.
 
 Original procedural village artwork is dedicated under CC0-1.0. No commercial
 game sprites, third-party fonts or external image assets are included.
+
+The public scenario evidence in demo/web/public-scenarios.json is adapted from
+DwellyOrg/HackatonPublicCases, Property Management cases 017, 021 and 025,
+revision 9bcdca585955dfb930005ed742572606e68f5688. Original source links and
+SHA-256 hashes accompany each case. These source cases are synthetic.
+The village mapping, participant choices, simulated dialogue, relative timing
+and success checks are demo adaptations, not recorded LLM runs or evaluations.

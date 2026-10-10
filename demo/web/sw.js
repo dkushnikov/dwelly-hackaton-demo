@@ -1,5 +1,5 @@
-const CACHE='lettings-village-v2';
-const FILES=['/','/index.html','/style.css','/app.js','/model.js','/village.js','/favicon.svg','/catalog.json','/insights.css','/insights.js','/insights-model.js','/insights-rules.json','/insights-corpus.json','/insights-lab.json','/replays/routine.jsonl','/replays/approval.jsonl','/replays/fraud.jsonl','/replays/vulnerable.jsonl'];
+const CACHE='lettings-village-v3';
+const FILES=['/','/index.html','/style.css','/app.js','/model.js','/simulation.js','/public-scenarios.json','/village.js','/favicon.svg','/catalog.json','/insights.css','/insights.js','/insights-model.js','/insights-rules.json','/insights-corpus.json','/insights-lab.json','/replays/routine.jsonl','/replays/approval.jsonl','/replays/fraud.jsonl','/replays/vulnerable.jsonl'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('lettings-village-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{

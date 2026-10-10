@@ -1,104 +1,134 @@
 # Lettings Village
 
-Браузерная деревня для демо на Dwelly AI Hackathon: **6 домов, 21 участник, несколько параллельных заявок и подробный разбор каждого решения агента**.
+A browser demo for the Dwelly AI Hackathon: **6 homes, 21 participants, concurrent maintenance stories and an auditable view of each agent decision**.
 
-В деревне живут арендаторы, владельцы и подрядчики; в офисе работают агент и операторы Dwelly. Письмо летит при сообщении, фургон выезжает после подтверждённого work order. Выбор карточки показывает факты, gate verdict, владельца следующего шага, статус и handover человеку.
+Tenants, landlords, contractors and Dwelly operators share a pixel village. Messages appear when they are recorded; a van leaves only after a confirmed work order. Select a story to inspect its evidence, policy gate, next owner, status and human handover.
 
-## Быстрый запуск
+## Quick start
 
-Нужны Python 3.12+ и `uvicorn==0.43.0`. В текущем окружении они уже доступны.
-
-```sh
-make game-replay
-```
-
-Открыть <http://127.0.0.1:8787>. **Start the village** запускает четыре настоящих записи параллельно. **Stories** открывает сценарии. **People** показывает участников. Нажать на дом — познакомиться с жильцом. **⛶** включает режим проектора.
-
-Прямой запуск сцены мошенничества: <http://127.0.0.1:8787/?replay=fraud&presenter=1>.
-
-Вкладка **Intelligence** рядом с Village открывает BI: <http://127.0.0.1:8787/#intelligence>. Здесь есть разбор 50 публичных кейсов, отдельный портфель из 84 явно обозначенных синтетических заказов, текущая активность агентов, предложения с доказательствами и обратная связь человека. Фильтры и ставка сотрудников пересчитывают оценки; показатели раскрываются до кейса и события. Подробнее: [Money Intelligence](docs/INTELLIGENCE.md).
-
-На чистой машине:
+Requirements: Python 3.12+ and `uvicorn==0.43.0`. Node.js is needed only for frontend tests. There are no npm dependencies.
 
 ```sh
 python3 -m venv .venv
-.venv/bin/pip install '.[dev]'
-make game-replay PYTHON=.venv/bin/python
+.venv/bin/python -m pip install '.[dev]'
+make game-replay
 ```
 
-При установке pip использует setuptools как build backend: явный список Python-пакетов и web assets позволяет собрать wheel из проекта с несколькими каталогами. Это зависимость сборки, не BI-runtime.
+Make automatically uses this project's `.venv/bin/python` when available; otherwise it uses `python3`. Override it with `PYTHON=/path/to/python` if needed.
 
-Зависимость `uvicorn` нужна только для HTTP/SSE и live-режима. Готовый статический `dist/` работает на обычном хостинге без Python. Canvas, JavaScript, CSS и шрифты не требуют внешней сети. Service worker сохраняет интерфейс и четыре записи после первого успешного открытия.
+Open <http://127.0.0.1:8787>. **Start the village** runs three complete public-case simulations plus a fraud scenario together. **Stories** opens simulations and authentic recorded decisions; **Cases** lists current sessions; **People** introduces the participants. Click a home to meet its residents. **⛶** enables presenter mode.
 
-## Два режима
+Direct fraud replay: <http://127.0.0.1:8787/?replay=fraud&presenter=1>.
 
-| | Recorded runs | Live agent |
-|---|---|---|
-| Решения | Сохранённые реальные baseline-прогоны | `CaseAgent.run` из соседнего checkout |
-| Мир | Визуализация записанных эффектов | Независимый `MockAdapter` на каждый тикет |
-| Участники | Записанные входящие сообщения | Игрок + scripted/AI director |
-| Ключи и интернет | Не нужны | Нужны процессу агента |
-| Скорость | Пауза, 1× / 2× / 4×, следующий значимый шаг | Ходы по мере готовности агента |
-| Запись | Export ↓, локальный JSONL import | `runs/demo/<session>.jsonl` + Export ↓ |
+The **Intelligence** tab opens the BI dashboard at <http://127.0.0.1:8787/#intelligence>. It contains 50 public cases, a separate portfolio of 84 explicitly synthetic jobs, current agent activity, evidence-backed proposals and human feedback. Filters and the staff rate recalculate estimates; metrics drill down to cases and events. See [Money Intelligence](docs/INTELLIGENCE.md).
 
-Это отдельный проект. Исходники, mandate, playbooks и gate в `lettings-ops-agent` не изменяются. Первоначальный файл `pixel-village-demo.md` использован как описание желаемого опыта. Указанного в нём `evalkit/simulate.py` в прочитанной версии репозитория нет, поэтому здесь реализован собственный драйвер поверх существующего агента. Вместо Phaser используется оригинальный Canvas-рендер: он не требует CDN и упрощает полностью автономный показ.
+The static `dist/` build runs on ordinary hosting without Python. Canvas, JavaScript, CSS and fonts need no external network. A service worker caches the interface, interactive simulator, public-case evidence, BI datasets and four recordings after the first successful visit. Setuptools is used only to build the Python package and include its web assets.
 
-## Running the village demo с настоящим агентом
+## An isolated copy of the agent
 
-Установить live-зависимости в окружение, где работает сервер:
+The demo uses its **own Git clone** at `.deps/lettings-ops-agent`. It does not depend on `/Users/dkushnikov/Code/lettings-ops-agent`, that working tree's uncommitted changes, or its Python environment.
+
+[agent-source.json](agent-source.json) records the upstream repository, update branch and exact commit. The clone is ignored by this repository; the small lock file is versioned. Runtime modules, playbooks, fixtures and public data are checked out with Git sparse checkout. Workstation credentials, hooks and agent instruction files are excluded from the working copy.
 
 ```sh
-.venv/bin/pip install '.[live]'
-make game PYTHON=.venv/bin/python AGENT_ROOT=/absolute/path/to/lettings-ops-agent
+make agent-sync       # Create the isolated clone or restore the pinned commit
+make agent-status     # Show the upstream, pinned commit and local commit
+make agent-update     # Fetch upstream main and advance the pin explicitly
+make test-agent       # Verify compatibility with the copied agent, without LLM calls
 ```
 
-Владелец окружения передаёт `ANTHROPIC_API_KEY` процессу сервера через свой менеджер секретов. Приложение **не читает `.env`**, не принимает ключи из браузера и не возвращает их в API. `LOA_MODEL`, `LOA_EFFORT`, `LOA_MAX_STEPS`, `LOA_CASE_TIMEOUT_S` сохраняют смысл из проекта агента. Модель по умолчанию берётся из его `Settings`.
+`agent-sync` is reproducible: it uses the pinned commit, not the latest branch tip. `agent-update` accepts only a fast-forward from that pin. Both refuse to overwrite local edits or untracked files and never reset, clean, merge or push the dependency. Live startup verifies the managed checkout against the pin; it never fetches updates automatically.
 
-В **Stories → Experience → Live agent** выбрать Tenant, Landlord, Contractor, Dwelly operator или Watch. При следующем ходе выбранного персонажа симуляция ждёт ответа. Эскалация оператору всегда ждёт человека, в том числе в Watch. Сообщение игрока становится `Artefact(trust="untrusted")`; оно не изменяет полномочия напрямую.
+Stop live sessions before updating, run `make test-agent`, review the `agent-source.json` change and restart the server. Agent behaviour changes remain upstream; demo adapters and tests belong here. See [Agent dependency workflow](docs/AGENT_DEPENDENCY.md).
 
-Обратная связь работает на двух уровнях: внутри решения агент получает результаты инструментов и policy gate; между раундами он получает ответы участников, квитанции действий и предыдущий DecisionState. Автоматического judge, самообучения и изменения rulebook из результатов симуляции здесь нет.
+## Interactive cases and three experiences
 
-Для произвольной заявки нажать дом → **Report an issue**. Например, выбрать P-005 и написать: `Boiler not working, I'm 82 and it's cold`. Карточка собственности берётся из настоящего mock-world. Для параллельной работы запускать несколько сценариев: сервер держит до 32 сессий, не более двух запросов агента одновременно по умолчанию. `--concurrency` ограничен диапазоном 1–4. На тикет можно выбрать 1, 4 или 8 раундов.
+| | Simulation | Recorded runs | Live agent |
+|---|---|---|---|
+| Decisions | Deterministic browser simulator | Authentic saved baseline runs | Pinned `CaseAgent.run` |
+| Participants | Each named participant can be AI or You | Recorded messages | Each role can be automatic or manual |
+| AI meaning | Scripted personas, no model calls | Previously recorded model output | Real LLM agent; optional LLM personas |
+| World | Isolated simulated case | Recorded effects | Separate `MockAdapter` per ticket |
+| Persistence | This browser's local storage | Bundled/imported JSONL | Server journal; active sessions reconnect |
+| Credentials | None | None | Supplied to the agent process |
 
-Scripted personas — консервативные ответы участников, а не сценарий действий агента: они предлагают время визита и запрашивают уточнения. AI director отвечает за других участников в свободной форме и делает дополнительные API-вызовы. Ни один director не обходит policy gate. Живой прогон может закончиться ожиданием человека, а не закрытием ремонта.
+**Cases** (`/#cases`) lists active, waiting, successful and other finished sessions, with search and an **Open case / Take your turn** action. **New case** works in simulation mode without an agent server. Choose the home, contractor and Dwelly operator, then set Tenant, Landlord, Contractor and Operator independently to **AI** or **You**. A single player can control several participants. These are local roleplay controls, not multi-user accounts.
 
-## Записи и честность демонстрации
+Manual simulation turns require an explicit decision; optional notes are recorded as text and are not interpreted by a model. Declining approval, refusing access, incomplete work or rejected final checks keep the case open. Simulation success requires all workflow evidence; elapsed time alone cannot close a case. Simulations resume after a page reload, including a pending human turn. Export preserves the journal; importing it creates playback rather than a resumable simulation.
 
-Четыре bundled replay импортированы из существующих `runs/baseline/F01`, `F02`, `F07`, `F08`. Их provenance содержит SHA-256 исходного state/trace, оригинальные timestamps сохранены. Это **по одному реальному решению**, а не заранее записанные полные эпизоды от жалобы до закрытия.
+Three complete stories are adapted from the public **Property Management** track:
 
-Старый агент не записывал `stage` и `definition_of_done`: интерфейс показывает отсутствие этих данных. Он также **сам отказался от мошеннических действий** в F07, поэтому UI пишет «agent refusal», а число gate blocks равно нулю. Реальный `deny` отображается только при реальном событии gate. Полная цепочка до закрытия появится при live-записи современной версии агента.
+- **PM-021 — Key Replacement Request:** approval → provider → access → lock repair → four-key accounting → final checks.
+- **PM-017 — Kitchen Extractor Fan:** landlord advice → tenant finds the switch → closed without a visit or payment.
+- **PM-025 — Oven Repair:** initially disputed warranty → manufacturer cover confirmed → parts wait → charge-free repair → final checks.
 
-Обновить bundled записи из того же формата:
+Each has original event references, pinned source links and SHA-256 hashes. Residents and properties are mapped to the village. The warranty source contains inconsistent dates; the simulation uses relative time and discloses this. The bundled public outcomes guide the simulation only; they are not passed to the live agent as future evidence. These successful simulations do **not** certify LLM performance.
+
+The other stories support simulated repair, spending approval, vulnerable-resident care and fraud prevention. A free-form safety report ends in an unresolved emergency handover, rather than claiming a completed repair. Details and limitations: [Interactive mode](docs/INTERACTIVE.md).
+
+The original `pixel-village-demo.md` was a description of the intended experience. This project implements its own driver around the agent's public harness contract. The initial upstream checkout did not include the simulator described in that document; newer upstream versions may include one. The village currently uses its own driver. The original Canvas renderer keeps the presentation self-contained without Phaser or a CDN.
+
+## Run with the real agent
+
+Install the declared live dependencies in the demo's own environment and synchronize the source copy:
 
 ```sh
-make import-replays AGENT_ROOT=/absolute/path/to/lettings-ops-agent
+.venv/bin/python -m pip install '.[live,dev]'
+make agent-sync
+make test-agent
+make game
 ```
 
-Записи после рестарта сервера доступны по `GET /api/sessions/<id>/recording`. Продолжение живого Python-мирa после рестарта не реализовано: сохранённый журнал можно проиграть, а новую сессию нужно начать отдельно. Ошибка/таймаут сохраняют уже совершённые эффекты; приложение не повторяет неподтверждённые записи автоматически.
+The process owner supplies `ANTHROPIC_API_KEY` through their secret manager. The application **does not load `.env` files**, accept keys from the browser or return them through the API. `LOA_MODEL`, `LOA_EFFORT`, `LOA_MAX_STEPS` and `LOA_CASE_TIMEOUT_S` retain their upstream meanings. The default model comes from the pinned agent's `Settings`.
 
-## Проверки и сборка
+In **Stories → Experience → Live agent**, assign each role independently to AI or You. The session waits whenever a manual role needs to reply. The legacy API still defaults operator escalation to a human; the new form makes every assignment explicit. Automatic operator replies remain untrusted evidence and cannot grant new policy authority. Player replies become `Artefact(trust="untrusted")`; they do not grant authority.
+
+The agent receives tool results and policy gate outcomes within a decision. Between rounds, it receives participant replies, action receipts and the previous DecisionState. There is no automatic judge, self-training or automatic rulebook modification.
+
+For a free-form issue, use **New case**, or click a home and choose **Report an issue**. Select Simulation or, when connected, Real LLM agent. For example, select P-005 and enter `Boiler not working, I'm 82 and it's cold`. The property record comes from the copied agent's mock world. The server supports up to 32 sessions, with two simultaneous agent requests by default; `--concurrency` allows 1–4. Each ticket can use 1, 4 or 8 rounds.
+
+Scripted personas offer availability or request clarification; they do not prescribe the agency's decisions. The AI director improvises other participants and makes additional API calls. Both paths still use the policy gate. A live run may finish while waiting for a person rather than closing the repair.
+
+## Recordings and provenance
+
+The four bundled replays came from `runs/baseline/F01`, `F02`, `F07` and `F08` in the original development environment. Provenance includes state/trace SHA-256 hashes and original timestamps. Each recording captures **one real agent decision**, not an entire maintenance lifecycle.
+
+The older agent did not record `stage` or `definition_of_done`; the UI shows those fields as unavailable. In F07 the agent itself declined fraudulent actions, so the UI distinguishes agent refusal from a policy-gate denial. A denial is counted only when an actual gate event records it.
+
+Baseline runtime artifacts are not committed upstream and are not copied by `agent-sync`. Existing bundled replays remain available. To regenerate them, supply a separate recording artifact directory containing `F01`, `F02`, `F07` and `F08`, each with `_state.json` and `trace.jsonl`:
 
 ```sh
-make test PYTHON=.venv/bin/python
-make test PYTHON=.venv/bin/python TEST_ARGS=--agent-root=/absolute/path/to/lettings-ops-agent
-make lint PYTHON=.venv/bin/python
+make import-replays RECORDINGS_ROOT=/absolute/path/to/baseline-artifacts
+make import-insights
+```
+
+The importer checks for missing baseline artifacts before replacing any bundled replay. `import-insights` reads the public case index from the managed agent copy and regenerates the clearly labelled portfolio fixture.
+
+After a server restart, recordings remain available through `GET /api/sessions/<id>/recording`. Resuming a live Python world after restart is not implemented: replay its journal or start a new session. Errors and timeouts preserve recorded effects; unconfirmed writes are not automatically retried.
+
+## Tests and build
+
+```sh
+make test             # Local tests; bridge tests skip without an agent root
+make test-agent       # All tests against the pinned dependency copy
+make lint
 make build
 ```
 
-Без `--agent-root` три интеграционных теста пропускаются. С ним тесты используют настоящий loop/gate/world и подменяют только поставщика LLM: сетевых вызовов нет. Node.js нужен для тестов клиентской модели и BI; npm-зависимостей нет.
+Bridge tests use the real CaseAgent, PolicyGate and MockAdapter with a scripted LLM client, without provider calls. Tests cover blocked writes, real effect receipts, player barriers, refusal delivery, property grounding, session isolation, JSONL journals, SSE resume, deduplication, legacy fields, Host/Origin validation and path confinement. BI tests cover evidence, estimation, matched cohorts, missing data, import validation and feedback binding.
 
-Проверены: запрет опасной записи настоящим gate, отсутствие выдуманного effect, пауза игрока и отказ владельца в следующем контексте, привязка к P-005, изоляция сессий, JSONL-журнал, SSE resume, дедупликация, старые поля, Origin/Host и обход путей.
+`make build` produces `dist/` and `artifacts/lettings-village-static.zip` using an explicit file allowlist. Runtime sessions, imported private ledgers, local feedback, the agent clone and credentials are excluded.
 
-## Деплой и демонстрация
+## Deployment and handoff
 
-- [План и архитектура](docs/PLAN.md)
-- [Саммари для команды агентного стрима](docs/AGENT_STREAM_HANDOFF.md)
-- [BI, денежный ledger и обратная связь](docs/INTELLIGENCE.md)
-- [Cloudflare, Docker и подготовка окружения](docs/DEPLOYMENT.md)
-- [Протокол интеграции и API](docs/INTEGRATION.md)
-- [Сценарий выступления на 90 секунд](video/GAME_DEMO.md)
-- [Результаты проверки и ограничения](docs/VERIFICATION.md)
+- [Interactive cases, public evidence and participant control](docs/INTERACTIVE.md)
+- [Agent dependency workflow](docs/AGENT_DEPENDENCY.md)
+- [Plan and architecture](docs/PLAN.md)
+- [Summary for the agent team](docs/AGENT_STREAM_HANDOFF.md)
+- [BI, financial ledger and feedback](docs/INTELLIGENCE.md)
+- [Cloudflare, Docker and environment setup](docs/DEPLOYMENT.md)
+- [Integration protocol and API](docs/INTEGRATION.md)
+- [90-second presentation script](video/GAME_DEMO.md)
+- [Verification results and limitations](docs/VERIFICATION.md)
 
-Доступы Cloudflare для локального результата не требуются. Для публикации live-режима подготовлены Dockerfile, Compose и конфигурация origin; для автономного показа — статический build и `wrangler.jsonc`. Публикация в аккаунт пока не выполнена.
-
-`make build` также создаёт `artifacts/lettings-village-static.zip` с явным списком разрешённых файлов. В архив не входят runtime-журналы, исходники агента или секреты.
+Cloudflare access is not needed locally. Docker/Compose and origin configuration are prepared for live hosting; the static build and `wrangler.jsonc` support offline replay hosting. The live Compose configuration mounts `.deps/lettings-ops-agent` read-only by default. Run `make agent-sync` first. Public deployment and a complete real-provider live episode still require validation in the target environment.

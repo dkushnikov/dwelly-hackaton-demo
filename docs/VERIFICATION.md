@@ -227,3 +227,151 @@ Browser QA через Codex in-app browser:
 - Сервер остановлен через Ctrl+C. Reload `/#intelligence` успешно показал dashboard и 595 interventions из service-worker cache.
 
 Скриншоты: `artifacts/intelligence-preview.jpg`, `intelligence-desktop.jpg`, `intelligence-mobile.jpg`. Встроенные данные, lab, UI и review работают без LLM. PDF extraction, real invoice feed, командное хранение отзывов и автоматическая доставка агенту не реализованы; границы и следующий контракт описаны в INTELLIGENCE.md.
+
+## Isolated agent dependency and English README — 2026-10-10
+
+The demo now owns `.deps/lettings-ops-agent` and `.venv`; it no longer uses the agent team's source checkout or Python environment. `agent-source.json` pins the GitHub revision. The single maintained README is fully English. The dependency workflow is documented in `AGENT_DEPENDENCY.md`.
+
+Commands exercised:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install --disable-pip-version-check --no-cache-dir '.[live,dev]'
+make agent-sync
+make agent-update
+make agent-status
+make test-agent
+make lint
+```
+
+Installation completed successfully in the demo's own environment. The initial clone pinned `a2c80f58a7f82341f9677f26c2c13e1b139c7307`; the real update fetched the newer upstream main revision. Final status and repeated sync output:
+
+```text
+Upstream: https://github.com/dkushnikov/lettings-ops-agent.git (main)
+Pinned revision: 9103fab85f371982ee68e88ac75f96e0ff662447
+Local revision: 9103fab85f371982ee68e88ac75f96e0ff662447
+Agent checkout: /Users/dkushnikov/Documents/ChatGPT/Dwelly Hackathon Demo/.deps/lettings-ops-agent
+Revision: 9103fab85f371982ee68e88ac75f96e0ff662447 (unchanged)
+Pinned source is ready. Restart live sessions after an update; run make test-agent before using it.
+```
+
+Final tests against that exact copied revision (individual test names omitted):
+
+```text
+54 passed in 3.31s
+node --test tests/*.test.mjs
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 50.82025
+All checks passed!
+```
+
+The 14 added Python cases exercise pinned sync, independent source changes, forward updates, dirty and untracked file refusal, origin mismatch, symlink/shared-worktree refusal, divergent history, missing runtime files, ignored file collisions, invalid configuration and missing replay artifacts. The real bridge tests use the copied harness with a scripted provider and make no paid LLM calls.
+
+One new test initially failed: Git sparse checkout overwrote an ignored file despite `switch --no-overwrite-ignore`. The dependency manager now compares ignored paths with the target tree before switching. The regression test confirms that both the local file and revision pin remain unchanged when a collision is rejected.
+
+The first sandboxed `make agent-sync` and `make agent-update` could not resolve `github.com`; the first sandboxed pip install could not resolve `pypi.org`. Repeating with approved network access succeeded. No credentials or source-team uncommitted artifacts were copied.
+
+Additional read-only checks returned:
+
+```text
+English README check: 1 maintained file(s)
+Live Compose YAML: isolated read-only mount, missing source rejected
+```
+
+`git diff --check` passed, and `git check-ignore .deps/lettings-ops-agent/harness/loop.py` confirmed that the clone is excluded from demo commits. Compose was inspected as YAML; the Docker runtime and a paid live episode remain unverified. Bundled replay/BI data was preserved, and no deployment was performed for this migration.
+
+## Interactive public-case simulations — 2026-10-10
+
+Added complete simulations for public Property Management PM-021 (lock and key replacement), PM-017 (extractor switch, no visit/payment), and PM-025 (manufacturer warranty repair). The public corpus files were read from the supplied checkout; none of the six source Markdown files had local Git modifications. The bundle records revision `9bcdca585955dfb930005ed742572606e68f5688`, hashes and exact event references. Existing real-agent recordings were preserved.
+
+```sh
+.venv/bin/python -m scripts.import_scenarios /Users/dkushnikov/Code/HackatonPublicCases
+make test-agent
+make lint
+make build
+```
+
+```text
+public-scenarios.json: 3 public cases with source revision, hashes and event evidence
+60 passed in 4.39s
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53.95425
+All checks passed!
+Interactive simulation: 3 source-linked public cases, role control and browser-local saved sessions; no API calls.
+```
+
+An archive inspection confirmed 23 allowlisted static files, including `simulation.js` and `public-scenarios.json`, with no dependency checkout, Python environment or runtime journals. JavaScript syntax was checked again after the final focus-preservation change. That change prevents another case's pending turn from interrupting an already pending player turn.
+
+The added JavaScript tests cover all public success paths, evidence references, no LLM usage, approval refusal, stale/wrong-role/unknown-choice rejection, all four manual roles, pending-turn restoration, exactly one dispatch, incomplete work/final-check rejection, cancellation, unresolved safety handover, fraud blocking, case filters and separation of simulations from real-agent BI. Python checks cover the role-map API contract and sequential landlord/tenant manual turns in the real pinned agent harness using a scripted provider.
+
+Browser verification in the existing in-app tab:
+
+- **Start the village**, 4×: all three public cases and the fraud incident visibly reached successful completion; source cases closed with 6/6, 3/3 and 8/8 checks respectively.
+- **Cases** lists and filters active, waiting and successful sessions. Searching `PM-` with Success selected returns exactly the three public cases.
+- A new free-form repair was run with **Play everyone**. Declining approval left it waiting for the landlord, with no dispatch. Reload restored that exact human barrier.
+- Continuing that case handed control to landlord, contractor, tenant, contractor, tenant and operator in order. A work order appeared only after access consent; the final review produced Success.
+- PM-021's evidence dialog exposes the original public repository link, revision, source property, six event references and history hash.
+- BI lists five interactive simulations separately, with 12 simulated actions, one simulated denial, zero model calls and zero tokens. Live and recorded populations remain empty for this browser session.
+- Mobile 390×844: document width 375, dialog width 341; no horizontal overflow. Viewport override was reset.
+- Console errors/warnings before the offline check: `[]`.
+- Preview server was stopped, then the page reloaded successfully from its service-worker cache with all five saved cases intact.
+
+Screenshot: `artifacts/interactive-cases.jpg`. These are explicitly scripted simulations, not claims that a paid LLM passed the public cases. No paid model calls, deployment, shared multi-user queue or automatic agent learning were added. Live configuration uses the new role map; a complete real-provider episode remains unverified.
+
+## Upstream agent refresh — 2026-10-10
+
+`make agent-update` advanced the isolated checkout and `agent-source.json` from `9103fab85f371982ee68e88ac75f96e0ff662447` to `475337052375be88e5b6c8eafa5ec4f709042133`, the fetched upstream `main`. The source team's checkout was not modified. This update adds emergency make-safe authority, a document safety review before resolution, run provenance, a runs board and simulator fixes. No demo adapter changes were needed for compatibility.
+
+Commands and actual results:
+
+```sh
+make test-agent
+make lint
+make build
+```
+
+```text
+60 passed in 3.75s
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53.6205
+All checks passed!
+Static replay build: /Users/dkushnikov/Documents/ChatGPT/Dwelly Hackathon Demo/dist
+4 authentic recordings; no runtime sessions, agent source, credentials, CDN or API dependency.
+Interactive simulation: 3 source-linked public cases, role control and browser-local saved sessions; no API calls.
+BI: 50 public corpus cases + 84 clearly labelled synthetic portfolio jobs; local review feedback.
+Deployment archive: /Users/dkushnikov/Documents/ChatGPT/Dwelly Hackathon Demo/artifacts/lettings-village-static.zip (119790 bytes)
+```
+
+The upstream regression suite was also run against the unchanged pinned source. Its tracked `tests/` and `fixtures-dwelly/` directories were materialized in the managed sparse checkout using Git's CLI, with the existing sensitive-file and agent-instruction exclusions retained. This extra local test material is ignored by the demo repository. The demo's own `.venv` received `pytest-asyncio==1.4.0` and `pypdf==6.20.0` for upstream async tests and PDF fixtures; these are test-run setup, not new demo runtime requirements.
+
+From `.deps/lettings-ops-agent`:
+
+```sh
+../../.venv/bin/python -m pytest -q -c pyproject.toml tests
+```
+
+```text
+........................................................................ [ 60%]
+...............................................                          [100%]
+119 passed in 5.11s
+```
+
+The initial sandboxed update and lazy fetch of upstream test blobs failed with `Could not resolve host: github.com`. Retrying with approved network access succeeded. The upstream suite and demo bridge tests use scripted providers; paid LLM behavior and a deployed live episode remain unverified.

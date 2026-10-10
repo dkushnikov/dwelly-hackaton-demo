@@ -26,17 +26,19 @@ docker compose up --build -d
 
 | Переменная | Значение |
 |---|---|
-| `LETTINGS_AGENT_ROOT` | Абсолютный путь к совместимому checkout агента |
+| `LETTINGS_AGENT_ROOT` | Необязательный путь к отдельной копии агента; по умолчанию `./.deps/lettings-ops-agent` |
 | `ANTHROPIC_API_KEY` | Передаётся секрет-хранилищем процессу, не браузеру |
 | `VILLAGE_PUBLIC_ORIGIN` | Точный URL, например `https://village.your-domain.example` |
 | `LOA_MODEL` | Доступная вашему аккаунту модель; иначе default из агента |
 | `LOA_EFFORT`, `LOA_MAX_STEPS`, `LOA_CASE_TIMEOUT_S` | Необязательные настройки существующего harness |
 
 ```sh
+make agent-sync
+make test-agent
 docker compose -f compose.yaml -f deploy/compose.live.yaml up --build -d
 ```
 
-Checkout монтируется read-only в `/agent`; код приложения читает только agent modules, rulebook, playbooks, world YAML и fixtures. Не загружать секреты в образ, не копировать `.env` и не передавать их через URL. `.dockerignore` допускает только исходники demo и pyproject.
+Отдельная копия из `.deps` закреплена в `agent-source.json` и монтируется read-only в `/agent`; исходный рабочий каталог команды не используется. Код приложения читает только agent modules, rulebook, playbooks, world YAML и fixtures. Не загружать секреты в образ, не копировать `.env` и не передавать их через URL. `.dockerignore` допускает только исходники demo и pyproject.
 
 Healthcheck должен обращаться с тем же Host, что и `VILLAGE_PUBLIC_ORIGIN`. Локальная curl-проверка при внешнем origin:
 

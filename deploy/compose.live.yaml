@@ -13,9 +13,11 @@ services:
       - VILLAGE_PUBLIC_ORIGIN
     volumes:
       - type: bind
-        source: ${LETTINGS_AGENT_ROOT:?Set LETTINGS_AGENT_ROOT to the agent checkout}
+        source: ${LETTINGS_AGENT_ROOT:-./.deps/lettings-ops-agent}
         target: /agent
         read_only: true
+        bind:
+          create_host_path: false
     command:
       - python
       - -m

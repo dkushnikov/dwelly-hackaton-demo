@@ -14,7 +14,7 @@
 
 ## Что уже собрано
 
-Проект находится в `/Users/dkushnikov/Documents/ChatGPT/Dwelly Hackathon Demo`. Источник агентного движка — `/Users/dkushnikov/Code/lettings-ops-agent`.
+Проект находится в `/Users/dkushnikov/Documents/ChatGPT/Dwelly Hackathon Demo`. Агентный движок загружается из отдельной копии `.deps/lettings-ops-agent` внутри демо-проекта. Репозиторий и commit закреплены в `agent-source.json`; команды `make agent-sync` и `make agent-update` работают только с этой копией. Исходный рабочий каталог команды и его Python-окружение больше не используются.
 
 Есть одна браузерная карта: **6 домов, 6 арендаторов, 4 владельца, 7 подрядчиков и 4 позиции Dwelly**. Несколько заявок можно наблюдать одновременно; выбранная карточка открывает подробный timeline, результаты policy gate, текущего ответственного, статус, checklist и handover оператору.
 
@@ -119,4 +119,18 @@ Trace-события передаются в браузер сразу. Выпо
 - [DEPLOYMENT.md](DEPLOYMENT.md) — подготовка Cloudflare и Docker.
 - [GAME_DEMO.md](../video/GAME_DEMO.md) — выступление на 90 секунд.
 
-Для старта: `make game-replay`. Для подключения движка: `make game AGENT_ROOT=/absolute/path/to/lettings-ops-agent` в окружении с live-зависимостями и настроенным провайдером. Следующее полезное действие — один совместный живой прогон и его разбор по журналу.
+Для старта: `make game-replay`. Для подключения движка: `make agent-sync`, `make test-agent`, затем `make game` в собственном окружении демо с live-зависимостями и настроенным провайдером. Следующее полезное действие — один совместный живой прогон и его разбор по журналу.
+
+
+## Interactive demo update — 2026-10-10
+
+The demo now contains complete browser simulations derived from public Property
+Management cases PM-021, PM-017 and PM-025, plus the existing synthetic scenarios.
+These have explicit closure evidence and successful all-AI paths. They are
+labelled deterministic simulations and are not claims of LLM evaluation results.
+The Cases tab exposes active and finished sessions; each named participant can
+be assigned AI or manual control. Browser simulations persist across reloads.
+Live sessions accept a per-role `controls` map; the real gate still controls
+writes. BI separates simulated, recorded and live activity. See
+[INTERACTIVE.md](INTERACTIVE.md) for source references, acceptance checks and
+remaining limits (browser-local state, no multi-player rooms, no paid live QA).

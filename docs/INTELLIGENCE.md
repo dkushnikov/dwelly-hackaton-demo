@@ -110,7 +110,8 @@ JSON до 4 MB и 5 000 jobs. Корень: `v: 1`, `kind: "imported"`, `synthet
 ## Воспроизводимость
 
 ```sh
-make import-insights AGENT_ROOT=/absolute/path/to/lettings-ops-agent
+make agent-sync
+make import-insights
 make test
 make build
 ```
