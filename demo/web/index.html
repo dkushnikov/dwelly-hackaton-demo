@@ -22,17 +22,20 @@
       <button id="nav-village" class="rail-button selected" title="Village"><span>▦</span>Village</button>
       <button id="nav-stories" class="rail-button" title="Scenario library"><span>▤</span>Stories</button>
       <button id="nav-cases" class="rail-button" title="Current cases"><span>☷</span>Cases</button>
+      <button id="nav-homes" class="rail-button" title="Homes directory"><span>⌂</span>Homes</button>
       <button id="nav-people" class="rail-button" title="People in the village"><span>♙</span>People</button>
       <button id="nav-intelligence" class="rail-button" title="Money intelligence"><span>▥</span>Insights</button>
-      <button id="import" class="rail-button" title="Import a session recording"><span>↥</span>Replay</button>
+      <button id="import" class="rail-button" title="Watch or load a recording"><span>↺</span>Replay</button>
+      <button id="nav-reset" class="rail-button" title="Reset demo"><span>⟲</span>Reset</button>
       <div class="rail-bottom"><span class="tiny-house">⌂</span><span>Made for<br>real life.</span></div>
     </nav>
     <main>
-      <nav class="workspace-tabs" aria-label="Workspace"><button id="view-village" class="active" aria-current="page">Village</button><button id="view-cases">Cases <span>Interactive</span></button><button id="view-intelligence">Intelligence <span>BI</span></button></nav>
+      <nav class="workspace-tabs" aria-label="Workspace"><button id="view-village" class="active" aria-current="page">Village</button><button id="view-cases">Cases <span>Interactive</span></button><button id="view-homes">Homes</button><button id="view-intelligence">Intelligence <span>BI</span></button></nav>
+      <nav class="workspace-tools" aria-label="Workspace tools"><button id="open-people" class="text-button">♙ People</button><button id="open-replay" class="text-button">↺ Replay</button><button id="open-reset" class="text-button">⟲ Reset demo</button></nav>
       <div id="village-view">
       <section class="page-heading">
         <div><div class="eyebrow"><span class="sun">✳</span> A LITTLE WORLD, REAL DECISIONS</div><h1>Every home has a story<span>.</span></h1><p>Follow the people, the problems, and the agent bringing it all together.</p></div>
-        <div class="launch"><button class="button primary" id="start-village"><span>▶</span> Start the village</button><button class="button secondary" id="new-ticket">+ New case</button></div>
+        <div class="launch"><button class="button primary" id="start-village" title="Fixed pack: PM-021, PM-017, PM-025 and fraud. Adds four simulations; existing cases stay."><span>▶</span> Start the village</button><button class="button secondary" id="new-ticket">+ New case</button><span class="launch-note">Fixed pack · 4 simulations · no API</span></div>
       </section>
       <section class="metrics" aria-label="Village activity">
         <div><span class="metric-icon sage">⌂</span><strong id="metric-homes">6</strong><span>homes in the village</span></div>
@@ -42,14 +45,14 @@
       </section>
       <div class="workbench">
         <div class="village-column">
-          <section class="map-card" aria-labelledby="map-title">
-            <div class="map-top"><div><span class="live-dot"></span><h2 id="map-title">Richmond neighbourhood</h2><span class="subtle" id="actor-count"></span></div><span id="world-clock" class="clock">SAT, 10 OCT · 09:00</span></div>
+          <section id="map-card" class="map-card" aria-labelledby="map-title">
+            <div class="map-top"><div><span class="live-dot"></span><h2 id="map-title">Richmond neighbourhood</h2><span class="subtle" id="actor-count"></span></div><div class="map-tools"><span id="world-clock" class="clock">SAT, 10 OCT · 09:00</span><button id="expand-map" class="text-button" aria-pressed="false">⛶ Full screen</button></div></div>
             <div class="map-wrap"><canvas id="village" width="768" height="480" aria-label="Interactive pixel village. Use the property buttons below to select a house." tabindex="0"></canvas>
-              <div class="map-caption"><span class="compass">N ↑</span><span>A quieter kind of control room.</span></div>
+              <div class="map-caption"><span class="compass">N ↑</span></div>
               <div id="toast" class="map-toast" role="status" hidden></div>
               <div id="safety-banner" class="safety-banner" role="status" hidden><span>◇</span><div><b id="safety-title"></b><p id="safety-text"></p></div><button id="dismiss-safety" aria-label="Dismiss safety notice">×</button></div>
             </div>
-            <div class="map-bottom"><div class="legend"><span><i class="tenant-dot"></i>Tenants</span><span><i class="landlord-dot"></i>Landlords</span><span><i class="contractor-dot"></i>Contractors</span><span><i class="agency-dot"></i>Dwelly</span></div><span class="map-hint">Click a home to say hello ↗</span></div>
+            <div class="map-bottom"><div class="legend signal-legend"><span><i class="signal-quiet"></i>No cases / finished</span><span><i class="signal-active"></i>Active</span><span><i class="signal-attention"></i>Your turn / review</span><span><i class="signal-success"></i>Success</span></div><span class="map-hint">Homes → details · Teams → People</span></div>
           </section>
           <div class="playback"><div class="playback-label"><span id="mode-badge" class="tag">REPLAY STUDIO</span><span id="playback-description">Real recordings. Ready when you are.</span></div><div class="playback-buttons"><button id="pause" class="icon-button" aria-label="Pause playback" title="Pause or play (Space)">Ⅱ</button><select id="speed" aria-label="Playback speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select><button id="skip" class="icon-button" title="Next meaningful event" aria-label="Skip to next meaningful event">↠</button></div></div>
           <section class="stories-section"><div class="section-heading"><h2>Around the village <span id="story-count">00</span></h2><button id="browse-stories" class="text-button">Explore scenarios ↗</button></div><div id="ticket-list" class="ticket-list"></div><div id="empty-village" class="empty-village"><span>✉</span><div><b>The village is waking up.</b><p>Run three public cases and a fraud scenario, or create a case and choose who you control.</p></div></div></section>
@@ -79,6 +82,11 @@
         <div id="case-list" class="case-list"></div><button id="clear-finished" class="text-button">Clear finished simulations from this browser</button>
       </section>
       <section id="intelligence" hidden aria-label="Money intelligence dashboard"></section>
+      <section id="homes" hidden aria-label="Homes directory">
+        <div class="page-heading"><div><div class="eyebrow">THE PLACES WE LOOK AFTER</div><h1>Every home, in view<span>.</span></h1><p>Find a resident, see their landlord and follow the cases attached to their home.</p></div></div>
+        <div class="directory-toolbar"><label class="field">Find a home<input id="home-search" type="search" placeholder="Address, resident, landlord or property ID…"></label><label class="field">Landlord<select id="home-landlord"><option value="all">All landlords</option></select></label><label class="field">Case activity<select id="home-status"><option value="all">All homes</option><option value="active">With active cases</option><option value="waiting">Waiting for you</option><option value="quiet">No active cases</option></select></label><button id="home-clear" class="text-button">Clear filters</button></div>
+        <p id="home-count" class="directory-count" role="status"></p><div id="home-list" class="home-list"></div>
+      </section>
     </main>
   </div>
   <dialog id="dialog"><div class="dialog-top"><span class="eyebrow" id="dialog-kicker"></span><button id="close-dialog" class="icon-button" aria-label="Close dialog">×</button></div><div id="dialog-content"></div></dialog>

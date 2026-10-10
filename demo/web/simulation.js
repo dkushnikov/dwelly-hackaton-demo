@@ -15,12 +15,28 @@ const yes=(label,body)=>choose('confirm',label,body);
 const no=(label='Not yet',body='This is not confirmed. Keep the case open.')=>choose('hold',label,body,false);
 const step=(id,stage,role,prompt,body,extra={})=>({id,stage,role,prompt,choices:[yes('Confirm',body),no()],...extra});
 
-export function participantsFor(world,propertyId,contractorId='C-001',operator='Property manager'){
+export function participantsFor(world,propertyId){
   const p=world.properties.find(p=>p.id===propertyId);
   if(!p)throw new Error('Choose a known property.');
-  const l=world.landlords.find(l=>l.id===p.landlord_id),c=world.contractors.find(c=>c.id===contractorId);
-  if(!c||!world.operators.includes(operator))throw new Error('Choose known participants.');
-  return {tenant:{id:`tenant-${p.id}`,name:p.tenant},landlord:{id:l.id,name:l.name},contractor:{id:c.id,name:c.name},operator:{id:`operator-${world.operators.indexOf(operator)}`,name:operator}};
+  const l=world.landlords.find(l=>l.id===p.landlord_id);
+  return {tenant:{id:`tenant-${p.id}`,name:p.tenant},landlord:{id:l.id,name:l.name},contractor:null,operator:null};
+}
+export function simulationConfigFor(world,scenario,property,controls,issue=''){
+  return {scenario,property,controls,issue,participants:participantsFor(world,property),
+    directory:structuredClone({contractors:world.contractors,operators:world.operators})};
+}
+function contractorTrade(scenario,issue){
+  const kind=kindFor(scenario,issue);
+  if(kind==='keys')return 'locksmith';
+  if(kind==='warranty')return 'general';
+  if(kind==='routine')return 'plumber';
+  if(['approval','vulnerable'].includes(kind))return 'heating';
+  const text=issue||scenario.issue||'';
+  if(/lock|\bkeys?\b/i.test(text))return 'locksmith';
+  if(/boiler|heating|radiator/i.test(text))return 'heating';
+  if(/electri|socket|light|wiring/i.test(text))return 'electrician';
+  if(/tap|leak|pipe|plumb|drain|toilet/i.test(text))return 'plumber';
+  return 'general';
 }
 
 export function planFor(scenario,issue=''){
@@ -95,15 +111,38 @@ export class Simulation {
   }
   effect(op,to_role='agency',summary=op){
     this.emit({t:'gate',tool:op,verdict:'allow',rules:['SIM-EVIDENCE'],reason:'Deterministic simulation rule; not the production policy gate'});
-    this.emit({t:'effect',op,to_role,summary,property:this.config.property,input:{property_id:this.config.property,contractor_id:this.config.participants.contractor.id},result:{id:`sim-${this.config.id}-${this.events.length}`,simulated:true}});
+    const input={property_id:this.config.property};
+    if(op==='create_work_order'){
+      if(!this.config.participants.contractor)throw new Error('Dispatch requires an assigned contractor.');
+      input.contractor_id=this.config.participants.contractor.id;
+    }
+    this.emit({t:'effect',op,to_role,summary,property:this.config.property,input,result:{id:`sim-${this.config.id}-${this.events.length}`,simulated:true}});
+  }
+  assign(role){
+    if(this.config.participants[role])return;
+    const {scenario,issue,directory}=this.config;
+    let actor,reason;
+    if(role==='operator'){
+      const kind=kindFor(scenario,issue),name=kind==='fraud'?'Finance desk':['safety','vulnerable'].includes(kind)?'Safeguarding desk':'Property manager';
+      const index=directory.operators.indexOf(name);
+      if(index<0)throw new Error('No operator is available for this case.');
+      actor={id:`operator-${index}`,name};reason=`Case routed to ${name}.`;
+    }else if(role==='contractor'){
+      const trade=contractorTrade(scenario,issue),provider=directory.contractors.find(c=>c.trade===trade);
+      if(!provider)throw new Error('No contractor is available for this trade.');
+      actor={id:provider.id,name:provider.name};reason=`${provider.name} selected for ${trade.replaceAll('_',' ')} work at provider selection.`;
+    }else throw new Error('The home must identify its tenant and landlord.');
+    this.config.participants={...this.config.participants,[role]:actor};
+    this.emit({t:'participant_assigned',role,actor_id:actor.id,actor_name:actor.name,reason});
   }
   advance(){
     if(this.finished||this.pending)return false;
     if(!this.events.length){
       const s=this.config.scenario,source=s.source;
       this.emit({t:'ticket_opened',ticket:source?.case||this.config.id,property:this.config.property,issue:this.config.issue||s.issue||s.title,mode:'sim',
-        controls:this.config.controls,participants:this.config.participants,source:'Deterministic browser simulation',
+        controls:this.config.controls,participants:structuredClone(this.config.participants),source:'Deterministic browser simulation',
         provenance:source?{...source,kind:'public_case_simulation',source:source.url}: {kind:'synthetic_simulation',source:'Village scenario',case:s.id}});
+      this.assign('operator');
       this.emit({t:'actor_message',role:'tenant',body:this.config.issue||s.issue||s.title,source:source?'Public case intake · adapted to village':'Synthetic intake'});return true;
     }
     const s=this.plan[this.index];
@@ -113,6 +152,7 @@ export class Simulation {
       if(s.requires.some(id=>!this.evidence[id]))throw new Error('Dispatch requires approval, provider and access evidence.');
       this.effect(s.action,'contractor','Simulated work order issued after approval and confirmed access');this.index++;return true;
     }
+    this.assign(s.role);
     this.status(s.stage,s.role,s.prompt);
     if(s.op==='block_payment_change')this.emit({t:'gate',tool:'update_payment_details',verdict:'deny',reason:'Unverified payment diversion blocked by simulation rule',rules:['SIM-NO-PAYMENT-CHANGE']});
     else if(s.op)this.effect(s.op,s.role,s.prompt);

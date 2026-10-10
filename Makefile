@@ -29,6 +29,7 @@ lint:
 	node --check demo/web/village.js
 	node --check demo/web/model.js
 	node --check demo/web/simulation.js
+	node --check demo/web/workspace.js
 	node --check demo/web/sw.js
 	node --check demo/web/insights.js
 	node --check demo/web/insights-model.js

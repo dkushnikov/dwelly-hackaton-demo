@@ -375,3 +375,149 @@ From `.deps/lettings-ops-agent`:
 ```
 
 The initial sandboxed update and lazy fetch of upstream test blobs failed with `Could not resolve host: github.com`. Retrying with approved network access succeeded. The upstream suite and demo bridge tests use scripted providers; paid LLM behavior and a deployed live episode remain unverified.
+
+## Assign participants within the case — 2026-10-10
+
+Removed contractor/operator identity selectors from new-case setup. Role controls remain independent. New simulations route an operator at intake and assign a contractor by trade when the case reaches provider selection. Assignment is an auditable event, separate from dispatch. PM-017 closes without a contractor. Existing saved casts are preserved.
+
+```sh
+node --test tests/*.test.mjs
+make lint
+make build
+.venv/bin/python -m pytest -q -c pyproject.toml tests --agent-root=.deps/lettings-ops-agent
+```
+
+```text
+ℹ tests 27
+ℹ pass 27
+ℹ fail 0
+All checks passed!
+Deployment archive: /Users/dkushnikov/Documents/ChatGPT/Dwelly Hackathon Demo/artifacts/lettings-village-static.zip (120481 bytes)
+60 passed in 3.35s
+```
+
+Regression checks cover no contractor assignment/turn in PM-017, approval refusal before selection, trade and operator routing, manual control of the chosen provider, immutable intake history, export/replay of assignments, restoration before/after assignment, legacy casts and invalid imported assignment events.
+
+Browser checks on `127.0.0.1:8787`: nine existing sessions restored; new PM-017 with the contractor set to **You** reached Success and displayed **Contractor: not involved**. In a new PM-021, the landlord's manual approval preceded selection of SecureFast Locksmiths; its manual provider turn survived reload. Completing its provider and completion turns reached Success. Console warnings/errors: `[]`. The updated launch form was left open. Screenshot: `artifacts/automatic-participant-routing.png`.
+
+## People filters, Homes, reset/undo and Replay chooser — 2026-10-10
+
+```sh
+make test-agent
+node --test tests/*.test.mjs
+make lint
+make build
+git diff --check
+```
+
+```text
+63 passed in 3.68s
+ℹ tests 34
+ℹ pass 34
+ℹ fail 0
+All checks passed!
+Deployment archive: /Users/dkushnikov/Documents/ChatGPT/Dwelly Hackathon Demo/artifacts/lettings-village-static.zip (126951 bytes)
+```
+
+The first directory test exposed an ambiguous expectation: unquoted `richmond road` also matches `Kew Road, Richmond`. Search now supports quoted phrases; tests distinguish the two-word search from the exact `"Richmond Road"` phrase. The final JavaScript run passed all 34 tests. Python checks include same-origin/confirmation requirements, cancellation of a pending live turn, journal preservation, reset notification and preservation of sessions created concurrently with cancellation. Storage tests cover scoped clearing, persistent undo, restoration of a pending simulation, BI reviews, quota failure before clearing, rollback after partial removal and rejection of foreign storage keys.
+
+Browser reset tests used a separate origin, `127.0.0.1:8788`, leaving the user's existing `8787` sessions intact:
+
+- Homes search `sarah p-004` selected one property; Report issue preselected P-004.
+- People combined Home P-004, You and `sarah` into one result. Contractor + `plumber` returned two providers. Same-name tenants remained distinct by home.
+- Replay first displayed instructions, four built-in recordings and an explicit file button. An invalid JSONL uploaded through the system file chooser produced an inline error; the file chooser tool was unusually slow but completed. A built-in recorded run started successfully.
+- Sessions-only reset cleared a pending manual simulation and a replay. After reload the board was empty and Undo remained available. Undo restored both cases and the exact landlord prompt, paused.
+- Full reset cleared a test BI review and settings. Undo restored the snoozed review and the applied £45/hour rate. The browser tool's initial programmatic fill did not commit the rate; keyboard input and the resulting £45/h KPI were verified before the reset/undo assertion.
+- At 390×844, document width was 375 and People dialog width was 358: no horizontal overflow. The viewport override was reset.
+- Console warnings/errors: `[]`. The test tab and port 8788 server were closed. The original tab was refreshed and opened on Homes; its eleven prior simulations remained available.
+
+Screenshots: `artifacts/homes-directory.png`, `artifacts/people-filters.png`. Lint and the deployment archive were rebuilt after the final label/error-display polish. No live paid-provider episode or deployment was performed.
+
+## House signals, directory landmarks and expanded map — 2026-10-10
+
+```sh
+node --test tests/*.test.mjs
+make lint
+make build
+git diff --check
+```
+
+```text
+ℹ tests 37
+ℹ pass 37
+ℹ fail 0
+All checks passed!
+Deployment archive: /Users/dkushnikov/Documents/ChatGPT/Dwelly Hackathon Demo/artifacts/lettings-village-static.zip (129445 bytes)
+```
+
+Three new tests cover home isolation, multiple cases, empty/active/success/finished states, manual-turn and review priority, recorded prompts and cancellation without fabricated success. No backend changes were needed in this iteration; the previously recorded Python results remain the latest backend verification.
+
+Browser checks used an isolated origin, `127.0.0.1:8789`, after the initial landlord shortcut check on the user's tab. Landlords selected four people; Contractors selected seven. Starting the fixed pack produced exactly four sessions: two at P-001, one at P-002 and one at P-006. Other homes displayed No cases. A separate manual PM-017 produced Your turn at P-002 even with another case at that home. Completed automatic cases changed their signals to success.
+
+The expanded map rendered at a 3072-pixel backing width; native text overlays stayed readable, and Escape/the exit control restored the workspace. People dialogs worked above the expanded map. At a 390×844 viewport, document width was 390 and status labels stayed inside the viewport; the override was reset. Browser console warnings/errors: `[]`. Fullscreen availability depends on the browser; the viewport-filling fallback uses the same map layout. Screenshot: `artifacts/village-fullscreen.png`.
+
+## Public case interface review — 2026-10-10
+
+The read-only corpus at revision `9bcdca585955dfb930005ed742572606e68f5688` contains 50 cases, 1,505 events and 16 PDFs. All index statuses are Completed. Event channels: Email 506, Call 74, SMS 54, Note 192, Update 443, Hold 236. The review uses each overview/outcome plus selected substantive journal events, extracts PDF text with `pdftotext -layout`, and visually checks PM-020 report page 4 and the PM-007 tax invoice with `pdftoppm`.
+
+`docs/CASE_REVIEW.md` has 50 individually numbered reviews, a ranked backlog, acceptance criteria, scenario priorities and a proposed agent/UI data contract. A local validation script confirmed all 50 unique case headings in order and all 67 source file references exist. Findings include PM-020 report/email disagreement, PM-007 quote/invoice difference, PM-032 overview/history amount disagreement and PM-050 alternative quotes plus a conflicting later amount. These are source-data inconsistencies, not measured agent failures. No run of the agent across these 50 cases was performed.
+
+## Public onboarding and release verification — 2026-10-10
+
+README now includes a clone-to-launch sequence, a direct upstream agent link, runtime/test prerequisites, isolated live setup, static preview and hosting choices. The deployment guide documents Pages Git integration and the separate same-origin Docker/Tunnel deployment. All 67 case-review references now use the pinned public corpus revision on GitHub.
+
+Commands and observed results:
+
+```text
+make test-agent
+63 passed in 3.40s
+ℹ tests 37
+ℹ pass 37
+ℹ fail 0
+
+make lint
+All checks passed!
+```
+
+All eight frontend JavaScript syntax checks also completed successfully. The dependency check confirmed both pinned and local agent revisions are `475337052375be88e5b6c8eafa5ec4f709042133`; no agent update was made for this release.
+
+```text
+make build
+Interactive simulation: 3 source-linked public cases, role control and browser-local saved sessions; no API calls.
+BI: 50 public corpus cases + 84 clearly labelled synthetic portfolio jobs; local review feedback.
+Deployment archive: /Users/dkushnikov/Documents/ChatGPT/Dwelly Hackathon Demo/artifacts/lettings-village-static.zip (129445 bytes)
+
+git diff --check
+(no output; exit 0)
+```
+
+A fresh virtual environment was created inside ignored `artifacts/readme-smoke` using Python 3.14.7. It installed only the package's base dependencies, then ran the installed package from that directory, outside the source import path:
+
+```sh
+.venv/bin/python -m venv artifacts/readme-smoke/.venv
+artifacts/readme-smoke/.venv/bin/python -m pip install --no-cache-dir .
+# From artifacts/readme-smoke:
+.venv/bin/python -m demo.server --replay --port 8789 --runs runs
+```
+
+```text
+Successfully installed click-8.5.0 h11-0.16.0 lettings-village-0.1.0 uvicorn-0.43.0
+Lettings Village → http://127.0.0.1:8789 · simulation + recorded runs / no API calls
+Clean-install health: {"ok": true, "live": false, "protocol": 1, "message": "Simulation and replay · no API calls", "max_sessions": 32}
+Clean-install HTTP smoke: 10 routes return 200; assets match working source
+```
+
+The HTTP smoke check covered the index, app, workspace, simulator, catalog, public scenarios, both BI datasets, fraud recording and service worker. No agent checkout or provider credential was used by this replay server. The temporary server was stopped after the check; the user's main port 8787 server was left running.
+
+Documentation/archive validation:
+
+```text
+README.md: English text; 15 local links resolve
+docs/DEPLOYMENT.md: English text; 2 local links resolve
+CASE_REVIEW.md: 67 pinned, portable source URLs; no local paths
+Static output: 24 files match the deployment archive; no extra files
+```
+
+Initial sandboxed commands could not resolve `github.com` (`git ls-remote origin refs/heads/main`) or `pypi.org` (`artifacts/readme-smoke/.venv/bin/python -m pip install .`). The fresh server also initially failed to bind localhost with `[Errno 1] operation not permitted`. Network installation, remote verification and localhost checks succeeded after tool-level sandbox escalation. No credentials were read or copied.
+
+These checks do not verify a paid model episode or a deployed Cloudflare/container environment. The advertised minimum Python version is 3.12; this fresh-install check used the available Python 3.14.7 runtime.

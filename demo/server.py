@@ -97,6 +97,20 @@ class Application:
                 "message": "Real agent connected" if self.engine else "Simulation and replay · no API calls", "max_sessions": self.max_sessions})
         if method == "GET" and path == "/api/sessions":
             return await self.json(send, 200, {"cursor": self.bus.cursor, "sessions": [s.snapshot() for s in self.sessions.values()]})
+        if method == "POST" and path == "/api/reset":
+            if (await self.body(receive)).get("confirm") is not True:
+                return await self.json(send, 400, {"error": "Confirm stopping and clearing the live sessions"})
+            sessions = list(self.sessions.values())
+            tasks = [s.task for s in sessions if s.task and not s.task.done()]
+            for task in tasks:
+                task.cancel()
+            await asyncio.gather(*tasks, return_exceptions=True)
+            for session in sessions:
+                session.finish("Session stopped by demo reset; journal preserved")
+                self.sessions.pop(session.id, None)
+            ids = [s.id for s in sessions]
+            self.bus.publish({"v": 1, "t": "workspace_reset", "session_ids": ids})
+            return await self.json(send, 200, {"ok": True, "cleared": ids, "journals_preserved": True})
         if method == "GET" and path == "/api/events":
             query = parse_qs(scope.get("query_string", b"").decode())
             headers = dict(scope["headers"])

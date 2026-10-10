@@ -96,3 +96,48 @@ def test_sse_reconnect_uses_cursor_and_cleans_up(tmp_path):
         assert b"id: 2" in text
         assert b"id: 1" not in text
     asyncio.run(check())
+
+
+def test_reset_requires_confirmation_and_same_origin(tmp_path):
+    app = Application(runs=tmp_path)
+    assert asyncio.run(request(app, "/api/reset", "POST"))[0] == 400
+    headers = [(b"host", b"localhost"), (b"origin", b"https://attacker.invalid"), (b"content-type", b"application/json")]
+    assert asyncio.run(request(app, "/api/reset", "POST", {"confirm": True}, headers))[0] == 403
+
+
+def test_reset_stops_waiting_sessions_preserves_journals_and_broadcasts(tmp_path):
+    async def check():
+        app = Application(runs=tmp_path)
+        session = Session({}, tmp_path, app.bus.publish)
+        app.sessions[session.id] = session
+        session.emit({"t": "ticket_opened", "property": "P-001"})
+        session.task = asyncio.create_task(session.ask("landlord", "Approve?"))
+        await asyncio.sleep(0)
+        assert session.pending
+        status, body, _ = await request(app, "/api/reset", "POST", {"confirm": True})
+        assert status == 200 and json.loads(body)["cleared"] == [session.id]
+        assert session.task.cancelled() and session.finished and session.pending is None
+        assert not app.sessions
+        assert app.bus.events[-1]["t"] == "workspace_reset"
+        assert app.bus.events[-1]["session_ids"] == [session.id]
+        status, journal, _ = await request(app, f"/api/sessions/{session.id}/recording")
+        assert status == 200 and json.loads(journal.splitlines()[-1])["t"] == "episode_end"
+        assert json.loads((await request(app, "/api/sessions"))[1])["sessions"] == []
+    asyncio.run(check())
+
+
+def test_reset_does_not_clear_sessions_created_while_cancellation_finishes(tmp_path):
+    async def check():
+        app = Application(runs=tmp_path)
+        old, new = Session({}, tmp_path), Session({}, tmp_path)
+        app.sessions[old.id] = old
+        async def running():
+            try:
+                await asyncio.Event().wait()
+            finally:
+                app.sessions[new.id] = new
+        old.task = asyncio.create_task(running())
+        await asyncio.sleep(0)
+        assert (await request(app, "/api/reset", "POST", {"confirm": True}))[0] == 200
+        assert list(app.sessions) == [new.id] and not new.finished
+    asyncio.run(check())

@@ -20,6 +20,7 @@
 | `GET /api/events?after=<cursor>` | Один SSE-поток всех тикетов |
 | `POST /api/sessions/<id>/message` | Ответ на ожидающий player turn |
 | `POST /api/sessions/<id>/cancel` | Прервать run и записать episode_end |
+| `POST /api/reset` | With `{confirm: true}`, stop and clear current live sessions, retain journals, and broadcast their IDs to connected viewers |
 | `GET /api/sessions/<id>/recording` | JSONL, доступен и после перезапуска |
 
 Создание:

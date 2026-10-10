@@ -29,6 +29,8 @@ test('malformed recording is rejected before playback',()=>{
   const opening={v:1,seq:1,t:'ticket_opened',at_ms:0};assert.throws(()=>parseReplay([opening,opening].map(JSON.stringify).join('\n')));
   assert.throws(()=>parseReplay([opening,{v:1,seq:2,t:'status',at_ms:1,red_flags:[null]}].map(JSON.stringify).join('\n')));
   assert.throws(()=>parseReplay([opening,{v:1,seq:2,t:'gate',at_ms:1,rules:'not-an-array'}].map(JSON.stringify).join('\n')));
+  assert.throws(()=>parseReplay([opening,{v:1,seq:2,t:'participant_assigned',at_ms:1,role:'contractor'}].map(JSON.stringify).join('\n')));
+  assert.throws(()=>parseReplay([opening,{v:1,seq:2,t:'participant_assigned',at_ms:1,role:'__proto__',actor_id:'bad',actor_name:'bad'}].map(JSON.stringify).join('\n')));
 });
 test('untrusted content stays literal and read gates do not clutter the timeline',()=>{
   const ticket=createTicket('a','replay');reduceEvent(ticket,{v:1,seq:1,t:'actor_message',body:'<img src=x onerror=alert(1)>'});

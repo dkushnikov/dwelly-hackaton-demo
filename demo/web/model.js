@@ -8,6 +8,7 @@ export function reduceEvent(ticket, event) {
   if(event.v !== 1 || !Number.isInteger(event.seq) || ticket.seen.has(event.seq)) return false;
   ticket.seen.add(event.seq); ticket.events.push(event);
   if(event.t === 'ticket_opened') {ticket.issue=event.issue;ticket.property=event.property;ticket.provenance=event.provenance;ticket.controls=event.controls||ticket.controls;ticket.participants=event.participants||ticket.participants;}
+  if(event.t === 'participant_assigned') ticket.participants={...ticket.participants,[event.role]:{id:event.actor_id,name:event.actor_name}};
   if(event.t === 'agent_thinking') {ticket.owner='agency';ticket.pending=null;}
   if(event.t === 'status') {ticket.status=event;ticket.owner=event.owner;ticket.stage=event.stage;}
   if(event.t === 'awaiting_player') {ticket.pending=event;ticket.owner=event.role;}
@@ -20,7 +21,7 @@ export function metrics(tickets) {
   return {active:values.filter(t=>!t.ended).length,humans:values.filter(t=>t.pending || (!t.ended && ['operator','landlord','tenant','contractor'].includes(t.owner))).length,
     effects:values.reduce((n,t)=>n+t.events.filter(e=>e.t==='effect'&&!e.deduplicated).length,0)};
 }
-const kinds = new Set(['ticket_opened','actor_message','agent_thinking','playbook','gate','tool_result','effect','status','awaiting_player','time_passes','episode_end','withheld','error','queued','terminal','nudge','reconciled','time_nudge','director_usage']);
+const kinds = new Set(['ticket_opened','participant_assigned','actor_message','agent_thinking','playbook','gate','tool_result','effect','status','awaiting_player','time_passes','episode_end','withheld','error','queued','terminal','nudge','reconciled','time_nudge','director_usage']);
 export function parseReplay(text) {
   if(text.length>2_000_000) throw new Error('Recording is larger than 2 MB.');
   const lines=text.trim().split('\n');
@@ -45,9 +46,10 @@ export function parseReplay(text) {
     }
     if(e.suggested!==undefined&&!strings(e.suggested))throw new Error('Invalid suggested replies.');
     if(e.t==='episode_end' && e.summary!==undefined&&!object(e.summary))throw new Error('Invalid run summary.');
+    if(e.t==='participant_assigned'&&(!['contractor','operator'].includes(e.role)||typeof e.actor_id!=='string'||!e.actor_id||typeof e.actor_name!=='string'||!e.actor_name))throw new Error('Invalid participant assignment.');
     previous=e.seq;previousTime=e.at_ms;
   }
   if(!events.length || events[0].t!=='ticket_opened') throw new Error('Recording must begin with ticket_opened.');
   return events;
 }
-export function shouldShow(event){return ['actor_message','playbook','effect','withheld','status','error','episode_end','awaiting_player','time_passes'].includes(event.t) || (event.t==='gate' && event.reason!=='read');}
+export function shouldShow(event){return ['participant_assigned','actor_message','playbook','effect','withheld','status','error','episode_end','awaiting_player','time_passes'].includes(event.t) || (event.t==='gate' && event.reason!=='read');}

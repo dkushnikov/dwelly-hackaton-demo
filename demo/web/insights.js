@@ -145,5 +145,15 @@ export async function createIntelligence(root,{getTickets,openTicket,dialog}){
     if(tab==='portfolio')renderPortfolio();if(tab==='agents')renderAgents();if(tab==='review')renderReview();if(tab==='method')renderMethod();
   }
   setTypes();render();
-  return {refreshOps(){if(tab==='agents'&&!root.hidden)render();}};
+  function restore(state){
+    if(state.imported)datasets.imported=validateLedger(state.imported);else delete datasets.imported;
+    for(const option of [...sourceField.select.options])if(option.value==='imported')option.remove();
+    if(datasets.imported){const option=node('option','','Imported ledger');option.value='imported';sourceField.select.append(option);}
+    source=datasets[state.source]?state.source:'public_corpus';type=state.type||'all';tab=tabsById.has(state.tab)?state.tab:'portfolio';
+    rate=Number.isFinite(state.rate)?state.rate:rules.hourly_rate_gbp;page=state.page||0;reviews=state.reviews||{};
+    sourceField.select.value=source;rateInput.value=String(rate);setTypes();render();
+  }
+  return {refreshOps(){if(tab==='agents'&&!root.hidden)render();},
+    snapshot(){return structuredClone({source,type,tab,rate,page,reviews,imported:datasets.imported||null});},
+    reset(){restore({});},restore};
 }

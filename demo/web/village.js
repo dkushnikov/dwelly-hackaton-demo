@@ -11,15 +11,53 @@ const destinations={agency:{x:367,y:253},operator:{x:400,y:255},landlord:{x:666,
 const palette={grass:'#dce4bb',grassDark:'#b8ce96',path:'#e8dcb4',pathEdge:'#d4c89e',tree:'#8ba36d',trunk:'#9b8561'};
 function random(seed){let a=seed;return()=>{a=(a*1664525+1013904223)>>>0;return a/4294967296;};}
 
+// A finished recording is not proof of a resolved maintenance case.
+export function homeSignal(tickets,property){
+  const cases=tickets.filter(t=>t.property===property),active=cases.filter(t=>!t.ended);
+  const waiting=active.filter(t=>t.pending&&t.mode!=='replay').length;
+  const review=cases.filter(t=>t.ended&&t.outcome==='needs_review').length;
+  let state='quiet',label='No cases';
+  if(waiting){state='attention';label=`Your turn · ${waiting}`;}
+  else if(review){state='attention';label=`Review · ${review}`;}
+  else if(active.length){state='active';label=`${active.length} active`;}
+  else if(cases.length&&cases.every(t=>t.outcome==='success')){state='success';label=`${cases.length} success`;}
+  else if(cases.length)label=`${cases.length} finished`;
+  const recorded=cases.filter(t=>t.mode==='replay').length;
+  return {state,label,detail:`${property}: ${cases.length} total cases, ${active.length} active, ${waiting} waiting for you, ${review} need review${recorded?`, ${recorded} recorded runs`:''}. Open home details.`};
+}
+
 export class Village {
-  constructor(canvas,onSelect){
+  constructor(canvas,onSelect,onPeople){
     this.canvas=canvas;this.ctx=canvas.getContext('2d');this.onSelect=onSelect;this.selected=null;this.tickets=[];this.particles=[];this.clock=0;
     this.reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.background=document.createElement('canvas');this.background.width=768;this.background.height=480;
-    this.drawTerrain(this.background.getContext('2d'));
+    this.overlays=document.createElement('div');this.overlays.className='map-overlays';canvas.after(this.overlays);
+    this.homeButtons=HOUSES.map(h=>{
+      const node=document.createElement('button');node.type='button';node.className='map-home';
+      node.style.cssText=`left:${(h.x-54)/768*100}%;top:${(h.y-60)/480*100}%;width:${108/768*100}%;height:${122/480*100}%`;
+      const signal=document.createElement('span');signal.className='home-signal';node.append(signal);
+      node.addEventListener('click',()=>onSelect(h.id));this.overlays.append(node);return {id:h.id,node,signal};
+    });
+    for(const [role,label,x,y,height] of [['landlord','Landlords',617,60,134],['contractor','Contractors',622,299,131]]){
+      const node=document.createElement('button');node.type='button';node.className='map-group';
+      node.style.cssText=`left:${x/768*100}%;top:${y/480*100}%;width:${108/768*100}%;height:${height/480*100}%`;
+      node.setAttribute('aria-label',`${label} · open People`);node.title=`${label} meeting place · open the filtered people directory`;
+      const caption=document.createElement('span');caption.textContent=`${label} ↗`;node.append(caption);node.addEventListener('click',()=>onPeople(role));this.overlays.append(node);
+    }
+    this.update([],null);this.resize();
+    this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(canvas);
+    window.addEventListener('resize',()=>this.resize());
     canvas.addEventListener('click',event=>{const r=canvas.getBoundingClientRect();const x=(event.clientX-r.left)*768/r.width,y=(event.clientY-r.top)*480/r.height;const house=HOUSES.find(h=>Math.abs(x-h.x)<55 && y>h.y-55 && y<h.y+57);if(house)onSelect(house.id);});
     canvas.addEventListener('keydown',e=>{if(e.key==='Enter')onSelect(this.selected?.property || 'P-001');});
     this.last=performance.now();requestAnimationFrame(t=>this.frame(t));
+  }
+  resize(){
+    const width=this.canvas.getBoundingClientRect().width;if(!width)return;
+    const scale=Math.min(4,Math.max(1,Math.ceil(width*(window.devicePixelRatio||1)/768)));
+    if(this.scale===scale)return;this.scale=scale;
+    this.canvas.width=this.background.width=768*scale;this.canvas.height=this.background.height=480*scale;
+    this.ctx.setTransform(scale,0,0,scale,0,0);this.ctx.imageSmoothingEnabled=false;
+    const terrain=this.background.getContext('2d');terrain.setTransform(scale,0,0,scale,0,0);terrain.imageSmoothingEnabled=false;this.drawTerrain(terrain);
   }
   rect(ctx,x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),w,h);}
   label(ctx,text,x,y,bg='#f7f3dd',color='#667552'){
@@ -107,12 +145,11 @@ export class Village {
     const x=669,y=110;this.rect(ctx,x-43,y+40,91,7,'#82976520');this.rect(ctx,x-40,y-11,80,52,'#c3b7ba');this.rect(ctx,x+29,y-10,11,51,'#b0a4ac');
     for(let i=0;i<8;i++)this.rect(ctx,x-44+i*3,y-12-i*3,88-i*6,3,'#8e8694');this.rect(ctx,x-36,y+13,73,3,'#ede1c9');
     for(const xx of [-28,17]){this.window(ctx,x+xx,y-3);this.window(ctx,x+xx,y+23);}
-    this.rect(ctx,x-6,y+20,14,21,'#8a8290');this.rect(ctx,x-3,y+21,8,8,'#c6c1b4');this.label(ctx,'LANDLORDS',x,y+74,'#f2e9e4','#94808f');
+    this.rect(ctx,x-6,y+20,14,21,'#8a8290');this.rect(ctx,x-3,y+21,8,8,'#c6c1b4');
   }
   yard(ctx){
     const x=674,y=329;this.rect(ctx,x-40,y-17,78,34,'#b2c4c0');this.rect(ctx,x-44,y-23,86,8,'#7c9290');this.rect(ctx,x-42,y-25,82,3,'#9cae9e');
     this.rect(ctx,x-30,y-8,24,25,'#8b9d94');this.rect(ctx,x+2,y-8,24,25,'#8b9d94');for(let i=0;i<5;i++){this.rect(ctx,x-29,y-5+i*4,22,1,'#a3b4a6');this.rect(ctx,x+3,y-5+i*4,22,1,'#a3b4a6');}
-    this.label(ctx,'CONTRACTOR YARD',x,y+88,'#e6ece2','#748b81');
     this.rect(ctx,x+34,y+11,7,12,'#b1a17c');this.rect(ctx,x+28,y+14,6,9,'#beaf8d');
   }
   person(ctx,x,y,index,moving=false,highlight=false){
@@ -141,9 +178,15 @@ export class Village {
     }else return;
     this.particles.push({source,target,kind,start:performance.now(),duration:kind==='van'?4000:2000});
   }
-  update(tickets,selected){this.tickets=tickets;this.selected=selected;}
+  update(tickets,selected){
+    this.tickets=tickets;this.selected=selected;
+    for(const {id,node,signal} of this.homeButtons){
+      const status=homeSignal(tickets,id);node.dataset.state=status.state;node.title=status.detail;node.setAttribute('aria-label',status.detail);
+      node.classList.toggle('selected',selected?.property===id);signal.textContent=status.label;
+    }
+  }
   frame(now){
-    this.clock=now;const ctx=this.ctx;ctx.clearRect(0,0,768,480);ctx.drawImage(this.background,0,0);
+    this.clock=now;const ctx=this.ctx;ctx.clearRect(0,0,768,480);ctx.drawImage(this.background,0,0,768,480);
     HOUSES.forEach(h=>this.house(ctx,h,this.selected?.property===h.id));this.agency(ctx,now);this.estate(ctx);this.yard(ctx);
     const owner=this.selected?.owner;
     HOUSES.forEach((h,i)=>{let dx=this.reduceMotion?0:Math.sin(now/2800+i)*9;this.person(ctx,h.x-20+dx,h.y+32,i,true,owner==='tenant'&&this.selected?.property===h.id);});
@@ -151,7 +194,6 @@ export class Village {
     for(let i=0;i<7;i++)this.person(ctx,635+(i%4)*21,370+Math.floor(i/4)*19,i+10,false,owner==='contractor');
     for(let i=0;i<4;i++)this.person(ctx,322+i*22,257+(i%2)*5,i+18,false,owner==='agency'||owner==='operator');
     if(!this.particles.some(p=>p.kind==='van'))this.van(ctx,670,347);
-    for(const h of HOUSES){const active=this.tickets.filter(t=>t.property===h.id&&!t.ended);if(active.length)this.bubble(ctx,String(active.length),h.x-28,h.y-51);}
     for(const p of this.particles){const fraction=Math.min(1,(now-p.start)/p.duration);const x=p.source.x+(p.target.x-p.source.x)*fraction,y=p.source.y+(p.target.y-p.source.y)*fraction-Math.sin(fraction*Math.PI)*(p.kind==='van'?0:35);
       if(p.kind==='van')this.van(ctx,x,y);else{this.rect(ctx,x-6,y-4,12,8,'#fffbdf');this.rect(ctx,x-6,y-4,12,1,'#b69b63');this.rect(ctx,x-5,y-3,2,2,'#cbb484');this.rect(ctx,x+3,y-3,2,2,'#cbb484');this.rect(ctx,x-3,y-1,6,1,'#cbb484');}}
     this.particles=this.particles.filter(p=>now-p.start<p.duration);

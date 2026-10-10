@@ -9,16 +9,16 @@ from pathlib import Path
 
 WEB = Path(__file__).resolve().parents[1] / "demo/web"
 SELECTION = [
-    (21, "public-keys", "P-001", "keys", "C-005", [1, 6, 20, 25, 28, 29]),
-    (17, "public-fan", "P-002", "fan", "C-003", [1, 8, 11, 14]),
-    (25, "public-warranty", "P-006", "warranty", "C-006", [1, 6, 20, 22, 42, 44, 50, 62, 64]),
+    (21, "public-keys", "P-001", "keys", [1, 6, 20, 25, 28, 29]),
+    (17, "public-fan", "P-002", "fan", [1, 8, 11, 14]),
+    (25, "public-warranty", "P-006", "warranty", [1, 6, 20, 22, 42, 44, 50, 62, 64]),
 ]
 
 
 def build(root):
     revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     result = []
-    for number, sid, prop, kind, contractor, selected in SELECTION:
+    for number, sid, prop, kind, selected in SELECTION:
         directory = root / "Property Management" / f"{number:03}"
         index, history = (directory / "index.md").read_bytes(), (directory / "history.md").read_bytes()
         text = index.decode()
@@ -27,7 +27,7 @@ def build(root):
         case_id = f"PM-{number:03}"
         base = f"https://github.com/DwellyOrg/HackatonPublicCases/blob/{revision}/Property%20Management/{number:03}"
         result.append({"id": sid, "title": text.splitlines()[0].split(": ", 1)[1], "property": prop,
-            "kind": kind, "contractor": contractor, "tag": f"Public case · {case_id}", "color": "sage",
+            "kind": kind, "tag": f"Public case · {case_id}", "color": "sage",
             "issue": section("Initial request"), "description": section("Outcome"),
             "source": {"case": case_id, "track": "Property Management", "url": base + "/index.md",
                 "history_url": base + "/history.md", "revision": revision,

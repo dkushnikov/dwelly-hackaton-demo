@@ -2,21 +2,29 @@
 
 A browser demo for the Dwelly AI Hackathon: **6 homes, 21 participants, concurrent maintenance stories and an auditable view of each agent decision**.
 
+Repositories: [Village demo](https://github.com/dkushnikov/dwelly-hackaton-demo) · [Lettings operations agent](https://github.com/dkushnikov/lettings-ops-agent) · [Public hackathon cases](https://github.com/DwellyOrg/HackatonPublicCases). The demo and agent have separate source trees and environments. Until a repository is public, cloning it requires GitHub access.
+
+[Case-by-case interface review](docs/CASE_REVIEW.md) analyses all 50 public Property Management examples, with implementation priorities, source references and acceptance criteria (Russian).
+
 Tenants, landlords, contractors and Dwelly operators share a pixel village. Messages appear when they are recorded; a van leaves only after a confirmed work order. Select a story to inspect its evidence, policy gate, next owner, status and human handover.
 
 ## Quick start
 
-Requirements: Python 3.12+ and `uvicorn==0.43.0`. Node.js is needed only for frontend tests. There are no npm dependencies.
+Requirements: Git, Python 3.12+ (available as `python3`) and a modern browser. Commands below use a macOS/Linux shell; `make` is optional for running the app. The Python install includes the pinned server dependency, `uvicorn==0.43.0`. Node.js 22+ is needed only for frontend tests/lint or the optional Wrangler deployment CLI; the application has no npm dependencies.
 
 ```sh
+git clone https://github.com/dkushnikov/dwelly-hackaton-demo.git
+cd dwelly-hackaton-demo
 python3 -m venv .venv
-.venv/bin/python -m pip install '.[dev]'
+.venv/bin/python -m pip install .
 make game-replay
 ```
 
-Make automatically uses this project's `.venv/bin/python` when available; otherwise it uses `python3`. Override it with `PYTHON=/path/to/python` if needed.
+No agent checkout or API key is needed for this mode. Without Make, run `.venv/bin/python -m demo.server --replay`. Stop the server with **Ctrl+C**. If port 8787 is occupied, use `make game-replay ARGS='--port 8788'` and open that port instead.
 
-Open <http://127.0.0.1:8787>. **Start the village** runs three complete public-case simulations plus a fraud scenario together. **Stories** opens simulations and authentic recorded decisions; **Cases** lists current sessions; **People** introduces the participants. Click a home to meet its residents. **⛶** enables presenter mode.
+Make automatically uses this project's `.venv/bin/python` when available; otherwise it uses `python3`. Override it with `PYTHON=/path/to/python` if needed. A health check is available at `http://127.0.0.1:8787/api/health`; this mode returns `"live": false`.
+
+Open <http://127.0.0.1:8787>. **Start the village** adds a fixed pack of four simulations: PM-021, PM-017, PM-025 and fraud. It does not choose random tests or clear existing cases. **Stories** opens simulations and authentic recorded decisions; **Cases** lists current sessions; **People** introduces the participants. Each home has a case-status light and count. Click a home for details, or the landlords/contractors building for a filtered People directory. **Full screen** expands the map (Escape exits); the header's **⛶** enables the separate presenter layout. The canvas adapts its resolution to the display density.
 
 Direct fraud replay: <http://127.0.0.1:8787/?replay=fraud&presenter=1>.
 
@@ -26,7 +34,7 @@ The static `dist/` build runs on ordinary hosting without Python. Canvas, JavaSc
 
 ## An isolated copy of the agent
 
-The demo uses its **own Git clone** at `.deps/lettings-ops-agent`. It does not depend on `/Users/dkushnikov/Code/lettings-ops-agent`, that working tree's uncommitted changes, or its Python environment.
+The demo uses its **own Git clone** of [lettings-ops-agent](https://github.com/dkushnikov/lettings-ops-agent) at `.deps/lettings-ops-agent`. It does not depend on the agent team's working tree, its uncommitted changes, or its Python environment.
 
 [agent-source.json](agent-source.json) records the upstream repository, update branch and exact commit. The clone is ignored by this repository; the small lock file is versioned. Runtime modules, playbooks, fixtures and public data are checked out with Git sparse checkout. Workstation credentials, hooks and agent instruction files are excluded from the working copy.
 
@@ -46,13 +54,15 @@ Stop live sessions before updating, run `make test-agent`, review the `agent-sou
 | | Simulation | Recorded runs | Live agent |
 |---|---|---|---|
 | Decisions | Deterministic browser simulator | Authentic saved baseline runs | Pinned `CaseAgent.run` |
-| Participants | Each named participant can be AI or You | Recorded messages | Each role can be automatic or manual |
+| Participants | Each role can be AI or You; assignments happen within the case | Recorded messages | Each role can be automatic or manual |
 | AI meaning | Scripted personas, no model calls | Previously recorded model output | Real LLM agent; optional LLM personas |
 | World | Isolated simulated case | Recorded effects | Separate `MockAdapter` per ticket |
 | Persistence | This browser's local storage | Bundled/imported JSONL | Server journal; active sessions reconnect |
 | Credentials | None | None | Supplied to the agent process |
 
-**Cases** (`/#cases`) lists active, waiting, successful and other finished sessions, with search and an **Open case / Take your turn** action. **New case** works in simulation mode without an agent server. Choose the home, contractor and Dwelly operator, then set Tenant, Landlord, Contractor and Operator independently to **AI** or **You**. A single player can control several participants. These are local roleplay controls, not multi-user accounts.
+**Cases** (`/#cases`) lists active, waiting, successful and other finished sessions, with search and an **Open case / Take your turn** action. **New case** works in simulation mode without an agent server. Choose the home, then set Tenant, Landlord, Contractor and Operator independently to **AI** or **You**. The case routes the operator and selects a contractor only when needed; manual control begins when that role becomes involved. A single player can control several roles. These are local roleplay controls, not multi-user accounts.
+
+**Homes** (`/#homes`) lists all six properties with residents, landlords, case counts and shortcuts to report an issue or open a home's cases. **People** searches names, trades, addresses and IDs, with role, home and per-case AI/You filters. **Replay** first offers built-in recordings or a local Village JSONL/NDJSON export, up to 2 MB. **Reset demo** clears local sessions, optionally including BI reviews/imports/settings, with a persisted undo backup. Stopping connected live sessions is a separate explicit option; their journals remain available and execution cannot be resumed by Undo.
 
 Manual simulation turns require an explicit decision; optional notes are recorded as text and are not interpreted by a model. Declining approval, refusing access, incomplete work or rejected final checks keep the case open. Simulation success requires all workflow evidence; elapsed time alone cannot close a case. Simulations resume after a page reload, including a pending human turn. Export preserves the journal; importing it creates playback rather than a resumable simulation.
 
@@ -70,16 +80,23 @@ The original `pixel-village-demo.md` was a description of the intended experienc
 
 ## Run with the real agent
 
-Install the declared live dependencies in the demo's own environment and synchronize the source copy:
+After the quick-start setup, install the declared live dependencies in the demo's own environment and synchronize the source copy. Node.js 22+ is required for the compatibility test command:
 
 ```sh
 .venv/bin/python -m pip install '.[live,dev]'
 make agent-sync
 make test-agent
+```
+
+Before starting the live server, the process owner supplies `ANTHROPIC_API_KEY` through their secret manager to its environment. The application **does not load `.env` files**, accept keys from the browser or return them through the API. `LOA_MODEL`, `LOA_EFFORT`, `LOA_MAX_STEPS` and `LOA_CASE_TIMEOUT_S` retain their upstream meanings. The default model comes from the pinned agent's `Settings`.
+
+Stop the replay server if it uses the same port, then run:
+
+```sh
 make game
 ```
 
-The process owner supplies `ANTHROPIC_API_KEY` through their secret manager. The application **does not load `.env` files**, accept keys from the browser or return them through the API. `LOA_MODEL`, `LOA_EFFORT`, `LOA_MAX_STEPS` and `LOA_CASE_TIMEOUT_S` retain their upstream meanings. The default model comes from the pinned agent's `Settings`.
+Open `http://127.0.0.1:8787` again. Live sessions make paid provider calls; `make test-agent` uses a scripted model client and does not require a provider key. A healthy live server confirms that the integration is available, not that a paid model call has succeeded.
 
 In **Stories → Experience → Live agent**, assign each role independently to AI or You. The session waits whenever a manual role needs to reply. The legacy API still defaults operator escalation to a human; the new form makes every assignment explicit. Automatic operator replies remain untrusted evidence and cannot grant new policy authority. Player replies become `Artefact(trust="untrusted")`; they do not grant authority.
 
@@ -108,9 +125,12 @@ After a server restart, recordings remain available through `GET /api/sessions/<
 
 ## Tests and build
 
+Install test tools once and have Node.js 22+ available:
+
 ```sh
+.venv/bin/python -m pip install '.[dev]'
 make test             # Local tests; bridge tests skip without an agent root
-make test-agent       # All tests against the pinned dependency copy
+make test-agent       # All tests; first follow the live dependency/sync setup above
 make lint
 make build
 ```
@@ -118,6 +138,20 @@ make build
 Bridge tests use the real CaseAgent, PolicyGate and MockAdapter with a scripted LLM client, without provider calls. Tests cover blocked writes, real effect receipts, player barriers, refusal delivery, property grounding, session isolation, JSONL journals, SSE resume, deduplication, legacy fields, Host/Origin validation and path confinement. BI tests cover evidence, estimation, matched cohorts, missing data, import validation and feedback binding.
 
 `make build` produces `dist/` and `artifacts/lettings-village-static.zip` using an explicit file allowlist. Runtime sessions, imported private ledgers, local feedback, the agent clone and credentials are excluded.
+
+Preview exactly the static deployment, without the Python API:
+
+```sh
+python3 -m http.server 8788 --bind 127.0.0.1 --directory dist
+```
+
+Open `http://127.0.0.1:8788`, not `dist/index.html` via `file://`. Simulation, manual character control, recordings and Intelligence all work here; live LLM sessions require the agent server. Browser data belongs to each origin, so localhost and a deployed site have separate cases and feedback. For static hosting the build command can be just `python3 -m scripts.build`: it uses the standard library and needs no package install, Node.js or agent clone.
+
+## Hosting
+
+For a public demo, use **Cloudflare Pages** connected to this GitHub repository: production branch `main`, framework **None**, build command `python3 -m scripts.build`, output directory `dist`, repository root as the build root. This publishes the full browser simulation, Replay and Intelligence; it makes no LLM calls. Pages can build a private repository when granted access, so publication of the repository can happen separately. See [Cloudflare's Git integration guide](https://developers.cloudflare.com/pages/get-started/git-integration/).
+
+For the **live agent**, run the included Docker Compose stack on an always-on host and serve both the interface and API through a named Cloudflare Tunnel protected by Access. Keep its run volume persistent. This is a separate full application URL; the current client expects the API on the same origin. The [deployment guide](docs/DEPLOYMENT.md) includes setup commands, configuration, limitations and a launch checklist for both options.
 
 ## Deployment and handoff
 
@@ -131,4 +165,4 @@ Bridge tests use the real CaseAgent, PolicyGate and MockAdapter with a scripted 
 - [90-second presentation script](video/GAME_DEMO.md)
 - [Verification results and limitations](docs/VERIFICATION.md)
 
-Cloudflare access is not needed locally. Docker/Compose and origin configuration are prepared for live hosting; the static build and `wrangler.jsonc` support offline replay hosting. The live Compose configuration mounts `.deps/lettings-ops-agent` read-only by default. Run `make agent-sync` first. Public deployment and a complete real-provider live episode still require validation in the target environment.
+Cloudflare access is not needed locally. Docker/Compose and origin configuration are prepared for live hosting; the static build and `wrangler.jsonc` support the interactive simulator, recordings and BI on Pages. The live Compose configuration mounts `.deps/lettings-ops-agent` read-only by default. Run `make agent-sync` first. Public deployment and a complete real-provider live episode still require validation in the target environment.
