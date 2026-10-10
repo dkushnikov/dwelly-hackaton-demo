@@ -1,0 +1,4895 @@
+{
+  "v": 1,
+  "kind": "portfolio_lab",
+  "title": "Portfolio lab",
+  "synthetic": true,
+  "source": "scripts/import_insights.py:portfolio_fixture (deterministic v1)",
+  "sha256": "fb59b95779da5228ed23938c50e3a385002ac814b7065fba31a3e413a971d0dc",
+  "description": "84 invented closed jobs, 2025. Scenario fixture only: contractor performance is invented. No agency agent or model generated these outcomes.",
+  "jobs": [
+    {
+      "case_id": "LAB-C-001-01",
+      "title": "Simulated plumber repair · P-002",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-01-03",
+      "closed": "2025-01-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-01/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-01/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-01/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 120.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-01/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 120,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-01/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-001-01/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-01/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-02",
+      "title": "Simulated plumber repair · P-003",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-02-03",
+      "closed": "2025-02-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-02/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-02/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-02/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 132.6,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-02/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 130,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-02/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-001-02/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-02/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-03",
+      "title": "Simulated plumber repair · P-004",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-03-03",
+      "closed": "2025-03-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-03/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-03/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-03/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 112.7,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-03/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 115,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-03/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-001-03/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-03/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-04",
+      "title": "Simulated plumber repair · P-005",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-04-03",
+      "closed": "2025-04-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-04/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-04/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-04/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 125.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-04/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 125,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-04/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-001-04/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-04/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-05",
+      "title": "Simulated plumber repair · P-006",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-05-03",
+      "closed": "2025-05-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-05/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-05/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-05/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 112.2,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-05/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 110,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-05/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-001-05/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-05/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-06",
+      "title": "Simulated plumber repair · P-001",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-06-03",
+      "closed": "2025-06-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-06/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-06/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-06/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 117.6,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-06/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 120,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-06/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-001-06/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-06/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-07",
+      "title": "Simulated plumber repair · P-002",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-07-03",
+      "closed": "2025-07-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-07/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-07/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-07/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 130.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-07/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 130,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-07/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-001-07/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-07/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-08",
+      "title": "Simulated plumber repair · P-003",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-08-03",
+      "closed": "2025-08-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-08/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-08/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-08/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 117.3,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-08/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 115,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-08/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-001-08/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-08/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-09",
+      "title": "Simulated plumber repair · P-004",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-09-03",
+      "closed": "2025-09-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-09/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-09/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-09/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 122.5,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-09/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 125,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-09/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-001-09/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-09/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-10",
+      "title": "Simulated plumber repair · P-005",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-10-03",
+      "closed": "2025-10-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-10/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-10/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-10/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 110.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-10/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 110,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-10/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-001-10/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-10/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-11",
+      "title": "Simulated plumber repair · P-006",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-11-03",
+      "closed": "2025-11-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-11/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-11/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-11/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 122.4,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-11/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 120,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-11/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-001-11/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-11/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-001-12",
+      "title": "Simulated plumber repair · P-001",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-001",
+      "contractor_name": "Hampton Plumbing & Heating",
+      "opened": "2025-12-03",
+      "closed": "2025-12-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-001-12/completion"
+      ],
+      "source_ids": [
+        "LAB-C-001-12/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-001-12/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 127.4,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-12/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 130,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-001-12/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-001-12/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-001-12/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-01",
+      "title": "Simulated gas_safe repair · P-003",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-01-03",
+      "closed": "2025-01-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-01/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-01/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-01/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 185.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-01/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 185,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-01/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-002-01/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-01/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-02",
+      "title": "Simulated gas_safe repair · P-004",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-02-03",
+      "closed": "2025-02-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-02/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-02/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-02/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 198.9,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-02/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 195,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-02/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-002-02/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-02/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-03",
+      "title": "Simulated gas_safe repair · P-005",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-03-03",
+      "closed": "2025-03-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-03/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-03/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-03/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 200.9,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-03/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 205,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-03/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-002-03/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-03/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-04",
+      "title": "Simulated gas_safe repair · P-006",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-04-03",
+      "closed": "2025-04-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-04/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-04/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-04/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 190.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-04/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 190,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-04/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-002-04/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-04/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-05",
+      "title": "Simulated gas_safe repair · P-001",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-05-03",
+      "closed": "2025-05-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-05/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-05/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-05/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 204.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-05/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 200,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-05/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-002-05/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-05/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-06",
+      "title": "Simulated gas_safe repair · P-002",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-06-03",
+      "closed": "2025-06-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-06/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-06/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-06/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 181.3,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-06/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 185,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-06/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-002-06/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-06/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-07",
+      "title": "Simulated gas_safe repair · P-003",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-07-03",
+      "closed": "2025-07-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-07/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-07/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-07/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 195.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-07/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 195,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-07/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-002-07/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-07/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-08",
+      "title": "Simulated gas_safe repair · P-004",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-08-03",
+      "closed": "2025-08-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-08/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-08/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-08/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 209.1,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-08/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 205,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-08/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-002-08/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-08/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-09",
+      "title": "Simulated gas_safe repair · P-005",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-09-03",
+      "closed": "2025-09-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-09/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-09/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-09/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 186.2,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-09/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 190,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-09/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-002-09/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-09/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-10",
+      "title": "Simulated gas_safe repair · P-006",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-10-03",
+      "closed": "2025-10-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-10/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-10/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-10/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 200.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-10/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 200,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-10/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-002-10/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-10/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-11",
+      "title": "Simulated gas_safe repair · P-001",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-11-03",
+      "closed": "2025-11-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-11/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-11/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-11/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 188.7,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-11/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 185,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-11/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-002-11/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-11/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-002-12",
+      "title": "Simulated gas_safe repair · P-002",
+      "case_type": "gas_safe",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-002",
+      "contractor_name": "Riverside Gas Services",
+      "opened": "2025-12-03",
+      "closed": "2025-12-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-002-12/completion"
+      ],
+      "source_ids": [
+        "LAB-C-002-12/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-002-12/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 191.1,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-12/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 195,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-002-12/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-002-12/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-002-12/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-01",
+      "title": "Simulated electrician repair · P-004",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-01-03",
+      "closed": "2025-01-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-01/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-01/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-01/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 150.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-01/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 150,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-01/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-003-01/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-01/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-02",
+      "title": "Simulated electrician repair · P-005",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-02-03",
+      "closed": "2025-02-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-02/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-02/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-02/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 137.7,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-02/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 135,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-02/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-003-02/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-02/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-03",
+      "title": "Simulated electrician repair · P-006",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-03-03",
+      "closed": "2025-03-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-03/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-03/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-03/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 142.1,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-03/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 145,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-03/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-003-03/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-03/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-04",
+      "title": "Simulated electrician repair · P-001",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-04-03",
+      "closed": "2025-04-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-04/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-04/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-04/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 155.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-04/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 155,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-04/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-003-04/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-04/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-05",
+      "title": "Simulated electrician repair · P-002",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-05-03",
+      "closed": "2025-05-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-05/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-05/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-05/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 142.8,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-05/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 140,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-05/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-003-05/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-05/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-06",
+      "title": "Simulated electrician repair · P-003",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-06-03",
+      "closed": "2025-06-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-06/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-06/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-06/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 147.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-06/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 150,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-06/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-003-06/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-06/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-07",
+      "title": "Simulated electrician repair · P-004",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-07-03",
+      "closed": "2025-07-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-07/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-07/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-07/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 135.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-07/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 135,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-07/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-003-07/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-07/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-08",
+      "title": "Simulated electrician repair · P-005",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-08-03",
+      "closed": "2025-08-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-08/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-08/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-08/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 147.9,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-08/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 145,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-08/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-003-08/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-08/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-09",
+      "title": "Simulated electrician repair · P-006",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-09-03",
+      "closed": "2025-09-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-09/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-09/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-09/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 151.9,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-09/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 155,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-09/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-003-09/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-09/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-10",
+      "title": "Simulated electrician repair · P-001",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-10-03",
+      "closed": "2025-10-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-10/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-10/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-10/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 140.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-10/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 140,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-10/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-003-10/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-10/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-11",
+      "title": "Simulated electrician repair · P-002",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-11-03",
+      "closed": "2025-11-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-11/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-11/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-11/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 153.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-11/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 150,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-11/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-003-11/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-11/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-003-12",
+      "title": "Simulated electrician repair · P-003",
+      "case_type": "electrician",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-003",
+      "contractor_name": "Kew Electrical Ltd",
+      "opened": "2025-12-03",
+      "closed": "2025-12-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-003-12/completion"
+      ],
+      "source_ids": [
+        "LAB-C-003-12/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-003-12/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 132.3,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-12/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 135,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-003-12/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-003-12/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-003-12/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-01",
+      "title": "Simulated heating repair · P-005",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-01-03",
+      "closed": "2025-01-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-01/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-01/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-01/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 205.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-01/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 205,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-01/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-004-01/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-01/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-02",
+      "title": "Simulated heating repair · P-006",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-02-03",
+      "closed": "2025-02-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-02/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-02/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-02/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 219.3,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-02/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 215,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-02/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-004-02/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-02/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-03",
+      "title": "Simulated heating repair · P-001",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-03-03",
+      "closed": "2025-03-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-03/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-03/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-03/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 196.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-03/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 200,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-03/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-004-03/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-03/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-04",
+      "title": "Simulated heating repair · P-002",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-04-03",
+      "closed": "2025-04-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-04/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-04/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-04/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 210.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-04/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 210,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-04/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-004-04/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-04/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-05",
+      "title": "Simulated heating repair · P-003",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-05-03",
+      "closed": "2025-05-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-05/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-05/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-05/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 224.4,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-05/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 220,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-05/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-004-05/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-05/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-06",
+      "title": "Simulated heating repair · P-004",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-06-03",
+      "closed": "2025-06-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-06/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-06/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-06/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 200.9,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-06/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 205,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-06/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-004-06/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-06/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-07",
+      "title": "Simulated heating repair · P-005",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-07-03",
+      "closed": "2025-07-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-07/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-07/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-07/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 215.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-07/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 215,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-07/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-004-07/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-07/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-08",
+      "title": "Simulated heating repair · P-006",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-08-03",
+      "closed": "2025-08-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-08/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-08/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-08/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 204.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-08/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 200,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-08/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-004-08/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-08/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-09",
+      "title": "Simulated heating repair · P-001",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-09-03",
+      "closed": "2025-09-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-09/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-09/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-09/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 205.8,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-09/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 210,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-09/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-004-09/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-09/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-10",
+      "title": "Simulated heating repair · P-002",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-10-03",
+      "closed": "2025-10-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-10/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-10/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-10/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 220.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-10/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 220,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-10/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-004-10/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-10/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-11",
+      "title": "Simulated heating repair · P-003",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-11-03",
+      "closed": "2025-11-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-11/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-11/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-11/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 209.1,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-11/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 205,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-11/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-004-11/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-11/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-004-12",
+      "title": "Simulated heating repair · P-004",
+      "case_type": "heating",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-004",
+      "contractor_name": "Thames Heating Engineers",
+      "opened": "2025-12-03",
+      "closed": "2025-12-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-004-12/completion"
+      ],
+      "source_ids": [
+        "LAB-C-004-12/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-004-12/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 210.7,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-12/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 215,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-004-12/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-004-12/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-004-12/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-01",
+      "title": "Simulated locksmith repair · P-006",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-01-03",
+      "closed": "2025-01-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-01/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-01/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-01/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 95.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-01/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 95,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-01/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-005-01/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-01/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-02",
+      "title": "Simulated locksmith repair · P-001",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-02-03",
+      "closed": "2025-02-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-02/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-02/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-02/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 81.6,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-02/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 80,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-02/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-005-02/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-02/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-03",
+      "title": "Simulated locksmith repair · P-002",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-03-03",
+      "closed": "2025-03-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-03/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-03/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-03/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 88.2,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-03/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 90,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-03/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-005-03/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-03/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-04",
+      "title": "Simulated locksmith repair · P-003",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-04-03",
+      "closed": "2025-04-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-04/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-04/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-04/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 75.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-04/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 75,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-04/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-005-04/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-04/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-05",
+      "title": "Simulated locksmith repair · P-004",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-05-03",
+      "closed": "2025-05-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-05/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-05/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-05/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 86.7,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-05/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 85,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-05/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-005-05/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-05/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-06",
+      "title": "Simulated locksmith repair · P-005",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-06-03",
+      "closed": "2025-06-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-06/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-06/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-06/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 93.1,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-06/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 95,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-06/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-005-06/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-06/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-07",
+      "title": "Simulated locksmith repair · P-006",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-07-03",
+      "closed": "2025-07-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-07/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-07/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-07/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 80.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-07/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 80,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-07/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-005-07/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-07/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-08",
+      "title": "Simulated locksmith repair · P-001",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-08-03",
+      "closed": "2025-08-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-08/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-08/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-08/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 91.8,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-08/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 90,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-08/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-005-08/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-08/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-09",
+      "title": "Simulated locksmith repair · P-002",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-09-03",
+      "closed": "2025-09-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-09/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-09/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-09/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 73.5,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-09/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 75,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-09/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-005-09/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-09/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-10",
+      "title": "Simulated locksmith repair · P-003",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-10-03",
+      "closed": "2025-10-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-10/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-10/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-10/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 85.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-10/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 85,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-10/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-005-10/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-10/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-11",
+      "title": "Simulated locksmith repair · P-004",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-11-03",
+      "closed": "2025-11-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-11/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-11/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-11/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 96.9,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-11/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 95,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-11/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-005-11/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-11/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-005-12",
+      "title": "Simulated locksmith repair · P-005",
+      "case_type": "locksmith",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-005",
+      "contractor_name": "SecureFast Locksmiths",
+      "opened": "2025-12-03",
+      "closed": "2025-12-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-005-12/completion"
+      ],
+      "source_ids": [
+        "LAB-C-005-12/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-005-12/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 78.4,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-12/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 80,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-005-12/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-005-12/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-005-12/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-01",
+      "title": "Simulated general repair · P-001",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-01-03",
+      "closed": "2025-01-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-01/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-01/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-01/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 170.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-01/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 170,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-01/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-006-01/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-01/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-02",
+      "title": "Simulated general repair · P-002",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-02-03",
+      "closed": "2025-02-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-02/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-02/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-02/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 183.6,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-02/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 180,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-02/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-006-02/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-02/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-03",
+      "title": "Simulated general repair · P-003",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-03-03",
+      "closed": "2025-03-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-03/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-03/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-03/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 161.7,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-03/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 165,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-03/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-006-03/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-03/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-04",
+      "title": "Simulated general repair · P-004",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-04-03",
+      "closed": "2025-04-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-04/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-04/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-04/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 175.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-04/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 175,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-04/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-006-04/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-04/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-05",
+      "title": "Simulated general repair · P-005",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-05-03",
+      "closed": "2025-05-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-05/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-05/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-05/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 163.2,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-05/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 160,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-05/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-006-05/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-05/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-06",
+      "title": "Simulated general repair · P-006",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-06-03",
+      "closed": "2025-06-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-06/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-06/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-06/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 166.6,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-06/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 170,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-06/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-006-06/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-06/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-07",
+      "title": "Simulated general repair · P-001",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-07-03",
+      "closed": "2025-07-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-07/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-07/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-07/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 180.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-07/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 180,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-07/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-006-07/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-07/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-08",
+      "title": "Simulated general repair · P-002",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-08-03",
+      "closed": "2025-08-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-08/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-08/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-08/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 168.3,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-08/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 165,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-08/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-006-08/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-08/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-09",
+      "title": "Simulated general repair · P-003",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-09-03",
+      "closed": "2025-09-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-09/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-09/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-09/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 171.5,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-09/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 175,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-09/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-006-09/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-09/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-10",
+      "title": "Simulated general repair · P-004",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-10-03",
+      "closed": "2025-10-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-10/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-10/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-10/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 160.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-10/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 160,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-10/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-006-10/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-10/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-11",
+      "title": "Simulated general repair · P-005",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-11-03",
+      "closed": "2025-11-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-11/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-11/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-11/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 173.4,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-11/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 170,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-11/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-006-11/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-11/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-006-12",
+      "title": "Simulated general repair · P-006",
+      "case_type": "general",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-006",
+      "contractor_name": "Barnes Building & Maintenance",
+      "opened": "2025-12-03",
+      "closed": "2025-12-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-006-12/completion"
+      ],
+      "source_ids": [
+        "LAB-C-006-12/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-006-12/review",
+          "text": "Simulated staff review."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 176.4,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-12/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 180,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-006-12/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-006-12/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-006-12/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-01",
+      "title": "Simulated plumber repair · P-002",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-01-03",
+      "closed": "2025-01-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-01/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-01/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-01/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-01/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-01/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-01/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 181.5,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-01/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 110,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-01/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-007-01/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-007-01/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-02",
+      "title": "Simulated plumber repair · P-003",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-02-03",
+      "closed": "2025-02-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-02/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-02/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-02/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-02/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-02/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-02/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 198.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-02/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 120,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-02/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-007-02/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-007-02/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-03",
+      "title": "Simulated plumber repair · P-004",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-03-03",
+      "closed": "2025-03-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-03/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-03/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-03/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-03/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-03/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-03/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 214.5,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-03/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 130,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-03/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-007-03/approval-wait"
+      ],
+      "rework": true,
+      "rework_source_ids": [
+        "LAB-C-007-03/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-04",
+      "title": "Simulated plumber repair · P-005",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-04-03",
+      "closed": "2025-04-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-04/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-04/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-04/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-04/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-04/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-04/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 189.75,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-04/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 115,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-04/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-007-04/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-007-04/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-05",
+      "title": "Simulated plumber repair · P-006",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-05-03",
+      "closed": "2025-05-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-05/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-05/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-05/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-05/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-05/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-05/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 206.25,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-05/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 125,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-05/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-007-05/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-007-05/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-06",
+      "title": "Simulated plumber repair · P-001",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-06-03",
+      "closed": "2025-06-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-06/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-06/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-06/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-06/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-06/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-06/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 181.5,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-06/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 110,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-06/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-007-06/approval-wait"
+      ],
+      "rework": true,
+      "rework_source_ids": [
+        "LAB-C-007-06/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-07",
+      "title": "Simulated plumber repair · P-002",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-002",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-07-03",
+      "closed": "2025-07-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-07/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-07/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-07/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-07/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-07/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-07/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 198.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-07/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 120,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-07/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-007-07/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-007-07/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-08",
+      "title": "Simulated plumber repair · P-003",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-003",
+      "landlord_id": "L-003",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-08-03",
+      "closed": "2025-08-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-08/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-08/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-08/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-08/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-08/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-08/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 214.5,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-08/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 130,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-08/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-007-08/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-007-08/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-09",
+      "title": "Simulated plumber repair · P-004",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-004",
+      "landlord_id": "L-002",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-09-03",
+      "closed": "2025-09-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-09/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-09/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-09/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-09/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-09/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-09/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 189.75,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-09/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 115,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-09/approval"
+        ]
+      },
+      "landlord_wait_days": 5,
+      "wait_source_ids": [
+        "LAB-C-007-09/approval-wait"
+      ],
+      "rework": true,
+      "rework_source_ids": [
+        "LAB-C-007-09/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-10",
+      "title": "Simulated plumber repair · P-005",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-005",
+      "landlord_id": "L-004",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-10-03",
+      "closed": "2025-10-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-10/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-10/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-10/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-10/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-10/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-10/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 206.25,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-10/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 125,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-10/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-007-10/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-007-10/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-11",
+      "title": "Simulated plumber repair · P-006",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-006",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-11-03",
+      "closed": "2025-11-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-11/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-11/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-11/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-11/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-11/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-11/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 181.5,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-11/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 110,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-11/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-007-11/approval-wait"
+      ],
+      "rework": false,
+      "rework_source_ids": [
+        "LAB-C-007-11/follow-up-90d"
+      ]
+    },
+    {
+      "case_id": "LAB-C-007-12",
+      "title": "Simulated plumber repair · P-001",
+      "case_type": "plumber",
+      "postcode_area": "TW",
+      "property_id": "P-001",
+      "landlord_id": "L-001",
+      "tenancy_id": null,
+      "contractor_id": "C-007",
+      "contractor_name": "QuickFix Plumbers (24h)",
+      "opened": "2025-12-03",
+      "closed": "2025-12-15",
+      "duration_days": 12,
+      "closure": "CLOSED_ALL_CHECKS",
+      "closure_refs": [
+        "LAB-C-007-12/completion"
+      ],
+      "source_ids": [
+        "LAB-C-007-12/fixture"
+      ],
+      "event_count": null,
+      "hold_reasons": {},
+      "interventions": [
+        {
+          "kind": "review_prompt",
+          "source_id": "LAB-C-007-12/review",
+          "text": "Simulated staff review."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-12/chase-0",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-12/chase-1",
+          "text": "Simulated provider chase."
+        },
+        {
+          "kind": "staff_call",
+          "source_id": "LAB-C-007-12/chase-2",
+          "text": "Simulated provider chase."
+        }
+      ],
+      "money_mentions": [],
+      "updates": [],
+      "attachment_names": [],
+      "outcome": "Synthetic completed job. Not an agent execution or an observed contractor result.",
+      "invoice": {
+        "amount_gbp": 198.0,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-12/invoice"
+        ]
+      },
+      "accepted_quote": {
+        "amount_gbp": 120,
+        "vat": "included",
+        "source_ids": [
+          "LAB-C-007-12/approval"
+        ]
+      },
+      "landlord_wait_days": 1,
+      "wait_source_ids": [
+        "LAB-C-007-12/approval-wait"
+      ],
+      "rework": true,
+      "rework_source_ids": [
+        "LAB-C-007-12/follow-up-90d"
+      ]
+    }
+  ]
+}

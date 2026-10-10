@@ -1,0 +1,17 @@
+Lettings Village — Dwelly hackathon demonstration
+
+The four bundled replays and synthetic world records derive from the local
+lettings-ops-agent project, licensed under Apache License 2.0. A copy of that
+license is provided in LICENSE-THIRD-PARTY. Sources are recorded in each JSONL
+opening event, together with SHA-256 hashes of the original state and trace.
+The replays are transformed and presentation timing is compressed. Original
+trace timestamps remain in recorded_at. Personal and company records are
+synthetic, as declared by the source mock-world data.
+
+The original baseline recordings each contain one real model decision. They
+are not multi-turn golden episodes. They predate the stage/definition-of-done
+fields, so those fields remain explicitly unrecorded. The fraud recording
+contains proactive refusals by the model, not policy-gate deny invocations.
+
+Original procedural village artwork is dedicated under CC0-1.0. No commercial
+game sprites, third-party fonts or external image assets are included.

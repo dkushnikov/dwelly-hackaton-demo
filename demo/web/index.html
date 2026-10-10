@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5ed">
+  <meta name="description" content="A living village that makes lettings operations visible. Real agent decisions, human handovers and offline replay.">
+  <title>Lettings Village · Dwelly</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/insights.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Lettings Village home"><span class="brand-mark" aria-hidden="true">▥</span><span>lettings<span class="brand-serif">village</span></span></a>
+    <div class="edition"><b>DWELLY</b><span>AI HACKATHON · 2026</span></div>
+    <div class="top-actions"><span id="connection" class="connection"><i></i>Recorded runs · API off</span><button id="help" class="quiet">How to play <span>↗</span></button><button id="presenter" class="icon-button" title="Toggle presenter view" aria-label="Toggle presenter view">⛶</button></div>
+  </header>
+  <div class="shell">
+    <nav class="rail" aria-label="Village navigation">
+      <button id="nav-village" class="rail-button selected" title="Village"><span>▦</span>Village</button>
+      <button id="nav-stories" class="rail-button" title="Scenario library"><span>▤</span>Stories</button>
+      <button id="nav-people" class="rail-button" title="People in the village"><span>♙</span>People</button>
+      <button id="nav-intelligence" class="rail-button" title="Money intelligence"><span>▥</span>Insights</button>
+      <button id="import" class="rail-button" title="Import a session recording"><span>↥</span>Replay</button>
+      <div class="rail-bottom"><span class="tiny-house">⌂</span><span>Made for<br>real life.</span></div>
+    </nav>
+    <main>
+      <nav class="workspace-tabs" aria-label="Workspace"><button id="view-village" class="active" aria-current="page">Village</button><button id="view-intelligence">Intelligence <span>BI</span></button></nav>
+      <div id="village-view">
+      <section class="page-heading">
+        <div><div class="eyebrow"><span class="sun">✳</span> A LITTLE WORLD, REAL DECISIONS</div><h1>Every home has a story<span>.</span></h1><p>Follow the people, the problems, and the agent bringing it all together.</p></div>
+        <div class="launch"><button class="button primary" id="start-village"><span>▶</span> Start the village</button><button class="button secondary" id="new-ticket">+ New story</button></div>
+      </section>
+      <section class="metrics" aria-label="Village activity">
+        <div><span class="metric-icon sage">⌂</span><strong id="metric-homes">6</strong><span>homes in the village</span></div>
+        <div><span class="metric-icon blue">↗</span><strong id="metric-tickets">0</strong><span>active stories</span></div>
+        <div><span class="metric-icon gold">♙</span><strong id="metric-humans">0</strong><span>waiting for a person</span></div>
+        <div><span class="metric-icon rose">◇</span><strong id="metric-safe">0</strong><span>completed actions</span></div>
+      </section>
+      <div class="workbench">
+        <div class="village-column">
+          <section class="map-card" aria-labelledby="map-title">
+            <div class="map-top"><div><span class="live-dot"></span><h2 id="map-title">Richmond neighbourhood</h2><span class="subtle" id="actor-count"></span></div><span id="world-clock" class="clock">SAT, 10 OCT · 09:00</span></div>
+            <div class="map-wrap"><canvas id="village" width="768" height="480" aria-label="Interactive pixel village. Use the property buttons below to select a house." tabindex="0"></canvas>
+              <div class="map-caption"><span class="compass">N ↑</span><span>A quieter kind of control room.</span></div>
+              <div id="toast" class="map-toast" role="status" hidden></div>
+              <div id="safety-banner" class="safety-banner" role="status" hidden><span>◇</span><div><b id="safety-title"></b><p id="safety-text"></p></div><button id="dismiss-safety" aria-label="Dismiss safety notice">×</button></div>
+            </div>
+            <div class="map-bottom"><div class="legend"><span><i class="tenant-dot"></i>Tenants</span><span><i class="landlord-dot"></i>Landlords</span><span><i class="contractor-dot"></i>Contractors</span><span><i class="agency-dot"></i>Dwelly</span></div><span class="map-hint">Click a home to say hello ↗</span></div>
+          </section>
+          <div class="playback"><div class="playback-label"><span id="mode-badge" class="tag">REPLAY STUDIO</span><span id="playback-description">Real recordings. Ready when you are.</span></div><div class="playback-buttons"><button id="pause" class="icon-button" aria-label="Pause playback" title="Pause or play (Space)">Ⅱ</button><select id="speed" aria-label="Playback speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select><button id="skip" class="icon-button" title="Next meaningful event" aria-label="Skip to next meaningful event">↠</button></div></div>
+          <section class="stories-section"><div class="section-heading"><h2>Around the village <span id="story-count">00</span></h2><button id="browse-stories" class="text-button">Explore scenarios ↗</button></div><div id="ticket-list" class="ticket-list"></div><div id="empty-village" class="empty-village"><span>✉</span><div><b>The village is waking up.</b><p>Start four recorded stories together, or choose a home to begin your own.</p></div></div></section>
+          <div id="property-list" class="property-list" aria-label="Select a property"></div>
+        </div>
+        <aside class="ticket-panel" aria-labelledby="ticket-title">
+          <div class="panel-heading"><span class="eyebrow">THE STORY SO FAR</span><button id="export" class="icon-button" title="Export this session" aria-label="Export this session">↓</button></div>
+          <div id="ticket-empty" class="ticket-empty"><div class="empty-illustration">⌂<span>✉</span></div><span class="tag">EVERY DETAIL MATTERS</span><h2>A home.<br>A problem.<br>A way forward.</h2><p>Choose a story to see who has the ticket, what the agent did, and why it was allowed.</p><button id="choose-story" class="button secondary">Choose a story ↗</button><div class="trust-note"><span>◇</span><p>Real agent traces.<br>Every action has a receipt.</p></div></div>
+          <div id="ticket-detail" hidden>
+            <div class="ticket-intro"><div class="ticket-kicker"><span id="ticket-id" class="tag"></span><span id="ticket-mode" class="subtle"></span></div><h2 id="ticket-title"></h2><p id="ticket-address"></p><div id="ticket-flags" class="flag-list"></div></div>
+            <div id="owner-card" class="owner-card"><div id="owner-avatar" class="avatar">D</div><div><span class="eyebrow">WHO'S HANDLING IT</span><b id="owner-name"></b><span id="owner-note"></span></div><span class="owner-pulse"></span></div>
+            <div class="panel-tabs" role="tablist"><button class="active" id="tab-story" role="tab" aria-selected="true">Timeline</button><button id="tab-status" role="tab" aria-selected="false">Ticket status</button></div>
+            <div id="story-tab" role="tabpanel"><div id="timeline" class="timeline"></div></div>
+            <div id="status-tab" role="tabpanel" hidden><div class="status-block"><div class="section-heading"><h3>Ticket journey</h3><span id="stage-badge" class="tag"></span></div><ol id="stages" class="stages"></ol><p id="legacy-note" class="muted"></p><h3>Current picture</h3><p id="recap"></p><h3>Up next</h3><p id="next-step"></p><h3>Definition of done</h3><ul id="dod" class="dod"></ul><div id="handover" class="handover" hidden></div><div id="outcome" class="outcome" hidden></div><details class="provenance"><summary>Recording provenance</summary><p id="provenance"></p></details></div></div>
+            <div id="player-card" class="player-card" hidden><span class="eyebrow">YOUR TURN</span><h3 id="player-title"></h3><p id="player-prompt"></p><div id="player-suggestions" class="suggestions"></div><form id="reply-form"><textarea id="player-reply" maxlength="4000" required aria-label="Your reply" placeholder="Write your reply…"></textarea><button class="button primary" type="submit">Send reply ↗</button></form></div>
+            <div class="ticket-footer"><span id="ticket-footer-text">Recorded evidence, visible decisions.</span><button id="stop-ticket" class="text-button">Stop</button></div>
+          </div>
+        </aside>
+      </div>
+      <footer class="page-footer"><span>Lettings Village <span>×</span> Dwelly</span><span>Synthetic residents. Real decisions. A little more peace of mind.</span><span id="offline-status">All art & recordings served locally</span></footer>
+      <div id="presenter-panel" hidden></div>
+      </div>
+      <section id="intelligence" hidden aria-label="Money intelligence dashboard"></section>
+    </main>
+  </div>
+  <dialog id="dialog"><div class="dialog-top"><span class="eyebrow" id="dialog-kicker"></span><button id="close-dialog" class="icon-button" aria-label="Close dialog">×</button></div><div id="dialog-content"></div></dialog>
+  <input type="file" id="replay-file" accept=".jsonl,.ndjson" hidden>
+  <noscript>This village needs JavaScript. The replay files are available under /replays/.</noscript>
+</body>
+</html>

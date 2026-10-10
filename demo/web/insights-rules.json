@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "hourly_rate_gbp": 30,
+  "shrinkage_k": 5,
+  "minimum_jobs": 3,
+  "minutes": {
+    "review_prompt": 3, "approval_prompt": 3, "manual_check": 3,
+    "auto_pause_needs_human": 3, "supervisor_close": 3,
+    "hold_free_text": 2, "staff_note": 2, "manual_edit": 2,
+    "manual_close": 2, "approval_recorded": 2, "hold": 1,
+    "staff_call": 6, "landlord_approval": 0
+  },
+  "rules": [
+    {"id": "INS-RECORD-MONEY", "min_missing": 1, "approver": "Operations lead", "priority": 1},
+    {"id": "INS-REVIEW-HOLDS", "min_holds": 10, "approver": "Property manager", "priority": 2},
+    {"id": "INS-REVIEW-VARIANCE", "n_min": 5, "ratio_min": 1.1, "share_min": 0.25, "approver": "Property manager", "priority": 1},
+    {"id": "INS-PREFERRED-REVIEW", "n_min": 5, "roi_min": 1.2, "rework_max": 0.1, "approver": "Landlord + property manager", "priority": 2},
+    {"id": "INS-CAP-REVIEW", "n_min": 5, "amount_gbp": 250, "share_min": 0.9, "wait_days_min": 3, "approver": "Landlord", "priority": 2}
+  ]
+}

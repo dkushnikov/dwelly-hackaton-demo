@@ -1,0 +1,30 @@
+# Use with: docker compose -f compose.yaml -f deploy/compose.live.yaml up --build
+# Values are supplied by the operator's environment, never committed.
+services:
+  village:
+    build:
+      target: live
+    environment:
+      - ANTHROPIC_API_KEY
+      - LOA_MODEL
+      - LOA_EFFORT
+      - LOA_MAX_STEPS
+      - LOA_CASE_TIMEOUT_S
+      - VILLAGE_PUBLIC_ORIGIN
+    volumes:
+      - type: bind
+        source: ${LETTINGS_AGENT_ROOT:?Set LETTINGS_AGENT_ROOT to the agent checkout}
+        target: /agent
+        read_only: true
+    command:
+      - python
+      - -m
+      - demo.server
+      - --host
+      - 0.0.0.0
+      - --agent-root
+      - /agent
+      - --public-origin
+      - ${VILLAGE_PUBLIC_ORIGIN:-http://127.0.0.1:8787}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os,urllib.request; origin=os.environ.get('VILLAGE_PUBLIC_ORIGIN') or 'http://127.0.0.1:8787'; req=urllib.request.Request('http://127.0.0.1:8787/api/health',headers={'Host':urllib.parse.urlsplit(origin).netloc}); urllib.request.urlopen(req,timeout=2)"]

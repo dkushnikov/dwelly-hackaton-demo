@@ -1,0 +1,19 @@
+services:
+  village:
+    build:
+      context: .
+      target: replay
+    ports:
+      - "127.0.0.1:8787:8787"
+    volumes:
+      - village-runs:/app/runs
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+volumes:
+  village-runs:
