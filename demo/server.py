@@ -17,11 +17,12 @@ ID = re.compile(r"^[a-f0-9]{32}$")
 
 
 class Application:
-    def __init__(self, engine=None, runs=None, public_origin=None, max_sessions=32):
+    def __init__(self, engine=None, runs=None, public_origin=None, max_sessions=32, journal=None):
         self.engine = engine
         self.runs = Path(runs or ROOT.parent / "runs/demo")
         self.public_origin = public_origin
         self.max_sessions = max_sessions
+        self.journal = journal
         self.sessions = {}
         self.bus = EventBus()
 
@@ -129,7 +130,7 @@ class Application:
                 else:
                     return await self.json(send, 429, {"error": "All session slots are busy. Stop a ticket first."})
             config = self.validate(await self.body(receive))
-            session = Session(config, self.runs, self.bus.publish)
+            session = Session(config, self.runs, self.bus.publish, journal=self.journal)
             self.sessions[session.id] = session
             session.task = asyncio.create_task(self.engine.run(session))
             return await self.json(send, 201, {"id": session.id})

@@ -6,11 +6,13 @@ Repositories: [Village demo](https://github.com/dkushnikov/dwelly-hackaton-demo)
 
 [Case-by-case interface review](docs/CASE_REVIEW.md) analyses all 50 public Property Management examples, with implementation priorities, source references and acceptance criteria (Russian).
 
+The first review iteration separates session progress, completed work, closure evidence and payment. Cases prioritises recorded deadlines and manual turns, and filters missing replies/evidence. Simulation choices explain their consequences; a recorded handover remains evidence rather than becoming a playable turn.
+
 Tenants, landlords, contractors and Dwelly operators share a pixel village. Messages appear when they are recorded; a van leaves only after a confirmed work order. Select a story to inspect its evidence, policy gate, next owner, status and human handover.
 
 ## Quick start
 
-Requirements: Git, Python 3.12+ (available as `python3`) and a modern browser. Commands below use a macOS/Linux shell; `make` is optional for running the app. The Python install includes the pinned server dependency, `uvicorn==0.43.0`. Node.js 22+ is needed only for frontend tests/lint or the optional Wrangler deployment CLI; the application has no npm dependencies.
+Requirements: Git, Python 3.12+ (available as `python3`) and a modern browser. Commands below use a macOS/Linux shell; `make` is optional for running the app. The Python install includes the pinned server dependency, `uvicorn==0.43.0`. Node.js 22+ is needed only for frontend tests/lint or the optional Wrangler deployment CLI. The browser has no npm runtime dependencies; `npm ci` installs the pinned deployment tool.
 
 ```sh
 git clone https://github.com/dkushnikov/dwelly-hackaton-demo.git
@@ -31,6 +33,8 @@ Direct fraud replay: <http://127.0.0.1:8787/?replay=fraud&presenter=1>.
 The **Intelligence** tab opens the BI dashboard at <http://127.0.0.1:8787/#intelligence>. It contains 50 public cases, a separate portfolio of 84 explicitly synthetic jobs, current agent activity, evidence-backed proposals and human feedback. Filters and the staff rate recalculate estimates; metrics drill down to cases and events. See [Money Intelligence](docs/INTELLIGENCE.md).
 
 The static `dist/` build runs on ordinary hosting without Python. Canvas, JavaScript, CSS and fonts need no external network. A service worker caches the interface, interactive simulator, public-case evidence, BI datasets and four recordings after the first successful visit. Setuptools is used only to build the Python package and include its web assets.
+
+For a shared-password deployment of the game, BI and live agent on Cloudflare Workers + Containers, follow [Cloudflare deployment](docs/CLOUDFLARE.md). This hosted version disables offline caching, starts the agent on demand and preserves live journals outside the container. The target is prepared and locally tested; the deployment guide lists the remaining cloud release checks.
 
 ## An isolated copy of the agent
 

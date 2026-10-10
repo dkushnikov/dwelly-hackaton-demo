@@ -1,0 +1,23 @@
+FROM python:3.12-slim AS agent-source
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /source
+COPY agent-source.json /source/agent-source.json
+COPY scripts/agent_dependency.py /source/scripts/agent_dependency.py
+RUN python -m scripts.agent_dependency sync
+
+FROM python:3.12-slim
+WORKDIR /app
+COPY pyproject.toml /tmp/village-pyproject.toml
+RUN python -c "import tomllib, subprocess; p=tomllib.load(open('/tmp/village-pyproject.toml','rb')); subprocess.check_call(['pip','install','--no-cache-dir',*p['project']['dependencies'],*p['project']['optional-dependencies']['live']])"
+COPY --from=agent-source /source/.deps/lettings-ops-agent/harness /agent/harness
+COPY --from=agent-source /source/.deps/lettings-ops-agent/mockworld /agent/mockworld
+COPY --from=agent-source /source/.deps/lettings-ops-agent/agent /agent/agent
+COPY --from=agent-source /source/.deps/lettings-ops-agent/fixtures /agent/fixtures
+COPY --from=agent-source /source/.deps/lettings-ops-agent/data /agent/data
+COPY --from=agent-source /source/.deps/lettings-ops-agent/NOTICE /agent/NOTICE
+COPY demo /app/demo
+RUN useradd --create-home --uid 10001 village && mkdir -p /app/runs/demo && chown -R village:village /app/runs
+USER village
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+EXPOSE 8787
+CMD ["python", "-m", "demo.cloud"]

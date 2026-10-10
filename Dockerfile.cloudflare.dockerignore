@@ -1,0 +1,10 @@
+**
+!Dockerfile.cloudflare
+!pyproject.toml
+!agent-source.json
+!scripts/
+!scripts/agent_dependency.py
+!demo/
+!demo/**
+demo/**/__pycache__/
+demo/**/*.pyc

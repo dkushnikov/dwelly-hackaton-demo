@@ -18,7 +18,7 @@ export function reduceEvent(ticket, event) {
 }
 export function metrics(tickets) {
   const values=[...tickets];
-  return {active:values.filter(t=>!t.ended).length,humans:values.filter(t=>t.pending || (!t.ended && ['operator','landlord','tenant','contractor'].includes(t.owner))).length,
+  return {active:values.filter(t=>!t.ended).length,humans:values.filter(t=>t.mode!=='replay'&&!t.ended&&(t.pending || ['operator','landlord','tenant','contractor'].includes(t.owner))).length,
     effects:values.reduce((n,t)=>n+t.events.filter(e=>e.t==='effect'&&!e.deduplicated).length,0)};
 }
 const kinds = new Set(['ticket_opened','participant_assigned','actor_message','agent_thinking','playbook','gate','tool_result','effect','status','awaiting_player','time_passes','episode_end','withheld','error','queued','terminal','nudge','reconciled','time_nudge','director_usage']);

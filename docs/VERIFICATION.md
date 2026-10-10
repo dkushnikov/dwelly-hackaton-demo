@@ -521,3 +521,31 @@ Static output: 24 files match the deployment archive; no extra files
 Initial sandboxed commands could not resolve `github.com` (`git ls-remote origin refs/heads/main`) or `pypi.org` (`artifacts/readme-smoke/.venv/bin/python -m pip install .`). The fresh server also initially failed to bind localhost with `[Errno 1] operation not permitted`. Network installation, remote verification and localhost checks succeeded after tool-level sandbox escalation. No credentials were read or copied.
 
 These checks do not verify a paid model episode or a deployed Cloudflare/container environment. The advertised minimum Python version is 3.12; this fresh-install check used the available Python 3.14.7 runtime.
+
+## Cloudflare preparation and Case Review iteration — 10 October 2026
+
+The isolated upstream pin advanced from `475337052375be88e5b6c8eafa5ec4f709042133` to `b0ef66d4d0dd58ab1499071fe580a18b8e9ce1c0`. The original sibling repository was not modified. The initial update approval was rejected because the reviewer classified `.deps` as a sibling; resolved-path checks proved it was inside this workspace and not a symlink, and the bounded update then succeeded.
+
+```text
+make test-agent
+68 passed in 3.62s
+JavaScript: tests 53; pass 53; fail 0
+
+make lint
+All checks passed!
+
+node deploy/cloudflare/smoke.mjs
+Cloud gateway smoke: PASS (login, asset/API protection, CSRF, budget concurrency, settlement idempotency, durable replay, logout). No model calls.
+
+make build
+Deployment archive: lettings-village-static.zip (136955 bytes)
+
+git diff --check
+[exit 0]
+```
+
+The smoke test uses Cloudflare workerd with SQLite, synthetic credentials and a mock assets service. It verifies 20 concurrent reservations cannot exceed the $5 ledger, duplicate settlements cannot refund twice, and both budget and a journal survive runtime restart. It does not start a real container or contact Anthropic. Its first localhost launch failed with `listen EPERM: operation not permitted 127.0.0.1`; the approved local-port run passed.
+
+Case Review browser QA used an isolated server on port 8789: PM-017 manual evidence request → Missing evidence filter → reload with preserved turn → Working after advice / Closed with checks / Closed without payment. Browser console errors: `[]`. A replay's recorded prompt no longer counts as a current human turn. The test server and tab were closed afterwards.
+
+Full deployment dry run remains unverified: `npx wrangler deploy --config wrangler.live.jsonc --dry-run --outdir artifacts/cloudflare-worker` first encountered `EPERM` for Wrangler's default global log directory. Routing Wrangler config/logs into workspace artifacts resolved that filesystem issue; the command then failed because **the Docker CLI is not installed**. Cloudflare Workers Builds is the intended image-build environment. No deployed Container, external SSE or paid provider call has been confirmed in this record.

@@ -1,1 +1,14 @@
-{"name":"lettings-village","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.mjs","check":"node --check demo/web/app.js && node --check demo/web/village.js && node --check demo/web/insights.js && node --check demo/web/insights-model.js"}}
+{
+  "name": "lettings-village",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check demo/web/app.js && node --check demo/web/village.js && node --check demo/web/insights.js && node --check demo/web/insights-model.js",
+    "test:cloud": "node deploy/cloudflare/smoke.mjs",
+    "deploy:cloud": "wrangler deploy --config wrangler.live.jsonc"
+  },
+  "devDependencies": {
+    "wrangler": "4.149.0"
+  }
+}

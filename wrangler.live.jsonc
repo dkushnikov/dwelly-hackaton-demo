@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lettings-village",
+  "main": "deploy/cloudflare/worker.js",
+  "compatibility_date": "2026-10-10",
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": { "directory": "./demo/web", "binding": "ASSETS", "run_worker_first": true },
+  "vars": { "PUBLIC_ORIGIN": "https://lettings-village.dkushnikov.workers.dev" },
+  "durable_objects": { "bindings": [
+    { "name": "VILLAGE", "class_name": "VillageContainer" },
+    { "name": "LEDGER", "class_name": "DemoLedger" }
+  ] },
+  "exports": {
+    "VillageContainer": { "type": "durable-object", "storage": "sqlite", "container": "village-agent" },
+    "DemoLedger": { "type": "durable-object", "storage": "sqlite" }
+  },
+  "containers": [{
+    "name": "village-agent",
+    "scheduling_policy": "durable_object",
+    "images": { "agent": { "dockerfile": "./Dockerfile.cloudflare", "build_context": "." } },
+    "observability": { "enabled": false }
+  }],
+  "ratelimits": [{ "name": "LOGIN_LIMITER", "namespace_id": "1042026", "simple": { "limit": 10, "period": 60 } }],
+  "observability": { "enabled": false }
+}

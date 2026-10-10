@@ -11,11 +11,12 @@ from .protocol import summary_of
 
 
 class Session:
-    def __init__(self, config, directory: Path, publish=lambda e: None):
+    def __init__(self, config, directory: Path, publish=lambda e: None, journal=None):
         self.id = uuid.uuid4().hex
         self.config = config
         self.events = []
         self.publish = publish
+        self.journal = journal
         self.created = time.monotonic()
         self.sim_time = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
         self.tick = 0
@@ -30,6 +31,8 @@ class Session:
         event = {**event, "v": 1, "session": self.id, "seq": len(self.events) + 1,
                  "tick": self.tick, "sim_time": self.sim_time, "at_ms": round((time.monotonic() - self.created) * 1000)}
         # Journal first: a visible event always has a durable line behind it.
+        if self.journal:
+            self.journal(event)
         with self.path.open("a", encoding="utf-8") as log:
             log.write(json.dumps(event, ensure_ascii=False) + "\n")
         self.events.append(event)
@@ -59,8 +62,8 @@ class Session:
 
     def finish(self, reason):
         if not self.finished:
-            self.finished = True
             self.emit({"t": "episode_end", "reason": reason, "summary": summary_of(self.events), "verdict": None})
+            self.finished = True
 
     def snapshot(self):
         return {"id": self.id, "config": self.config, "events": self.events, "pending": self.pending, "finished": self.finished}

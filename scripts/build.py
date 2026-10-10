@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / "demo/web"
-FILES = ["index.html", "style.css", "app.js", "model.js", "village.js", "sw.js", "favicon.svg", "catalog.json", "simulation.js", "workspace.js", "public-scenarios.json"]
+FILES = ["index.html", "style.css", "app.js", "model.js", "case-view.js", "village.js", "sw.js", "favicon.svg", "catalog.json", "simulation.js", "workspace.js", "public-scenarios.json"]
 FILES += ["insights.css", "insights.js", "insights-model.js", "insights-rules.json", "insights-corpus.json", "insights-lab.json"]
 
 

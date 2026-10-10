@@ -39,3 +39,11 @@ test('untrusted content stays literal and read gates do not clutter the timeline
   assert.equal(shouldShow({t:'withheld'}),true);
   assert.equal(/\.innerHTML\s*=/.test(readFileSync(new URL('../demo/web/app.js',import.meta.url),'utf8')),false);
 });
+
+test('recorded participant turns never count as a current human waiting on the village',()=>{
+  const replay=createTicket('recording','replay');reduceEvent(replay,{v:1,seq:1,t:'awaiting_player',role:'tenant'});
+  assert.equal(metrics([replay]).humans,0);
+  const live=createTicket('live','live');reduceEvent(live,{v:1,seq:1,t:'awaiting_player',role:'operator'});
+  assert.equal(metrics([replay,live]).humans,1);
+  reduceEvent(live,{v:1,seq:2,t:'episode_end'});assert.equal(metrics([replay,live]).humans,0);
+});

@@ -28,6 +28,7 @@ lint:
 	node --check demo/web/app.js
 	node --check demo/web/village.js
 	node --check demo/web/model.js
+	node --check demo/web/case-view.js
 	node --check demo/web/simulation.js
 	node --check demo/web/workspace.js
 	node --check demo/web/sw.js

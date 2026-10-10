@@ -1,3 +1,4 @@
+import {caseAction} from './case-view.js';
 // Original procedural pixel art. All coordinates are logical pixels; no external assets.
 const HOUSES=[
   {id:'P-001',x:126,y:115,color:'#c88361',roof:'#a96d52',label:'HEATH ROAD'},
@@ -14,8 +15,8 @@ function random(seed){let a=seed;return()=>{a=(a*1664525+1013904223)>>>0;return 
 // A finished recording is not proof of a resolved maintenance case.
 export function homeSignal(tickets,property){
   const cases=tickets.filter(t=>t.property===property),active=cases.filter(t=>!t.ended);
-  const waiting=active.filter(t=>t.pending&&t.mode!=='replay').length;
-  const review=cases.filter(t=>t.ended&&t.outcome==='needs_review').length;
+  const waiting=active.filter(t=>caseAction(t).playable).length;
+  const review=cases.filter(t=>{const action=caseAction(t);return action.needsReview||action.missingDocument||action.overdue||['declined','no_access','clarification'].includes(action.kind);}).length;
   let state='quiet',label='No cases';
   if(waiting){state='attention';label=`Your turn · ${waiting}`;}
   else if(review){state='attention';label=`Review · ${review}`;}

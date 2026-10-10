@@ -1,5 +1,6 @@
 import {Village} from './village.js';
 import {createTicket, reduceEvent, metrics, parseReplay, shouldShow, humanize, LABELS, STAGES} from './model.js';
+import {caseOverview, caseAction, formatCaseTime, decisionEvidence} from './case-view.js';
 import {createIntelligence} from './insights.js';
 import {Simulation, participantsFor, simulationConfigFor, ROLES, STORAGE_KEY, caseState, filterCases} from './simulation.js';
 import {homeRows,filterHomes,peopleRows,filterPeople,resetLocal,readResetBackup,restoreLocal,RESET_KEY,REVIEW_KEY} from './workspace.js';
@@ -10,7 +11,7 @@ function button(text,cls,action){const node=el('button',cls,text);node.type='but
 const tickets=new Map(), recordings=new Map(), simulations=new Map();
 let catalog,selectedId=null,paused=false,speed=1,live=false,stream=null,toastTimeout,bannerTimeout,renderScheduled=false;
 let intelligence,intelligencePromise,publicScenarios=[],currentView='village',caseFilter='all',caseQuery='',storageWarning=false,storageBlocked=false;
-let peopleRefresh=null,resetInProgress=false;
+let peopleRefresh=null,resetInProgress=false,cloud=false;
 const params=new URLSearchParams(location.search);
 const symbols={routine:'⌁',approval:'£',fraud:'◇',vulnerable:'✳','public-keys':'⚿','public-fan':'✳','public-warranty':'◷'};
 const village=new Village($('village'),showProperty,role=>showPeople({role}));
@@ -171,7 +172,7 @@ function render(){
     tile.setAttribute('aria-label',`${ticket.scenario.title || ticket.issue || 'New story'}, ${ticket.mode}`);tile.setAttribute('aria-pressed',String(ticket.id===selectedId));
     tile.append(el('span',`tile-icon ${ticket.scenario.color || 'sage'}`,symbols[ticket.scenario.id] || '⌂'));
     const copy=el('div');copy.append(el('h3','',ticket.scenario.title || (ticket.issue || 'New story').slice(0,55)),el('p','',propertyById(ticket.property)?.address || ticket.property));
-    const state=ticket.pending?'Your turn':ticket.outcome==='success'?'Success · all checks passed':ticket.ended?'Finished · see outcome':ticket.events.length?'With '+ownerName(ticket):'Starting soon';
+    const action=caseAction(ticket),state=action.playable?'Your turn':ticket.outcome==='success'?'Scenario checks passed':ticket.ended?'Session finished · inspect outcome':ticket.events.length?'With '+ownerName(ticket):'Starting soon';
     copy.append(el('span','tile-badge',`${ticket.mode==='replay'?'↺ REPLAY':ticket.mode==='sim'?'◉ SIM':'● LIVE'} · ${state}`));tile.append(copy);
     const progress=el('div','tile-progress'),bar=el('span');bar.style.width=`${Math.round((ticket.mode!=='live'?ticket.progress:ticket.ended?1:.35)*100)}%`;progress.append(bar);tile.append(progress);return tile;
   }));
@@ -201,9 +202,10 @@ function renderTicket(ticket){
   $('ticket-id').textContent=ticket.events[0]?.ticket || 'NEW TICKET';$('ticket-mode').textContent=ticket.mode==='replay'?'↺ Recorded run':ticket.mode==='sim'?'◉ Simulation · no LLM calls':'● Real agent · mock world';
   $('ticket-title').textContent=ticket.scenario.title || ticket.issue || 'A new story';$('ticket-address').textContent=propertyById(ticket.property)?.address || ticket.property;
   $('owner-name').textContent=ownerName(ticket);$('owner-avatar').textContent={agency:'D',tenant:'T',landlord:'L',contractor:'C',operator:'O'}[ticket.owner] || 'D';
-  $('owner-note').textContent=ticket.pending?'Waiting for your reply':ticket.ended?'Final case owner':ticket.owner==='agency'?'Reading, checking, taking care':'The next step is with this person';
-  $('case-result').hidden=!ticket.ended;$('case-result').className='case-result '+(ticket.outcome==='success'?'success':'');
-  $('case-result').textContent=ticket.outcome==='success'?'✓ Success · all simulated checks passed':ticket.endReason||'Run finished';
+  $('owner-note').textContent=caseAction(ticket).playable?'Waiting for your reply':ticket.ended?'Final recorded owner':ticket.mode==='replay'&&ticket.pending?'Recorded participant turn · read only':ticket.owner==='agency'?'Reading, checking, taking care':'The next step is with this person';
+  renderOverview(ticket);
+  $('case-result').hidden=!ticket.ended;$('case-result').className='case-result';
+  $('case-result').textContent=ticket.outcome==='success'?'Scenario checks passed · work, closure and money are shown separately above.':ticket.endReason||'Run finished';
   $('case-source').hidden=!ticket.scenario.source;$('case-source').textContent=ticket.scenario.source?`${ticket.scenario.source.case} · View public case evidence ↗`:'';
   $('case-controls').textContent=ticket.controls?ROLES.map(r=>ticket.mode==='sim'&&r==='contractor'&&!ticket.participants?.contractor?
     ticket.ended?'Contractor: not involved':`Contractor (if needed): ${ticket.controls[r]==='human'?'You':'AI'}`:
@@ -214,8 +216,9 @@ function renderTicket(ticket){
   timeline.replaceChildren(...ticket.events.filter(shouldShow).map(timelineItem));
   if(wasBottom)timeline.scrollTop=timeline.scrollHeight;
   const state=ticket.status;$('stage-badge').textContent=humanize(ticket.stage);
-  const current=STAGES.indexOf(ticket.stage);
-  $('stages').replaceChildren(...STAGES.map((stage,index)=>el('li',index===current?'current':current>=0&&index<current?'past':'',humanize(stage))));
+  const journey=ticket.mode==='sim'&&ticket.scenario.kind==='fan'?['intake','landlord_approval','result','final_checks','closed']:STAGES;
+  const current=journey.indexOf(ticket.stage);
+  $('stages').replaceChildren(...journey.map((stage,index)=>el('li',index===current?'current':current>=0&&index<current?'past':'',humanize(stage))));
   $('legacy-note').textContent=state?.stage==='unknown'?'This older recording did not include a workflow stage or completion checklist. No stage has been inferred.':state?.hold_reason || '';
   $('recap').textContent=state?.recap || 'The agent is working through the evidence.';$('next-step').textContent=state?.next_step || (ticket.ended?'Read the handover and recorded decision below.':'The next step will appear when the agent records its decision.');
   const items=(state?.dod || []).map(item=>{const li=el('li');li.append(el('span','',item.status==='done'?'✓':item.status==='skipped'?'−':'○'),el('div','',item.text || humanize(item.item)));li.title=item.evidence || '';return li;});
@@ -228,9 +231,39 @@ function renderTicket(ticket){
   $('ticket-footer-text').textContent=ticket.ended?'Run finished. Follow the recorded ticket status.':'Every action has a receipt.';
   $('stop-ticket').hidden=ticket.ended;
   const prompt=['live','sim'].includes(ticket.mode)?ticket.pending:null;$('player-card').hidden=!prompt;
-  if(prompt && $('player-card').dataset.prompt!==prompt.prompt_id){$('player-card').dataset.prompt=prompt.prompt_id;$('player-title').textContent=`Reply as ${prompt.actor_name||LABELS[prompt.role]||prompt.role}`;$('player-prompt').textContent=prompt.prompt;$('player-reply').value='';$('player-reply').required=ticket.mode==='live';$('player-reply').placeholder=ticket.mode==='sim'?'Optional note (recorded as text; the selected decision controls the simulation)…':'Write your reply…';
+  if(prompt && $('player-card').dataset.prompt!==`${ticket.id}:${prompt.prompt_id}`){
+    $('player-card').dataset.prompt=`${ticket.id}:${prompt.prompt_id}`;$('player-title').textContent=`Reply as ${prompt.actor_name||LABELS[prompt.role]||prompt.role}`;$('player-prompt').textContent=prompt.prompt;
+    $('player-reply').value='';$('player-reply').required=ticket.mode==='live';$('player-reply').placeholder=ticket.mode==='sim'?'Optional note (recorded as text; the selected decision controls the simulation)…':'Write your reply…';
     $('player-decision-field').hidden=ticket.mode!=='sim';$('player-decision').replaceChildren(...[...(ticket.mode==='sim'?[{id:'',label:'Choose your decision…'}]:[]),...(prompt.choices||[])].map(c=>{const option=el('option','',c.label);option.value=c.id;return option;}));$('player-decision').required=ticket.mode==='sim';
-    $('player-suggestions').replaceChildren(...(ticket.mode==='sim'?[]:prompt.suggested || []).map(text=>button(text.slice(0,90)+(text.length>90?'…':''),'',()=>{$('player-reply').value=text;})));}
+    $('player-suggestions').replaceChildren(...(ticket.mode==='sim'?[]:prompt.suggested || []).map(text=>button(text.slice(0,90)+(text.length>90?'…':''),'',()=>{$('player-reply').value=text;})));
+    const evidence=$('decision-evidence');evidence.replaceChildren(el('summary','','Evidence available for this decision'));
+    for(const item of decisionEvidence(ticket))evidence.append(button(`#${item.seq} · ${item.role}: ${item.body.slice(0,120)}${item.body.length>120?'…':''}`,'evidence-link',()=>openText(item.body)));
+    if(prompt.source_ref)evidence.append(el('p','muted',`Public scenario reference: ${prompt.source_ref}. Historical source material is available above; it is not proof of a current real-world action.`));
+    if(!decisionEvidence(ticket).length)evidence.append(el('p','muted','No participant message has been recorded yet. Review the timeline and handover.'));
+    $('decision-choices').replaceChildren(...(ticket.mode==='sim'?prompt.choices||[]:[]).map(choice=>{
+      const node=button('','decision-choice',()=>{$('player-decision').value=choice.id;updateDecisionPreview();});node.dataset.choice=choice.id;node.setAttribute('aria-pressed','false');
+      node.append(el('b','',choice.label),el('span','',choice.consequence||'This older turn has no recorded consequence preview. Review the scenario before confirming.'));return node;
+    }));
+    updateDecisionPreview();
+  }
+}
+function renderOverview(ticket){
+  const facts=caseOverview(ticket),container=$('case-overview');
+  container.replaceChildren(el('p','overview-source',facts.qualifier));
+  const grid=el('dl','case-facts');
+  for(const [key,label] of [['session','Session'],['work','Work outcome'],['closure','Case closure'],['financial','Financial status']]){
+    const item=el('div','case-fact'),value=key==='session'?{label:facts.session,detail:'Session state is separate from the case outcome.'}:facts[key];
+    item.append(el('dt','',label),el('dd','',value.label),el('p','',value.detail));
+    if(value.evidence){const event=ticket.events.find(e=>e.seq===value.evidence);if(event)item.append(button(`Evidence #${value.evidence} ↗`,'text-button',()=>openText(event.body||event.recap||event.reason||'Recorded status')));}
+    grid.append(item);
+  }
+  container.append(grid);
+}
+function updateDecisionPreview(){
+  const ticket=selected(),choice=ticket?.pending?.choices?.find(c=>c.id===$('player-decision').value),isSim=ticket?.mode==='sim';
+  $('decision-consequence').textContent=isSim?choice?.consequence||'Choose a decision to see what will happen. Your optional note does not change the selected branch.':'Your reply becomes evidence for the live agent. Its policy gate decides subsequent actions; no effect is guaranteed by sending a reply.';
+  $('send-reply').textContent=isSim?choice?`${choice.label} →`:'Choose a decision above':'Send reply for agent review →';
+  for(const node of $('decision-choices').children)node.setAttribute('aria-pressed',String(node.dataset.choice===choice?.id));
 }
 function renderPresenter(){
   const ticket=selected();if(!$('presenter-panel').hidden){const usage=ticket?.events.filter(e=>['agent_thinking','director_usage'].includes(e.t)).reduce((sum,e)=>sum+(e.usage?.input||0)+(e.usage?.output||0),0) || 0;$('presenter-panel').textContent=`SESSION ${ticket?.id || '—'}  |  API ${ticket?.mode==='live'?'ON':'OFF'}  |  TICK ${ticket?.events.at(-1)?.tick || 0}  |  EVENTS ${ticket?.events.length || 0}  |  TOKENS ${usage.toLocaleString()}  |  ${paused?'PAUSED':speed+'×'}`;}
@@ -297,13 +330,28 @@ function renderCases(){
   const rows=filterCases([...tickets.values()],caseFilter,caseQuery),container=$('case-list');
   $('case-count').textContent=`${rows.length} of ${tickets.size} cases`;
   container.replaceChildren(...rows.map(ticket=>{
-    const card=el('article','case-row'),copy=el('div'),state=caseState(ticket);
-    copy.append(el('span',`tag ${state}`,`${ticket.mode.toUpperCase()} · ${state==='waiting'?'YOUR TURN':state.toUpperCase()}`),el('h3','',ticket.scenario.title||ticket.issue||'New case'),el('p','',`${ticket.provenance?.case||ticket.property} · ${propertyById(ticket.property)?.address||ticket.property}`),el('p','',ticket.pending?`Waiting for ${ownerName(ticket)}`:ticket.endReason||`Next: ${ownerName(ticket)}`));
-    if(ticket.controls)copy.append(el('p','muted',ROLES.map(r=>`${LABELS[r]}: ${ticket.controls[r]==='human'?'You':'AI'}`).join(' · ')));
-    card.append(copy,button(ticket.pending?'Take your turn →':'Open case →','button secondary',()=>{showView('village');select(ticket.id);$('ticket-title').scrollIntoView({behavior:'smooth',block:'center'});}));return card;
+    const card=el('article','case-row'),copy=el('div','case-copy'),state=caseState(ticket),action=caseAction(ticket),facts=caseOverview(ticket);
+    copy.append(el('span',`tag ${state}`,`${ticket.mode.toUpperCase()} · ${state==='waiting'?'YOUR TURN':state==='success'?'SCENARIO CHECKS PASSED':state.toUpperCase()}`),el('h3','',ticket.scenario.title||ticket.issue||'New case'),el('p','',`${ticket.provenance?.case||ticket.property} · ${propertyById(ticket.property)?.address||ticket.property}`));
+    if(action.overdue)copy.append(el('span','queue-alert','Overdue at recorded scenario time'));
+    if(action.missingDocument)copy.append(el('span','queue-alert','Supporting evidence requested'));
+    if(action.kind==='declined')copy.append(el('span','queue-alert','Approval declined'));
+    const factsLine=el('p','queue-outcomes',`${facts.work.label} · ${facts.closure.label} · ${facts.financial.label}`);copy.append(factsLine);
+    const details=el('dl','queue-details');
+    for(const [label,value] of [['Next owner',action.owner],['Why we are waiting',action.reason],['Next action',action.nextStep],['Recorded since',`${formatCaseTime(action.since)} · scenario time`],['Next contact / deadline',action.deadline?formatCaseTime(action.deadline):'Not agreed / not recorded'],['Deadline source',action.deadlineSource],['Visit',action.visit]]){
+      const pair=el('div');pair.append(el('dt','',label),el('dd','',value));details.append(pair);
+    }
+    copy.append(details);
+    if(action.recorded)copy.append(el('p','muted','Recorded context only. Opening this case does not send a reply or create an action.'));
+    card.append(copy,button(action.label,'button secondary',()=>{
+      showView('village');select(ticket.id);
+      if(action.playable)$('player-card').scrollIntoView({behavior:'smooth',block:'center'});
+      else if(action.needsReview){$('tab-status').click();$(ticket.status?.handover?'handover':'status-tab').scrollIntoView({behavior:'smooth',block:'center'});}
+      else $('ticket-title').scrollIntoView({behavior:'smooth',block:'center'});
+    }));return card;
   }));
   if(!rows.length)container.append(el('p','notice','No cases match this view. Start a new simulation or change the filter.'));
 }
+
 function showProperty(id){
   if(!catalog)return;const property=propertyById(id);if(!property)return;
   const active=[...tickets.values()].findLast(t=>t.property===id);if(active)select(active.id);
@@ -357,14 +405,15 @@ function showPeople(initial={}){
 function showHelp(){const body=showDialog('WELCOME TO LETTINGS VILLAGE','Watch. Play. Follow the evidence.');const list=el('ol','help-list');for(const text of ['Start the village launches three public-case simulations and a fraud scenario. A green success appears only after all closure checks.','Cases shows active, waiting, successful and finished sessions. Browser simulations persist across reloads; server live sessions reconnect while that server is running.','New case lets you choose a home and set Tenant, Landlord, Contractor and Dwelly operator independently to AI or You. You can play several roles in one browser.','Simulation AI is scripted and calls no API. Choose explicit decisions for manual turns: declining approval or reporting incomplete work keeps a case open.','Stories also contains four authentic recorded agent decisions. The real LLM mode is available when its server is connected. These evidence types stay separate in Intelligence.','Use Space to pause simulations/replays, 1 / 2 / 4 to change speed and ↠ for the next turn. Export saves an event journal; imported journals play back without restoring player control.'])list.append(el('li','',text));body.append(list);}
 
 async function api(path,body){const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const result=await response.json();if(!response.ok)throw new Error(result.error || 'The office could not complete this request.');return result;}
-async function startLive(config,scenario){const result=await api('/api/sessions',config);if(!tickets.has(result.id))tickets.set(result.id,createTicket(result.id,'live',scenario || {title:config.issue,property:config.property,color:'sage'}));const ticket=tickets.get(result.id);ticket.controls=config.controls;select(result.id);closeDialog();toast('The report is in. The real agent is taking a look.');}
+async function startLive(config,scenario){const result=await api('/api/sessions',config);if(!tickets.has(result.id))tickets.set(result.id,createTicket(result.id,'live',scenario || {title:config.issue,property:config.property,color:'sage'}));const ticket=tickets.get(result.id);ticket.controls=config.controls;select(result.id);closeDialog();if(cloud)await connectLive();toast('The report is in. The real agent is taking a look.');}
 async function connectLive(){
   const response=await fetch('/api/sessions');if(!response.ok)return;const snapshot=await response.json();
+  if(snapshot.container_running===false){stream?.close();stream=null;for(const ticket of tickets.values())if(ticket.mode==='live'&&!ticket.ended){ticket.ended=true;ticket.endReason='Live runtime stopped; its saved journal is available in Replay.';}render();$('connection').textContent='Live agent ready · starts with a new case';return;}
   for(const raw of snapshot.sessions){const ticket=tickets.get(raw.id) || createTicket(raw.id,'live',scenarioById(raw.config.scenario) || {title:raw.config.issue,property:raw.config.property});ticket.controls=raw.config.controls;tickets.set(raw.id,ticket);for(const event of raw.events)handleEvent(ticket,event,false);}
   stream?.close();stream=new EventSource(`/api/events?after=${snapshot.cursor}`);
   stream.onmessage=message=>{try{const event=JSON.parse(message.data);if(event.t==='workspace_reset'){for(const id of event.session_ids)if(tickets.get(id)?.mode==='live')tickets.delete(id);if(!tickets.has(selectedId))selectedId=[...tickets.keys()][0]||null;render();return;}let ticket=tickets.get(event.session);if(!ticket){ticket=createTicket(event.session,'live',{title:event.issue,property:event.property});tickets.set(event.session,ticket);}handleEvent(ticket,event);}catch(error){showError(error);}};
   stream.addEventListener('reset',()=>{stream.close();connectLive().catch(showError);});
-  stream.onerror=()=>{$('connection').textContent='Reconnecting to the office…';};
+  stream.onerror=()=>{$('connection').textContent='Reconnecting to the office…';if(cloud){stream.close();setTimeout(()=>connectLive().catch(showError),2000);}};
   stream.onopen=()=>{$('connection').replaceChildren(el('i'),document.createTextNode('Real agent connected'));$('connection').classList.add('live');};
   render();
 }
@@ -377,6 +426,10 @@ function showReplay(error=''){
   body.append(el('h3','cast-title','Or watch a built-in recording'));
   const list=el('div','scenario-grid');for(const s of catalog.scenarios.filter(s=>s.replay)){const card=button('','scenario-choice',()=>startReplay(s).then(()=>showView('village')).catch(e=>showReplay(e.message)));card.append(el('span','tag','RECORDED AGENT RUN'),el('h3','',s.title),el('p','',s.description));list.append(card);}body.append(list);
   body.append(el('p','muted','A BI evidence ledger (.json) belongs in Intelligence → Import ledger, not Replay.'));
+  if(cloud){
+    const archive=el('section');archive.append(el('h3','','Saved live cases'),el('p','muted','Loading shared cloud recordings…'));body.append(archive);
+    fetch('/api/recordings').then(async response=>{if(!response.ok)throw new Error('Sign in again to load cloud recordings.');const rows=await response.json();archive.replaceChildren(el('h3','','Saved live cases'));if(!rows.length)archive.append(el('p','muted','No cloud recordings yet.'));for(const row of rows){archive.append(button(`${row.title} · ${row.id.slice(0,8)} · ${row.events} events`,'button',async()=>{try{const response=await fetch(`/api/sessions/${row.id}/recording`);if(!response.ok)throw new Error('This recording could not be loaded.');await importRecording(await response.blob());}catch(error){showReplay(error.message);}}));}}).catch(error=>{archive.replaceChildren(el('p','error-notice',error.message));});
+  }
 }
 function localWorkspaceSnapshot(includeBI){
   return {simulations:[...simulations.values()].map(sim=>sim.snapshot()),
@@ -454,7 +507,8 @@ $('dismiss-safety').addEventListener('click',()=>$('safety-banner').hidden=true)
 $('presenter').addEventListener('click',()=>{const on=document.body.classList.toggle('presenting');$('presenter-panel').hidden=!on;renderPresenter();});
 $('expand-map').addEventListener('click',()=>toggleMap().catch(showError));
 for(const name of ['story','status'])$(`tab-${name}`).addEventListener('click',()=>{for(const tab of ['story','status']){$(`${tab}-tab`).hidden=tab!==name;$(`tab-${tab}`).classList.toggle('active',tab===name);$(`tab-${tab}`).setAttribute('aria-selected',String(tab===name));}});
-$('reply-form').addEventListener('submit',async event=>{event.preventDefault();const ticket=selected(),prompt=ticket?.pending;if(!prompt)return;const submit=$('reply-form').querySelector('button');submit.disabled=true;try{if(ticket.mode==='sim'){simulations.get(ticket.id).answer(prompt.role,prompt.prompt_id,$('player-decision').value,$('player-reply').value);persistSimulations();}else await api(`/api/sessions/${ticket.id}/message`,{role:prompt.role,prompt_id:prompt.prompt_id,body:$('player-reply').value});ticket.pending=null;render();}catch(error){showError(error);}finally{submit.disabled=false;}});
+$('player-decision').addEventListener('change',updateDecisionPreview);
+$('reply-form').addEventListener('submit',async event=>{event.preventDefault();const ticket=selected(),prompt=ticket?.pending;if(!prompt)return;const submit=$('send-reply');submit.disabled=true;try{if(ticket.mode==='sim'){simulations.get(ticket.id).answer(prompt.role,prompt.prompt_id,$('player-decision').value,$('player-reply').value);persistSimulations();}else await api(`/api/sessions/${ticket.id}/message`,{role:prompt.role,prompt_id:prompt.prompt_id,body:$('player-reply').value});ticket.pending=null;render();}catch(error){showError(error);}finally{submit.disabled=false;}});
 $('stop-ticket').addEventListener('click',async()=>{const ticket=selected();if(!ticket)return;try{if(ticket.mode==='live')await api(`/api/sessions/${ticket.id}/cancel`,{});else if(ticket.mode==='sim'){simulations.get(ticket.id).close('cancelled');persistSimulations();}else{ticket.running=false;ticket.ended=true;ticket.endReason='Playback stopped by presenter';}render();}catch(error){showError(error);}});
 $('replay-file').addEventListener('change',()=>{importRecording($('replay-file').files[0]).catch(e=>showReplay(`Could not load this recording: ${e.message}`));$('replay-file').value='';});
 document.addEventListener('keydown',event=>{if(['INPUT','TEXTAREA','SELECT','BUTTON'].includes(event.target.tagName)||$('dialog').open)return;if(event.code==='Space'){event.preventDefault();$('pause').click();}if(['1','2','4'].includes(event.key)){speed=Number(event.key);$('speed').value=event.key;renderPresenter();}});
@@ -469,11 +523,16 @@ async function boot(){
     for(const l of catalog.world.landlords){const option=el('option','',l.name);option.value=l.id;$('home-landlord').append(option);}
     render();
     if(['#intelligence','#cases','#homes'].includes(location.hash))showView(location.hash.slice(1));
-    try{const response=await fetch('/api/health');if(response.ok){const health=await response.json();live=health.live;if(live)await connectLive();}}catch{/* Static/offline hosting intentionally has no live API. */}
+    try{const response=await fetch('/api/health');if(response.status===401){location.assign('/login');return;}if(response.ok){const health=await response.json();live=health.live;cloud=!!health.cloud;if(live||cloud)await connectLive();}}catch{/* Static/offline hosting intentionally has no live API. */}
     if(params.get('presenter')==='1')$('presenter').click();
     const replay=params.get('replay');if(replay){const id=replay.replace(/\.jsonl$/,'');const scenario=scenarioById(id);if(scenario)await startReplay(scenario);else toast('Unknown bundled replay. Use Replay to import a local JSONL file.');}
-    $('connection').replaceChildren(el('i'),document.createTextNode(live?'Real agent connected':'Simulation ready · API off'));
-    if('serviceWorker' in navigator){try{await navigator.serviceWorker.register('/sw.js');await navigator.serviceWorker.ready;$('offline-status').textContent='Offline village available on this device';}catch{$('offline-status').textContent='Local files ready · browser caching unavailable';}}
+    $('connection').replaceChildren(el('i'),document.createTextNode(live?(cloud?'Live agent available · starts on demand':'Real agent connected'):'Simulation ready · API off'));
+    if(cloud){
+      $('offline-status').textContent='Private cloud demo · live sessions last up to 15 minutes';
+      const logout=el('form');logout.method='post';logout.action='/logout';const submit=el('button','button','Sign out');submit.type='submit';logout.append(submit);$('offline-status').parentElement.append(logout);
+      if('serviceWorker' in navigator)for(const registration of await navigator.serviceWorker.getRegistrations())await registration.unregister();
+      if('caches' in window)for(const key of await caches.keys())if(key.startsWith('lettings-'))await caches.delete(key);
+    }else if('serviceWorker' in navigator){try{await navigator.serviceWorker.register('/sw.js');await navigator.serviceWorker.ready;$('offline-status').textContent='Offline village available on this device';}catch{$('offline-status').textContent='Local files ready · browser caching unavailable';}}
   }catch(error){$('ticket-empty').replaceChildren(el('h2','','The village could not open.'),el('p','',error.message),button('Try again','button primary',()=>location.reload()));}
 }
 $('case-source').addEventListener('click',()=>showSource(selected()?.scenario));

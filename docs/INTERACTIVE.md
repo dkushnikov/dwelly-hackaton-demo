@@ -5,12 +5,26 @@ The browser supports complete, deterministic simulations alongside the original 
 ## Try it
 
 1. Open the village and click **Start the village**. This fixed pack adds PM-021, PM-017, PM-025 and a synthetic fraud case concurrently with all participants automatic. There is no random selection, and existing sessions stay. The entire pack needs four free slots. Use 4× to speed up the presentation.
-2. Open **Cases** to filter active, waiting, successful and other finished runs. Search by title, public case ID or property. Open a case to inspect its timeline, source evidence and completion checklist.
+2. Open **Cases** for the next-action queue. Filter by active, your turn, needs a human, waiting for a reply, missing evidence, overdue in scenario time, scenario checks passed, or other finished runs. Search by title, public case ID, property, owner or waiting reason. Open the specific decision, handover or outcome from its row.
 3. Choose **New case** or a story. Select the home, then set each role to **AI** or **You** independently. The home identifies the tenant and landlord. Operator routing and contractor selection happen inside the case; choosing **You** reserves control of a role when it becomes involved. Multiple manual roles use the same browser, taking turns.
-4. A manual turn pauses that case. Select an explicit decision and optionally add a note. The simulator does not interpret free-form notes. A negative choice keeps the case open at the unresolved step; confirm later or stop the session.
+4. A manual turn pauses that case. Read the current question, recent participant evidence and each choice’s consequences. Select a contextual choice, inspect the preview, and confirm it with the named action button. Optionally add a note; the simulator does not interpret free-form notes. A refusal or supporting-evidence request keeps the case open at the unresolved step and appears in the queue; confirm later or stop the session.
 5. Reload to resume simulations, including pending turns. Export JSONL for audit or playback. Importing JSONL does not restore interactive control.
 
-The status badge distinguishes **Success** from a merely finished, cancelled or unresolved run. The production agent's old replays remain unchanged, including their unrecorded checklist/stage fields.
+The **Scenario checks passed** badge describes the simulation run. The case overview separately shows session state, work outcome, case closure and financial status. A finished recording never implies a completed repair, closed case or paid invoice. The production agent's old replays remain unchanged, including their unrecorded checklist/stage fields.
+
+
+## Case Review: first implementation
+
+This iteration implements UI-01 (separate outcomes), UI-02 (the next-action queue), and UI-05 (manual choices with consequences) from [Case Review](CASE_REVIEW.md).
+
+- **Independent facts:** work may be complete while closure is pending; closure may be recorded while payment remains unknown. Evidence links open the actual session event. PM-017 reports *working after advice* and *closed without payment*, without inferring a zero charge. PM-021 keeps closure pending after the lock repair until office key return and final review. PM-025 separates investigation, confirmed manufacturer cover and a completion report stating no landlord charge. No simulation claims that an invoice was paid.
+- **Actionable queue:** every row shows the next owner, waiting reason, next action, recorded waiting time, deadline/source and visit information. A declined scope and a request for evidence remain visible after reload. Recorded overdue obligations sort first, then human decisions, missing evidence, active cases and finished sessions. A missing deadline says *Not agreed / not recorded*. Comparisons use the latest valid `sim_time` in that case; wall-clock time and playback milliseconds do not create overdue work.
+- **Contextual decisions:** the three public scenarios offer a supporting-evidence request in addition to their specific positive and negative choices. A preview states what will continue and what stays blocked. Recent participant messages are available beside the decision; the full timeline and historical source remain separate. Warranty investigation does not authorise chargeable work. A negative fan answer keeps the scenario open and does not invent an automatic contractor branch.
+- **Consistent map attention:** playable turns, missing evidence, explicit refusals and recorded human handovers use the same action model as Cases. A recorded handover can be inspected but never becomes an interactive replay turn.
+
+The simulator adds `status.case_facts` and `status.next_action` to new browser journals and consequence text to each manual choice. These fields are explicitly marked simulated. The live agent contract currently supplies owner, stage, hold reason, next step and handover; the UI uses an explicit handover deadline where available, but does not invent separate live work/payment results or confirmed visit times. Older saved simulations without the new fields show the available recorded status and unknown outcomes until new evidence is emitted. An older pending turn may have no consequence preview.
+
+This is not the full evidence workspace or approval-scope editor. Document availability/review states and conflicts (UI-03), conditional approval/quote versions (UI-04), editable appointments, linked defects and invoice reconciliation remain later iterations. Supporting-evidence requests here pause the existing scenario; they do not fetch documents or contact a real participant.
 
 ## Public cases and success checks
 
@@ -51,7 +65,7 @@ Compatibility tests exercise multiple human roles against the pinned real harnes
 
 ## Persistence and limits
 
-The map labels every home: grey for no cases or unverified finished runs, amber for active runs, red for a playable manual turn or an explicit `needs_review` outcome, and green when all of that home's cases ended with an explicit success outcome. Recorded prompts are never playable turns. The label, tooltip and accessible name expose counts; colour is not the only signal. Simulation success remains simulated evidence. Click the landlords or contractors meeting place to open People with that role selected; these are directory landmarks, not extra rental properties.
+The map labels every home: grey for no cases or unverified finished runs, amber for active runs, red for a playable manual turn, a recorded human review, missing evidence, declined/unclear decisions or an overdue recorded obligation, and green when all of that home's cases ended with an explicit success outcome. Recorded prompts are never playable turns. The label, tooltip and accessible name expose counts; colour is not the only signal. Simulation success remains simulated evidence. Click the landlords or contractors meeting place to open People with that role selected; these are directory landmarks, not extra rental properties.
 
 **Full screen** uses the browser fullscreen API where available and otherwise expands the map inside the viewport. Escape or the exit button restores the workspace. Home and People dialogs work above the expanded map, and opening a case list exits it. The canvas renders at an integer backing scale based on display density, capped at 4× (3072×1920); labels above the homes are native text. This is separate from the existing presenter layout.
 

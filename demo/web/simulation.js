@@ -1,3 +1,6 @@
+import {caseState, filterCaseQueue} from './case-view.js';
+export {caseState};
+
 // Deterministic, browser-local roleplay. No provider calls or real-world actions.
 // A success is earned from explicit simulated evidence, never from elapsed time.
 export const ROLES=['tenant','landlord','contractor','operator'];
@@ -89,15 +92,46 @@ export function planFor(scenario,issue=''){
   return plan;
 }
 
+// Choice IDs remain compatible with saved turns; the added text describes the actual branch.
+export function decisionChoices(s,kind){
+  const consequences={
+    approval:['Record approval for this stated scope. Provider selection follows; no work order is issued until provider and access are confirmed.','Keep approval unresolved. No contractor dispatch or closure; the same role must reconsider the scope.'],
+    advice:['Send the switch instructions to the tenant. Ask whether the fan works; no contractor or invoice is created.','Keep the operating instructions unresolved. Ask the landlord for clarification before checking the fan.'],
+    working:['Record the tenant’s confirmation. The operator can review closure without a visit. This does not prove a zero charge.','Record that the fan still fails. Keep the case open with the tenant; this scenario does not automatically book a repair.'],
+    'warranty-uncertain':['Record the uncertainty and check manufacturer cover next. No spend or charge-free repair is authorised by this answer.','Keep warranty investigation open. No work order may be issued until cover is confirmed.'],
+    warranty:['Record manufacturer cover as simulated evidence. Continue to provider and access confirmation; no payment is made.','Keep cover unconfirmed and request warranty evidence. No work order or paid repair is authorised.'],
+    provider:['Record acceptance and a proposed morning window. The tenant must confirm access before dispatch.','Keep provider acceptance unresolved. No work order is issued.'],
+    access:['Record access confirmation. The next step may issue one simulated work order if all dispatch checks pass.','Keep access unresolved and request a new arrangement. No work order is issued; a replacement time is not invented.'],
+    parts:['Record the parts wait. The repair remains incomplete until a separate completion report is confirmed.','Keep the parts update unresolved. Completion and closure remain blocked.'],
+    completion:['Record a simulated completion report. Remaining key-return, resident or operator checks must still pass before closure.','Record incomplete work. Keep the case open; no completion or successful closure is claimed.'],
+    keys:['Record physical office key return and the four-key distribution. Final operator review follows.','Keep office key return unconfirmed, even if the lock is repaired. Closure remains blocked.'],
+    review:['Approve closure once every simulated check is present. Close the case next; no invoice settlement or payment is created.','Reject closure. Keep the case open for the operator to obtain the missing evidence.'],
+  };
+  const pair=consequences[s.id]||['Record this confirmation and continue to the next scenario check.','Keep this check unresolved. No later scenario action or closure occurs.'];
+  const labels={advice:['Share switch instructions','Instructions unclear'], 'warranty-uncertain':['Check manufacturer cover','Need warranty records'],warranty:['Confirm manufacturer cover','Cover not confirmed'],parts:['Parts ordered; repair pending','Parts update missing'],keys:['Office keys received','Office keys still missing']};
+  const choices=s.choices.map((c,index)=>({...c,label:labels[s.id]?.[index]||c.label,consequence:pair[c.accept?0:1],
+    wait_kind:c.accept?null:['warranty','warranty-uncertain','parts','review'].includes(s.id)?'missing_document':s.id==='approval'?'declined':s.id==='access'?'no_access':'clarification'}));
+  if(['fan','keys','warranty'].includes(kind))choices.push({id:'clarify',label:'Request supporting evidence',accept:false,wait_kind:'missing_document',
+    body:`Supporting evidence is missing for this decision: ${s.prompt} Keep this step open.`,
+    consequence:'Record an evidence request and keep this decision open with the same participant. No later action or closure occurs until a new confirmation.'});
+  if(kind==='warranty'&&s.id==='approval'){
+    choices[0].label='Investigate warranty cover';
+    choices[0].body='Please investigate the previous installation and manufacturer cover. I have not authorised chargeable work.';
+    choices[0].consequence='Authorise warranty investigation only. Manufacturer cover, provider acceptance and access must be confirmed before a charge-free work order.';
+  }
+  if(kind==='fan'&&s.id==='review')choices[0].label='Close after tenant confirmation';
+  return choices;
+}
+
 export class Simulation {
   constructor(config,onEvent=()=>{},saved=null){
     if(!config?.id||!config.scenario||!config.participants)throw new Error('Invalid simulation configuration.');
     for(const role of ROLES)if(!['ai','human'].includes(config.controls?.[role]))throw new Error('Every participant needs AI or human control.');
     this.config=structuredClone(config);this.onEvent=onEvent;this.plan=planFor(config.scenario,config.issue);
-    this.events=[];this.index=0;this.evidence={};this.pending=null;this.finished=false;this.hours=0;this.blocked=false;
+    this.events=[];this.index=0;this.evidence={};this.pending=null;this.finished=false;this.hours=0;this.blocked=false;this.waitKind=null;this.waitingSince=null;this.blockReason='';
     if(saved){
       if(saved.version!==SIM_VERSION||!Number.isInteger(saved.index)||saved.index<0||saved.index>this.plan.length||!Array.isArray(saved.events))throw new Error('Unsupported saved simulation. Export it before clearing browser data.');
-      Object.assign(this,{events:saved.events,index:saved.index,evidence:saved.evidence,pending:saved.pending,finished:saved.finished,hours:saved.hours,blocked:saved.blocked});
+      Object.assign(this,{events:saved.events,index:saved.index,evidence:saved.evidence,pending:saved.pending,finished:saved.finished,hours:saved.hours,blocked:saved.blocked,waitKind:saved.waitKind||null,waitingSince:saved.waitingSince||null,blockReason:saved.blockReason||''});
     }
   }
   emit(event){
@@ -105,8 +139,30 @@ export class Simulation {
       sim_time:new Date(Date.UTC(2026,9,10,9)+this.hours*3600000).toISOString(),simulated:true};
     this.events.push(e);this.onEvent(e);return e;
   }
+  facts(stage){
+    const kind=kindFor(this.config.scenario,this.config.issue),e=this.evidence;
+    const item=(label,detail,evidence_seq=null)=>({label,detail,evidence_seq});
+    let work=item('Completion not evidenced','The required work or operating check has not been confirmed.');
+    let financial=item('Payment not evidenced','No invoice or settlement evidence is recorded by this simulation.');
+    if(kind==='fan'&&e.working)work=item('Working after advice','Tenant confirmed the fan works after finding its switch. No repair visit was required.',e.working);
+    else if(e.completion)work=item(e['resident-check']?'Working · tenant confirmed':'Repair reported complete',e.keys?'Completion and physical office key return are both confirmed.':'The contractor supplied a simulated completion report; closure has separate checks.',e['resident-check']||e.completion);
+    else if(e.parts)work=item('Repair pending · parts ordered','Parts were ordered; this is not a completion report.',e.parts);
+    if(kind==='warranty'&&e.warranty)financial=item(e.completion?'No landlord charge reported':'Charge-free cover confirmed',e.completion?'The completion report states a warranty repair at no charge to the landlord. No payment is recorded.':'Manufacturer cover is confirmed in the simulation. Completion is still a separate check.',e.completion||e.warranty);
+    if(kind==='fan'&&stage==='closed')financial=item('Closed without payment','This is a closure category. It does not establish an invoice amount, a zero charge, or a settled payment.',e.review);
+    if(kind==='fraud'){
+      work=item('Repair not established','This scenario verifies a payment diversion, not the existence or completion of a repair.',e['fraud-verified']||null);
+      if(e['fraud-check'])financial=item('Payment change blocked','The diversion is blocked; no payment or repair is claimed.',e['fraud-check']);
+    }
+    const closure=stage==='closed'?item('Closed · checks evidenced',kind==='fan'?'Landlord advice, tenant confirmation and operator review. No contractor is required.':kind==='keys'?'Approval, completion, four-key distribution, physical office return and operator review.':kind==='warranty'?'Manufacturer cover, completion report and operator review.':'All required simulated evidence and the final review are recorded.',e.review||e['fraud-review']):
+      item('Case remains open',this.blockReason||'Required evidence and a final closure decision are still pending.');
+    return {work,closure,financial};
+  }
   status(stage,owner,recap){
-    this.emit({t:'status',stage,owner,recap,next_step:this.plan[this.index]?.prompt||'',hold_reason:this.blocked?'Waiting for explicit confirmation':'',
+    const s=this.plan[this.index],active=stage!=='closed'&&!this.finished;
+    this.emit({t:'status',stage,owner,recap,next_step:active?s?.prompt||'Review the recorded checks and close the case.':'',hold_reason:this.blocked?this.blockReason||'Waiting for explicit confirmation':'',
+      case_facts:this.facts(stage),next_action:active?{role:s?.role||'agency',kind:this.blocked?this.waitKind||'reply':s?.role?'reply':'progress',reason:this.blockReason||s?.prompt||'Final closure checks are ready.',
+        next_step:s?.prompt||'Close after the recorded checks.',waiting_since:this.waitingSince,deadline:null,deadline_source:null,
+        visit:this.evidence.access?'Access confirmed; exact date not recorded':this.evidence.provider?'Proposed: tomorrow morning; not a confirmed appointment':'Not agreed / not recorded'}:null,
       dod:this.plan.filter(s=>s.role).map(s=>({item:s.id,text:s.prompt,status:this.evidence[s.id]?'done':'pending',evidence:this.evidence[s.id]?`Simulated reply #${this.evidence[s.id]}`:''})),red_flags:[],withheld_actions:[]});
   }
   effect(op,to_role='agency',summary=op){
@@ -153,11 +209,12 @@ export class Simulation {
       this.effect(s.action,'contractor','Simulated work order issued after approval and confirmed access');this.index++;return true;
     }
     this.assign(s.role);
+    if(!this.waitingSince)this.waitingSince=new Date(Date.UTC(2026,9,10,9)+this.hours*3600000).toISOString();
     this.status(s.stage,s.role,s.prompt);
     if(s.op==='block_payment_change')this.emit({t:'gate',tool:'update_payment_details',verdict:'deny',reason:'Unverified payment diversion blocked by simulation rule',rules:['SIM-NO-PAYMENT-CHANGE']});
     else if(s.op)this.effect(s.op,s.role,s.prompt);
     const prompt={t:'awaiting_player',role:s.role,actor_id:this.config.participants[s.role].id,actor_name:this.config.participants[s.role].name,
-      prompt_id:`${this.config.id}-${this.events.length+1}`,prompt:s.prompt,choices:s.choices.map(({id,label})=>({id,label})),suggested:s.choices.map(c=>c.body),source_ref:s.ref||null};
+      prompt_id:`${this.config.id}-${this.events.length+1}`,prompt:s.prompt,choices:decisionChoices(s,kindFor(this.config.scenario,this.config.issue)).map(({id,label,consequence,accept})=>({id,label,consequence,accept})),suggested:s.choices.map(c=>c.body),source_ref:s.ref||null};
     this.pending=prompt;
     if(this.config.controls[s.role]==='human')this.emit(prompt);
     else this.answer(s.role,prompt.prompt_id,s.choices[0].id,'',true);
@@ -167,15 +224,15 @@ export class Simulation {
     if(this.finished||!this.pending||this.pending.role!==role||this.pending.prompt_id!==promptId)throw new Error('This reply belongs to a different turn.');
     if(!automatic&&this.config.controls[role]!=='human')throw new Error('This participant is AI controlled.');
     if(typeof note!=='string'||note.length>4000)throw new Error('Notes must be under 4,000 characters.');
-    const s=this.plan[this.index],choice=s.choices.find(c=>c.id===choiceId);
+    const s=this.plan[this.index],choice=decisionChoices(s,kindFor(this.config.scenario,this.config.issue)).find(c=>c.id===choiceId);
     if(!choice)throw new Error('Choose an explicit decision for this turn.');
     const reply=this.emit({t:'actor_message',role,actor_id:this.config.participants[role].id,actor_name:this.config.participants[role].name,
-      body:choice.body+(note.trim()?`\nPlayer note (uninterpreted): ${note.trim()}`:''),choice:choice.id,source:automatic?'AI persona · scripted simulation':'Human · simulation',source_ref:s.ref||null});
+      body:choice.body+(note.trim()?`\nPlayer note (uninterpreted): ${note.trim()}`:''),choice:choice.id,step_id:s.id,accepted:choice.accept,consequence:choice.consequence,source:automatic?'AI persona · scripted simulation':'Human · simulation',source_ref:s.ref||null});
     this.pending=null;
     if(!choice.accept){
-      this.blocked=true;this.status(s.stage,role,choice.body);return;
+      this.blocked=true;this.waitKind=choice.wait_kind;this.blockReason=choice.body;this.status(s.stage,role,choice.body);return;
     }
-    this.blocked=false;this.evidence[s.id]=reply.seq;this.index++;
+    this.blocked=false;this.waitKind=null;this.blockReason='';this.waitingSince=null;this.evidence[s.id]=reply.seq;this.index++;
     if(s.terminal){this.close(s.terminal);return;}
     this.status(s.stage,'agency',choice.body);
   }
@@ -197,16 +254,7 @@ export class Simulation {
         blocked:this.events.filter(e=>e.t==='gate'&&e.verdict==='deny').length,approvals:this.events.filter(e=>e.op==='request_landlord_approval').length,
         withheld:0,done:required.filter(id=>this.evidence[id]).length,total:required.length}});
   }
-  snapshot(){return {version:SIM_VERSION,config:this.config,events:this.events,index:this.index,evidence:this.evidence,pending:this.pending,finished:this.finished,hours:this.hours,blocked:this.blocked};}
+  snapshot(){return {version:SIM_VERSION,config:this.config,events:this.events,index:this.index,evidence:this.evidence,pending:this.pending,finished:this.finished,hours:this.hours,blocked:this.blocked,waitKind:this.waitKind,waitingSince:this.waitingSince,blockReason:this.blockReason};}
 }
 
-export function caseState(ticket){
-  if(ticket.outcome==='success')return 'success';
-  if(ticket.ended)return 'finished';
-  if(ticket.pending&&ticket.mode!=='replay')return 'waiting';
-  return 'active';
-}
-export function filterCases(tickets,filter='all',query=''){
-  const needle=query.trim().toLowerCase();
-  return tickets.filter(t=>(filter==='all'||caseState(t)===filter)&&`${t.scenario.title||t.issue||''} ${t.property} ${t.provenance?.case||''}`.toLowerCase().includes(needle));
-}
+export const filterCases=filterCaseQueue;

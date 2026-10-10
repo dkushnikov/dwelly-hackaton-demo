@@ -126,4 +126,4 @@ Use a named tunnel: [Quick Tunnels do not support SSE](https://developers.cloudf
 - Export its journal and replay it. Keep an exported recording and the independent Pages URL available for the presentation.
 - Check a phone-size viewport and Full screen. For offline use, wait for the service worker's availability message after the initial online visit.
 
-No Cloudflare deployment has been executed from this checkout. Docker and `cloudflared` were unavailable in the development environment; container startup, DNS/TLS, Access and external SSE still require verification on the selected host. See [verification records](VERIFICATION.md) for completed local checks.
+The alternative [Workers + Containers deployment](CLOUDFLARE.md) runs the entire system on Cloudflare with shared-password access and persistent SQLite journals. It needs no separate Docker host or Tunnel. Its guide records the release status and external checks. See [verification records](VERIFICATION.md) for completed local checks.
