@@ -1,6 +1,11 @@
 **
 !Dockerfile
+!Dockerfile.cloudflare
 !pyproject.toml
+# Wrangler normalizes the Dockerfile name; both image builds need this allowlist.
+!agent-source.json
+!scripts/
+!scripts/agent_dependency.py
 !demo/
 !demo/**
 demo/**/__pycache__/
