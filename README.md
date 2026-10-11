@@ -2,7 +2,9 @@
 
 A browser demo for the Dwelly AI Hackathon: **6 homes, 21 participants, concurrent maintenance stories and an auditable view of each agent decision**.
 
-Repositories: [Village demo](https://github.com/dkushnikov/dwelly-hackaton-demo) · [Lettings operations agent](https://github.com/dkushnikov/lettings-ops-agent) · [Public hackathon cases](https://github.com/DwellyOrg/HackatonPublicCases). The demo and agent have separate source trees and environments. Until a repository is public, cloning it requires GitHub access.
+Repositories: [Village demo](https://github.com/dkushnikov/dwelly-hackaton-demo) · [Lettings operations agent](https://github.com/dkushnikov/lettings-ops-agent) · [Public hackathon cases](https://github.com/DwellyOrg/HackatonPublicCases). The demo and agent have separate source trees and environments.
+
+**Saved checkpoint, 11 October 2026:** start with [current state and resume steps](docs/STATE.md), [forking instructions](docs/FORKING.md), [remaining features](docs/ROADMAP.md) and [feedback for the agent team](docs/AGENT_FEEDBACK.md). Original code is [Apache-2.0](LICENSE); data/artwork attribution is documented in [NOTICE](NOTICE).
 
 [Case-by-case interface review](docs/CASE_REVIEW.md) analyses all 50 public Property Management examples, with implementation priorities, source references and acceptance criteria (Russian).
 
@@ -34,7 +36,7 @@ The **Intelligence** tab opens the BI dashboard at <http://127.0.0.1:8787/#intel
 
 The static `dist/` build runs on ordinary hosting without Python. Canvas, JavaScript, CSS and fonts need no external network. A service worker caches the interface, interactive simulator, public-case evidence, BI datasets and four recordings after the first successful visit. Setuptools is used only to build the Python package and include its web assets.
 
-For a shared-password deployment of the game, BI and live agent on Cloudflare Workers + Containers, follow [Cloudflare deployment](docs/CLOUDFLARE.md). This hosted version disables offline caching, starts the agent on demand and preserves live journals outside the container. The target is prepared and locally tested; the deployment guide lists the remaining cloud release checks.
+For a shared-password deployment of the game, BI and live agent on Cloudflare Workers + Containers, follow [Cloudflare deployment](docs/CLOUDFLARE.md). This hosted version disables offline caching, starts the agent on demand and preserves live journals outside the container. The image and Worker were deployed successfully and the hosted login page was verified. A complete deployed provider episode remains unverified; see the saved checkpoint before relying on live mode.
 
 ## An isolated copy of the agent
 
@@ -155,11 +157,17 @@ Open `http://127.0.0.1:8788`, not `dist/index.html` via `file://`. Simulation, m
 
 For a public demo, use **Cloudflare Pages** connected to this GitHub repository: production branch `main`, framework **None**, build command `python3 -m scripts.build`, output directory `dist`, repository root as the build root. This publishes the full browser simulation, Replay and Intelligence; it makes no LLM calls. Pages can build a private repository when granted access, so publication of the repository can happen separately. See [Cloudflare's Git integration guide](https://developers.cloudflare.com/pages/get-started/git-integration/).
 
-For the **live agent**, run the included Docker Compose stack on an always-on host and serve both the interface and API through a named Cloudflare Tunnel protected by Access. Keep its run volume persistent. This is a separate full application URL; the current client expects the API on the same origin. The [deployment guide](docs/DEPLOYMENT.md) includes setup commands, configuration, limitations and a launch checklist for both options.
+For the **full application on Cloudflare**, use the [Workers + Containers guide](docs/CLOUDFLARE.md) and your own hostname/secrets. The existing deployment is [Lettings Village](https://lettings-village.dkushnikov.workers.dev/), protected by a shared password. A fork does not inherit its access or data.
+
+Alternatively run Docker Compose on an always-on host and serve the interface and API through a named Cloudflare Tunnel protected by Access. Keep its run volume persistent. The client expects the API on the same origin. The [alternative deployment guide](docs/DEPLOYMENT.md) includes setup commands and limitations.
 
 ## Deployment and handoff
 
 - [Interactive cases, public evidence and participant control](docs/INTERACTIVE.md)
+- [Saved checkpoint and continuation](docs/STATE.md)
+- [Forking and dependency reproduction](docs/FORKING.md)
+- [Prioritised feature backlog](docs/ROADMAP.md)
+- [Current feedback for the agent team](docs/AGENT_FEEDBACK.md)
 - [Agent dependency workflow](docs/AGENT_DEPENDENCY.md)
 - [Plan and architecture](docs/PLAN.md)
 - [Summary for the agent team](docs/AGENT_STREAM_HANDOFF.md)
@@ -169,4 +177,4 @@ For the **live agent**, run the included Docker Compose stack on an always-on ho
 - [90-second presentation script](video/GAME_DEMO.md)
 - [Verification results and limitations](docs/VERIFICATION.md)
 
-Cloudflare access is not needed locally. Docker/Compose and origin configuration are prepared for live hosting; the static build and `wrangler.jsonc` support the interactive simulator, recordings and BI on Pages. The live Compose configuration mounts `.deps/lettings-ops-agent` read-only by default. Run `make agent-sync` first. Public deployment and a complete real-provider live episode still require validation in the target environment.
+Cloudflare access is not needed locally. The static build and `wrangler.jsonc` support simulation, recordings and BI on Pages. Live Compose mounts `.deps/lettings-ops-agent` read-only; run `make agent-sync` first. Cloudflare Workers uses `wrangler.live.jsonc` and builds the pinned agent independently. Saving or forking the repository does not preserve browser/cloud state or stop hosting charges. See [verification results](docs/VERIFICATION.md) for the exact tested boundary.

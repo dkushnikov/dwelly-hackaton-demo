@@ -2,7 +2,7 @@
 
 Run the village and BI as Worker assets, with the pinned Python agent in one on-demand Container. The account's free `workers.dev` hostname needs no purchased domain, VM, Tunnel or email identity provider.
 
-**Release status:** local workerd tests pass for authentication, asset/API protection, concurrent budget reservations and SQLite persistence. The image build and a deployed provider request still require verification. The hostname in the configuration is not proof of a deployed service.
+**Release status, 11 October 2026:** local workerd tests pass for authentication, asset/API protection, concurrent budget reservations and SQLite persistence. Cloudflare Workers Builds successfully built the image and deployed application source `3d25272`; the hosted password login page was verified. A deployed provider request, external live SSE/manual turns and cloud journal recovery still require verification. Work is deferred at the saved [checkpoint](STATE.md); see [forking instructions](FORKING.md) before reusing the deployment configuration.
 
 ## Components
 

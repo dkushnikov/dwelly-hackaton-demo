@@ -1,5 +1,9 @@
 Lettings Village — Dwelly hackathon demonstration
 
+Copyright 2026 Dmitry Kushnikov and contributors.
+Original software and documentation are licensed under Apache License 2.0;
+see LICENSE. The artwork and third-party data retain the terms below.
+
 The four bundled replays and synthetic world records derive from the local
 lettings-ops-agent project, licensed under Apache License 2.0. A copy of that
 license is provided in LICENSE-THIRD-PARTY. Sources are recorded in each JSONL
@@ -22,3 +26,9 @@ revision 9bcdca585955dfb930005ed742572606e68f5688. Original source links and
 SHA-256 hashes accompany each case. These source cases are synthetic.
 The village mapping, participant choices, simulated dialogue, relative timing
 and success checks are demo adaptations, not recorded LLM runs or evaluations.
+
+Public-case source text, scenario evidence and the derived public-case BI index
+(demo/web/insights-corpus.json) are attributed to DwellyOrg/HackatonPublicCases.
+They are not relicensed by this repository's Apache-2.0 grant. Retain their
+source URLs, hashes and upstream terms when redistributing or adapting them.
+The separate synthetic BI portfolio is demo-generated data, not observed costs.

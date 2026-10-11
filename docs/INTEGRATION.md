@@ -55,7 +55,7 @@
 
 SSE буфер — 20 000 событий. Истёкший cursor восстанавливается через snapshot. Исторические завершённые сессии, вытесненные из памяти, доступны только как JSONL. После рестарта нельзя продолжить живой мир из лога.
 
-API использует same-origin JSON writes, Host allowlist, ограничения размера/числа ходов и path confinement. Авторизация пользователей делегируется Cloudflare Access перед всем origin. Внутренней системы аккаунтов нет.
+API использует same-origin JSON writes, Host allowlist, ограничения размера/числа ходов и path confinement. В варианте Tunnel авторизация делегируется Cloudflare Access. Workers + Containers использует password gateway: см. [CLOUDFLARE.md](CLOUDFLARE.md). Индивидуальных аккаунтов нет.
 
 
 ## Interactive controls and browser simulation

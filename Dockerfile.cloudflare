@@ -15,7 +15,9 @@ COPY --from=agent-source /source/.deps/lettings-ops-agent/agent /agent/agent
 COPY --from=agent-source /source/.deps/lettings-ops-agent/fixtures /agent/fixtures
 COPY --from=agent-source /source/.deps/lettings-ops-agent/data /agent/data
 COPY --from=agent-source /source/.deps/lettings-ops-agent/NOTICE /agent/NOTICE
+COPY --from=agent-source /source/.deps/lettings-ops-agent/LICENSE /agent/LICENSE
 COPY demo /app/demo
+COPY LICENSE LICENSE-THIRD-PARTY NOTICE /app/
 RUN useradd --create-home --uid 10001 village && mkdir -p /app/runs/demo && chown -R village:village /app/runs
 USER village
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1

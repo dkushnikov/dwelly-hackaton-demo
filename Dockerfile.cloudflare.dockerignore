@@ -1,6 +1,9 @@
 **
 !Dockerfile.cloudflare
 !pyproject.toml
+!LICENSE
+!LICENSE-THIRD-PARTY
+!NOTICE
 !agent-source.json
 !scripts/
 !scripts/agent_dependency.py

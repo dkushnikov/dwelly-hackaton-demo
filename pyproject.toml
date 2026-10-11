@@ -12,6 +12,7 @@ demo = ["web/*", "web/replays/*.jsonl", "web/assets/*.md"]
 name = "lettings-village"
 version = "0.1.0"
 description = "A playable, auditable village around a real lettings operations agent"
+license = {file = "LICENSE"}
 requires-python = ">=3.12"
 dependencies = ["uvicorn==0.43.0"]
 

@@ -25,12 +25,13 @@ def main():
         shutil.copyfile(source, dest / "replays" / source.name)
     shutil.copyfile(ROOT / "deploy/static-headers", dest / "_headers")
     shutil.copyfile(ROOT / "NOTICE", dest / "NOTICE.txt")
+    shutil.copyfile(ROOT / "LICENSE", dest / "LICENSE.txt")
     shutil.copyfile(ROOT / "LICENSE-THIRD-PARTY", dest / "LICENSE-THIRD-PARTY.txt")
     artifacts = ROOT / "artifacts"
     artifacts.mkdir(exist_ok=True)
     archive = artifacts / "lettings-village-static.zip"
     members = FILES + [f"replays/{name}.jsonl" for name in ("routine", "approval", "fraud", "vulnerable")]
-    members += ["_headers", "NOTICE.txt", "LICENSE-THIRD-PARTY.txt"]
+    members += ["_headers", "NOTICE.txt", "LICENSE.txt", "LICENSE-THIRD-PARTY.txt"]
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
         for name in members:
             bundle.write(dest / name, name)

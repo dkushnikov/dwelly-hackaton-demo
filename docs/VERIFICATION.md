@@ -548,4 +548,81 @@ The smoke test uses Cloudflare workerd with SQLite, synthetic credentials and a 
 
 Case Review browser QA used an isolated server on port 8789: PM-017 manual evidence request → Missing evidence filter → reload with preserved turn → Working after advice / Closed with checks / Closed without payment. Browser console errors: `[]`. A replay's recorded prompt no longer counts as a current human turn. The test server and tab were closed afterwards.
 
-Full deployment dry run remains unverified: `npx wrangler deploy --config wrangler.live.jsonc --dry-run --outdir artifacts/cloudflare-worker` first encountered `EPERM` for Wrangler's default global log directory. Routing Wrangler config/logs into workspace artifacts resolved that filesystem issue; the command then failed because **the Docker CLI is not installed**. Cloudflare Workers Builds is the intended image-build environment. No deployed Container, external SSE or paid provider call has been confirmed in this record.
+Full deployment dry run remains unverified: `npx wrangler deploy --config wrangler.live.jsonc --dry-run --outdir artifacts/cloudflare-worker` first encountered `EPERM` for Wrangler's default global log directory. Routing Wrangler config/logs into workspace artifacts resolved that filesystem issue; the command then failed because **the Docker CLI is not installed**. Cloudflare Workers Builds is the intended image-build environment. No deployed Container, external SSE or paid provider call had been confirmed at the time of this preparation record; the following checkpoint updates deployment status.
+
+## Deployment and saved checkpoint — 11 October 2026
+
+Cloudflare Workers Builds succeeded for application source
+`3d25272d39e001f01309692c21b4e960140c1586`, build
+`c7a8ceee-016b-44ed-882b-6141c089537d` (2m 9s). The first build failed because
+Wrangler's normalised Dockerfile used the root ignore file and excluded
+`agent-source.json` and `scripts/agent_dependency.py`. Commit `3d25272` corrected
+that allowlist; the subsequent image build and deployment succeeded.
+
+The hosted `/login` page at `lettings-village.dkushnikov.workers.dev` was observed
+in the browser after the owner provisioned the runtime secrets. No secret values
+were read. A later sandboxed public HTTP check could not resolve the hostname:
+
+```text
+curl --silent --show-error --max-time 20 --output /dev/null --write-out 'home: %{http_code} %{redirect_url}\n' https://lettings-village.dkushnikov.workers.dev/
+curl: (6) Could not resolve host: lettings-village.dkushnikov.workers.dev
+home: 000
+```
+
+Browser navigation succeeded independently. A paid deployed provider episode,
+external SSE/manual turn and post-shutdown cloud recording remain unverified.
+Those checks and further features were explicitly deferred by the owner.
+
+Checkpoint maintenance adds current state/resume, forking, roadmap and agent
+feedback documents; replaces the obsolete initial plan/handoff; adds Apache-2.0
+for original code and preserves corpus/artwork exceptions. Static and Docker
+distributions now include the required license/notice inputs. This packaging
+change has not been rebuilt on Cloudflare. No behaviour of the agent was changed.
+
+Fresh checks in the existing environment (Python 3.14.7, Node 26.8.2, npm 11.19.1):
+
+```text
+make test-agent
+Pinned revision: b0ef66d4d0dd58ab1499071fe580a18b8e9ce1c0
+Local revision: b0ef66d4d0dd58ab1499071fe580a18b8e9ce1c0
+68 passed in 3.82s
+ℹ tests 53
+ℹ pass 53
+ℹ fail 0
+
+make lint
+All checks passed!
+[all nine JavaScript syntax commands exited 0]
+
+.venv/bin/python -m pip check
+No broken requirements found.
+
+make build
+4 authentic recordings; no runtime sessions, agent source, credentials, CDN or API dependency.
+Interactive simulation: 3 source-linked public cases, role control and browser-local saved sessions; no API calls.
+BI: 50 public corpus cases + 84 clearly labelled synthetic portfolio jobs; local review feedback.
+Deployment archive: lettings-village-static.zip (141258 bytes)
+
+Checkpoint file validation
+Static archive: 26 files match dist; license and notices included.
+Markdown: 71 local links resolve.
+Manifest: 72 checksums match.
+Package metadata and Docker license inputs: PASS.
+```
+
+`pip check` also reported its normal unwritable global cache warning; no cache or
+permission changes were made. Dependency constraints were captured from installed
+package metadata (29 packages, excluding pip and this project). They are a record
+of the tested environment, not proof of a fresh install or Python 3.12 compatibility.
+No new dependencies were installed or network/provider calls made for this freeze.
+
+Cleanup removed only generated `build/`, `dist/`, pytest/ruff caches, root egg-info
+and Python bytecode under demo/scripts/tests. Source, bundled evidence, journals,
+test artifacts and local environments were preserved. The static ZIP remains an
+ignored local artifact; `make build` recreates `dist/`. The manifest and this
+record are portable source records, not backups of runtime or cloud data.
+
+Cloud smoke was not repeated because gateway/runtime logic did not change; its
+previous successful result is recorded above. No cloud resource was changed or
+deleted, and no paid provider call was made. Git commit/tag/publication status is
+deliberately not inferred from the existence of these checkpoint files.

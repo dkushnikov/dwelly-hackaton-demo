@@ -3,6 +3,7 @@ WORKDIR /app
 RUN pip install --no-cache-dir uvicorn==0.43.0
 RUN useradd --create-home --uid 10001 village
 COPY demo /app/demo
+COPY LICENSE LICENSE-THIRD-PARTY NOTICE /app/
 RUN mkdir -p /app/runs/demo && chown -R village:village /app/runs
 USER village
 EXPOSE 8787

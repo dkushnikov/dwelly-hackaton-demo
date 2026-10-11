@@ -2,6 +2,9 @@
 !Dockerfile
 !Dockerfile.cloudflare
 !pyproject.toml
+!LICENSE
+!LICENSE-THIRD-PARTY
+!NOTICE
 # Wrangler normalizes the Dockerfile name; both image builds need this allowlist.
 !agent-source.json
 !scripts/
